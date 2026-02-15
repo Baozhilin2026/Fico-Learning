@@ -81,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { Setting } from '@element-plus/icons-vue'
 import { useSettingsStore } from '@/stores/settings'
 import { useI18n } from '@/composables/useI18n'
@@ -90,7 +90,7 @@ import { unifiedTTSService } from '@/services/unifiedTTSService'
 const settingsStore = useSettingsStore()
 const { t } = useI18n()
 
-const currentEngine = ref<'web' | 'google'>('web')
+const currentEngine = computed(() => unifiedTTSService.getEngine())
 const currentAccent = computed(() => settingsStore.ttsAccent)
 const currentGender = computed(() => settingsStore.ttsGender)
 const currentRate = computed(() => settingsStore.ttsRate)
@@ -98,7 +98,6 @@ const currentRate = computed(() => settingsStore.ttsRate)
 function handleCommand(command: { type: string; value: any }) {
   switch (command.type) {
     case 'engine':
-      currentEngine.value = command.value
       unifiedTTSService.setEngine(command.value)
       break
     case 'accent':

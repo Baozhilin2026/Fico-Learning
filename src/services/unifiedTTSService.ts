@@ -4,12 +4,42 @@ import { googleTTSService } from './googleTTSService'
 
 type TTSEngine = 'web' | 'google'
 
+const ENGINE_STORAGE_KEY = 'fico_tts_engine'
+
 class UnifiedTTSService {
-  private engine: TTSEngine = 'web'
+  // Default to Google Cloud TTS
+  private engine: TTSEngine = 'google'
+
+  constructor() {
+    // Load saved engine preference
+    this.loadEnginePreference()
+  }
+
+  // Load engine preference from localStorage
+  private loadEnginePreference(): void {
+    try {
+      const saved = localStorage.getItem(ENGINE_STORAGE_KEY)
+      if (saved === 'web' || saved === 'google') {
+        this.engine = saved
+      }
+    } catch (error) {
+      console.error('Failed to load engine preference:', error)
+    }
+  }
+
+  // Save engine preference to localStorage
+  private saveEnginePreference(): void {
+    try {
+      localStorage.setItem(ENGINE_STORAGE_KEY, this.engine)
+    } catch (error) {
+      console.error('Failed to save engine preference:', error)
+    }
+  }
 
   // Set engine type
   setEngine(engine: TTSEngine): void {
     this.engine = engine
+    this.saveEnginePreference()
     console.log('TTS Engine switched to:', engine)
   }
 
