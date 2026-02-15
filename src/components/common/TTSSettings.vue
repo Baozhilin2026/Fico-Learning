@@ -10,6 +10,20 @@
           </el-dropdown-item>
 
           <el-dropdown-item disabled divided>
+            <span class="label">TTS 引擎</span>
+          </el-dropdown-item>
+          <el-dropdown-item :command="{ type: 'engine', value: 'web' }">
+            <span :class="{ active: currentEngine === 'web' }">
+              浏览器内置 (免费)
+            </span>
+          </el-dropdown-item>
+          <el-dropdown-item :command="{ type: 'engine', value: 'google' }">
+            <span :class="{ active: currentEngine === 'google' }">
+              Google Cloud (高质量)
+            </span>
+          </el-dropdown-item>
+
+          <el-dropdown-item disabled divided>
             <span class="label">{{ t('tts.accent') }}</span>
           </el-dropdown-item>
           <el-dropdown-item :command="{ type: 'accent', value: 'indian' }">
@@ -67,20 +81,26 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { Setting } from '@element-plus/icons-vue'
 import { useSettingsStore } from '@/stores/settings'
 import { useI18n } from '@/composables/useI18n'
+import { unifiedTTSService } from '@/services/unifiedTTSService'
 
 const settingsStore = useSettingsStore()
 const { t } = useI18n()
 
+const currentEngine = ref<'web' | 'google'>('web')
 const currentAccent = computed(() => settingsStore.ttsAccent)
 const currentGender = computed(() => settingsStore.ttsGender)
 const currentRate = computed(() => settingsStore.ttsRate)
 
 function handleCommand(command: { type: string; value: any }) {
   switch (command.type) {
+    case 'engine':
+      currentEngine.value = command.value
+      unifiedTTSService.setEngine(command.value)
+      break
     case 'accent':
       settingsStore.setTTSAccent(command.value)
       break

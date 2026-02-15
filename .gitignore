@@ -34,3 +34,7 @@ dist-ssr
 # Temporary files
 nul
 }
+
+# Environment variables
+.env
+.env.local

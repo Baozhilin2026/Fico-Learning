@@ -3,6 +3,8 @@ import { unifiedTTSService } from '@/services/unifiedTTSService'
 import { useSettingsStore } from '@/stores/settings'
 import type { TTSAccent, TTSGender } from '@/types'
 
+type TTSEngine = 'web' | 'google'
+
 export function useTTS() {
   const settingsStore = useSettingsStore()
 
@@ -10,6 +12,7 @@ export function useTTS() {
   const isPaused = ref(false)
   const currentSpeed = ref(1.0)
   const progress = ref(0)
+  const currentEngine = ref<TTSEngine>('web')
 
   // Sync currentSpeed with settingsStore.ttsRate
   currentSpeed.value = settingsStore.ttsRate
@@ -28,6 +31,12 @@ export function useTTS() {
 
   // Get engine info
   const engineInfo = computed(() => unifiedTTSService.getEngineInfo())
+
+  // Switch TTS engine
+  function setEngine(engine: TTSEngine): void {
+    currentEngine.value = engine
+    unifiedTTSService.setEngine(engine)
+  }
 
   // Speak text
   async function speak(text: string, options?: {
@@ -105,6 +114,7 @@ export function useTTS() {
     progress,
     currentAccent: computed(() => currentSettings.value.accent),
     currentGender: computed(() => currentSettings.value.gender),
+    currentEngine: computed(() => currentEngine.value),
     engineInfo,
     speak,
     pause,
@@ -112,6 +122,7 @@ export function useTTS() {
     stop,
     setSpeed,
     setAccent,
-    setGender
+    setGender,
+    setEngine
   }
 }
