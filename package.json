@@ -1,0 +1,31 @@
+{
+  "name": "fico-learning",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "@vueuse/shared": "^14.2.0",
+    "crypto-js": "^4.2.0",
+    "element-plus": "^2.6.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.1.0",
+    "pinia": "^2.1.7",
+    "playwright": "^1.58.2",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "sass": "^1.72.0",
+    "typescript": "^5.4.2",
+    "vite": "^5.1.6",
+    "vue-tsc": "^2.0.6"
+  }
+}

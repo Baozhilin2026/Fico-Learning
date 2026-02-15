@@ -1,0 +1,20 @@
+# -*- coding: utf-8 -*-
+import re
+
+# Read original file
+with open('Vocabulary.vue', 'r', encoding='utf-8') as f:
+    lines = f.readlines()
+
+# Find and fix the problematic line (around line 100-101)
+for i, line in enumerate(lines):
+    # Looking for the pattern that needs fixing
+    if '\":vocabulary=\"vocab\"' in line and ':is-bookmarked=\"isBookmarked(vocab)\"' in line:
+        # Replace with proper comma
+        lines[i] = line.replace('\":vocabulary=\"vocab\"', '\":vocabulary=\"vocab\",')
+        break
+
+# Write back
+with open('Vocabulary.vue', 'w', encoding='utf-8') as f:
+    f.writelines(lines)
+    
+print('Fixed!')

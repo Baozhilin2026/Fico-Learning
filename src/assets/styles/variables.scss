@@ -1,0 +1,81 @@
+// SAP Blue Theme Colors
+$primary: #008FD3;
+$primary-dark: #005A87;
+$primary-light: #4FC3F7;
+$secondary: #F0F0F0;
+$accent: #FF9800;
+$success: #4CAF50;
+$error: #F44336;
+$warning: #FF9800;
+$info: #2196F3;
+
+// Neutral Colors
+$text-primary: #212121;
+$text-secondary: #757575;
+$text-disabled: #BDBDBD;
+$border-color: #E0E0E0;
+$divider: #EEEEEE;
+
+// Background Colors
+$bg-primary: #FFFFFF;
+$bg-secondary: #F5F5F5;
+$bg-tertiary: #EEEEEE;
+
+// Typography
+$font-family-en: 'Arial', 'Helvetica', sans-serif;
+$font-family-zh: 'Microsoft YaHei', 'SimHei', sans-serif;
+$font-family-base: $font-family-en, $font-family-zh;
+
+$font-size-xs: 12px;
+$font-size-sm: 14px;
+$font-size-base: 16px;
+$font-size-lg: 18px;
+$font-size-xl: 20px;
+$font-size-2xl: 24px;
+$font-size-3xl: 30px;
+
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// Spacing
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-2xl: 48px;
+
+// Border Radius
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
+
+// Shadows
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+
+// Transitions
+$transition-fast: 150ms ease-in-out;
+$transition-base: 200ms ease-in-out;
+$transition-slow: 300ms ease-in-out;
+
+// Z-index
+$z-dropdown: 1000;
+$z-sticky: 1020;
+$z-fixed: 1030;
+$z-modal-backdrop: 1040;
+$z-modal: 1050;
+$z-popover: 1060;
+$z-tooltip: 1070;
+
+// Layout
+$navbar-height: 60px;
+$sidebar-width: 240px;
+$bottombar-height: 40px;
+$top-bar-height: 80px;
+$max-content-width: 1400px;

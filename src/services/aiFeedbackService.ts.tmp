@@ -1,0 +1,207 @@
+import { glmService } from './glmService'
+import { dataLoader } from './dataLoader'
+import type { FICOJobLevel, FICOIndustry, AIInterviewFeedback, InterviewAnswer } from '@/types'
+
+class AIFeedbackService {
+  private feedbackCache = new Map<string, AIInterviewFeedback>()
+
+  private buildEvaluationPrompt(
+    question: string,
+    answer: string,
+    jobLevel: FICOJobLevel,
+    industry: FICOIndustry,
+    competencies: string[]
+  ): string {
+    return `You are a senior SAP FICO interview evaluation expert. Please provide a professional assessment of candidate's interview response.
+
+Interview Question: ${question}
+Candidate's Answer: ${answer}
+Job Level: ${jobLevel}
+Industry: ${industry}
+Expected Competencies: ${competencies.join(', ')}
+
+Please evaluate response across three dimensions (score 0-100 for each):
+
+1. English Expression (30%)
+   - Grammatical accuracy
+   - Fluency and coherence
+   - Professional terminology usage
+
+2. FICO Professional Competence (40%)
+   - Technical accuracy of FICO concepts
+   - Understanding of industry scenarios
+   - Usage of key FICO terminology
+
+3. Interview Communication Skills (30%)
+   - Completeness of answer
+   - Logical structure
+   - Use of examples and elaboration
+
+Provide detailed, specific feedback that will help candidate improve.
+
+Output ONLY valid JSON in this exact format (no markdown, no code blocks):
+{
+  "englishExpression": {
+    "score": 85,
+    "strengths": ["Good grammar structure", "Clear communication"],
+    "weaknesses": ["Some pronunciation issues with technical terms"],
+    "suggestions": ["Practice pronouncing FICO terminology"]
+  },
+  "ficoProfessionalism": {
+    "score": 75,
+    "technicalAccuracy": ["Correct understanding of company code configuration"],
+    "industryContext": ["Needs more industry-specific examples"],
+    "keywordUsage": ["Used key terms like Company Code, Document Type"]
+  },
+  "interviewSkills": {
+    "score": 80,
+    "clarity": ["Answer was clear and direct"],
+    "structure": ["Good logical flow"],
+    "completeness": ["Covered main aspects thoroughly"]
+  },
+  "overallScore": 79,
+  "aiInsights": {
+    "overallAssessment": "The candidate demonstrates solid FICO foundational knowledge...",
+    "careerRecommendations": ["Consider gaining more hands-on project experience"],
+    "skillGaps": ["Limited exposure to real-world manufacturing scenarios"]
+  }
+}
+
+Evaluate now.`
+  }
+
+  private buildSessionEvaluationPrompt(
+    answers: InterviewAnswer[],
+    jobLevel: FICOJobLevel,
+    industry: FICOIndustry
+  ): string {
+    // Check if all questions were skipped
+    const allSkipped = answers.every(a =>
+      !a.answer.trim() ||
+      a.answer === '[跳过]' ||
+      a.answer === '[Skipped]' ||
+      a.answer === '[语音回答]' && !a.audioBlob
+    )
+
+    const answeredCount = answers.filter(a =>
+      a.answer.trim() &&
+      a.answer !== '[跳过]' &&
+      a.answer !== '[Skipped]'
+    ).length
+
+    const answersText = answers.map((a, i) => {
+      let answerStatus = ''
+      if (a.answer.trim() === '' || a.answer === '[跳过]' || a.answer === '[Skipped]') {
+        answerStatus = '(Skipped)'
+      }
+      return `Q${i + 1}: ${a.question}\nA${i + 1}: ${a.answer || '[No answer provided]'} ${answerStatus}`
+    }).join('\n\n')
+
+    let specialInstructions = ''
+
+    if (allSkipped) {
+      specialInstructions = `
+SPECIAL SITUATION - ALL QUESTIONS SKIPPED:
+The candidate has skipped all ${answers.length} questions in this interview session. This is understandable - interview preparation takes time and courage.
+
+For your evaluation:
+- Provide encouraging and constructive feedback
+- Acknowledge that starting somewhere is first step to improvement
+- Give a moderate baseline score (50-60 range) to allow room for growth
+- Focus on learning recommendations and study resources
+- Emphasize that practice makes progress
+- Be motivational rather than critical
+`
+    } else if (answeredCount < answers.length / 2) {
+      specialInstructions = `
+SPECIAL SITUATION - MOST QUESTIONS SKIPPED:
+The candidate has only answered ${answeredCount} out of ${answers.length} questions.
+
+For your evaluation:
+- Be encouraging and supportive
+- Acknowledge questions that were attempted
+- Provide constructive guidance for improvement
+- Focus on building confidence
+`
+    }
+
+    // Build JSON template separately to avoid escaping issues
+    const jsonTemplate = `{
+  "englishExpression": {
+    "score": 82,
+    "strengths": ["Consistently good grammar", "Professional vocabulary"],
+    "weaknesses": ["Occasional hesitation"],
+    "suggestions": ["Continue practicing to improve fluency"]
+  },
+  "ficoProfessionalism": {
+    "score": 78,
+    "strengths": ["Correctly explained Company Code configuration principles", "Mentioned key integration points"],
+    "weaknesses": ["Missing Document Type posting logic details", "Did not cover fiscal year variant handling"],
+    "suggestions": ["Study Document Posting configuration in depth", "Practice explaining fiscal year variants"]
+  },
+  "interviewSkills": {
+    "score": 85,
+    "clarity": ["Clear and structured responses"],
+    "structure": ["Well-organized answers"],
+    "completeness": ["Thorough coverage of topics"]
+  },
+  "overallScore": 81,
+  "aiInsights": {
+    "overallAssessment": "The candidate shows strong potential as a FICO consultant...",
+    "careerRecommendations": ["Focus on gaining more project implementation experience"],
+    "skillGaps": ["Consider deepening knowledge in Controlling module"]
+  },
+  "referenceAnswers": [
+    {
+      "question": "EXACT text of question 1 from interview",
+      "englishAnswer": "A good English answer in 2-3 sentences...",
+      "chineseAnswer": "中文参考答案..."
+    },
+    {
+      "question": "EXACT text of question 2 from interview",
+      "englishAnswer": "Another good answer...",
+      "chineseAnswer": "另一个参考答案..."
+    }
+  ]
+}`
+
+    return `You are a senior SAP FICO interview evaluation expert. Please provide a comprehensive professional assessment of candidate's entire interview session.
+
+Job Level: ${jobLevel}
+Industry: ${industry}
+Total Questions: ${answers.length}
+Questions Attempted: ${answeredCount}
+${specialInstructions}
+
+Interview Session:
+${answersText}
+
+IMPORTANT EVALUATION INSTRUCTIONS:
+
+1. You MUST FIRST generate reference answers for ALL questions, then evaluate FICO Professionalism by DIRECTLY COMPARING the candidate's answers against these reference answers.
+
+2. For FICO Business Professionalism (40% weight), evaluate based on COMPARISON with reference answers:
+   - Technical content accuracy: What correct FICO concepts from reference are present/absent in candidate's answer?
+   - Key terminology coverage: What essential FICO keywords from reference are present/missing?
+   - Completeness of technical points: What key technical points from reference are covered/missing?
+   - Industry context relevance: Compared to reference, does the answer address industry-specific considerations?
+
+3. Be OBJECTIVE and SPECIFIC in your feedback - state clearly what was covered vs missing:
+   - List technical points from reference answer that ARE present in candidate's answer
+   - List key FICO terminology that is MISSING from candidate's answer
+   - List technical concepts that are INCORRECTLY explained compared to reference
+   - For each feedback point, clearly indicate it came from comparing with reference answer
+
+4. You MUST provide reference answers (2-3 sentences each) in BOTH English and Chinese for EVERY SINGLE QUESTION listed above. These should represent what an ideal ${jobLevel} level FICO consultant in ${industry} industry should answer.
+
+Output ONLY valid JSON in this exact format (no markdown, no code blocks):
+${jsonTemplate}
+
+CRITICAL REMEMBER:
+- You MUST include referenceAnswers for ALL ${answers.length} questions
+- For ficoProfessionalism feedback, base your assessment on DIRECT COMPARISON between candidate's answer and reference answer you generated
+- Specify what technical points ARE covered, what are MISSING, what are INCORRECT
+- Do not skip any question in referenceAnswers array
+
+Evaluate now.`
+  }
