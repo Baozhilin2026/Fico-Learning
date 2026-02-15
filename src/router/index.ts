@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import { unifiedTTSService } from '@/services/unifiedTTSService'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -61,6 +62,9 @@ const router = createRouter({
 // Navigation guard for authentication
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
+
+  // Stop any TTS playback when navigating
+  unifiedTTSService.stop()
 
   // Initialize auth store if not already initialized
   if (!authStore.state.loginTime) {

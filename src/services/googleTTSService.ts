@@ -13,6 +13,7 @@ interface GoogleTTSError {
 class GoogleTTSService {
   private audio: HTMLAudioElement | null = null
   private isPlaying = false
+  private currentAudioUrl: string | null = null
 
   // API endpoint - will be proxied through Vercel
   private apiEndpoint = '/api/tts'
@@ -61,6 +62,7 @@ class GoogleTTSService {
   }
 
   async speak(text: string, settings: TTSSettings): Promise<void> {
+    // Stop any current playback and clean up
     this.stop()
 
     const languageCode = this.accentLangMap[settings.accent]
@@ -68,6 +70,8 @@ class GoogleTTSService {
     const voice = this.selectVoice(settings.accent, settings.gender)
     const speakingRate = this.getSpeakingRate(1.0, settings.rate)
     const pitch = this.getPitch(settings.pitch || 1.0)
+
+    console.log('[Google TTS] Starting playback:', { text: text.substring(0, 30), voice, languageCode })
 
     try {
       const response = await fetch(this.apiEndpoint, {
@@ -102,23 +106,27 @@ class GoogleTTSService {
 
       const audioBlob = new Blob([arrayBuffer], { type: 'audio/mp3' })
       const audioUrl = URL.createObjectURL(audioBlob)
+      this.currentAudioUrl = audioUrl
 
       return new Promise((resolve, reject) => {
         this.audio = new Audio(audioUrl)
 
         this.audio.onended = () => {
+          console.log('[Google TTS] Playback ended')
           this.isPlaying = false
-          URL.revokeObjectURL(audioUrl)
+          this.cleanupAudio()
           resolve()
         }
 
-        this.audio.onerror = () => {
+        this.audio.onerror = (e) => {
+          console.error('[Google TTS] Playback error:', e)
           this.isPlaying = false
-          URL.revokeObjectURL(audioUrl)
+          this.cleanupAudio()
           reject(new Error('Audio playback failed'))
         }
 
         this.audio.oncanplay = () => {
+          console.log('[Google TTS] Audio ready, starting playback')
           this.isPlaying = true
           this.audio?.play().catch(reject)
         }
@@ -127,7 +135,7 @@ class GoogleTTSService {
       })
 
     } catch (error) {
-      console.error('Google TTS error:', error)
+      console.error('[Google TTS] Error:', error)
       throw error
     }
   }
@@ -148,7 +156,20 @@ class GoogleTTSService {
     if (this.audio) {
       this.audio.pause()
       this.audio.currentTime = 0
-      this.isPlaying = false
+      // Remove event listeners to prevent any further callbacks
+      this.audio.onended = null
+      this.audio.onerror = null
+      this.audio.oncanplay = null
+      this.audio = null
+    }
+    this.isPlaying = false
+    this.cleanupAudio()
+  }
+
+  private cleanupAudio(): void {
+    if (this.currentAudioUrl) {
+      URL.revokeObjectURL(this.currentAudioUrl)
+      this.currentAudioUrl = null
     }
   }
 
