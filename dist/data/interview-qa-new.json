@@ -1,0 +1,759 @@
+{
+  "documentName": "SAP FICO Interview Questions - 100 Questions by Scenario",
+  "parts": [
+    {
+      "partId": "SCENARIO1",
+      "partName": "General SAP FICO Interview Questions  通用SAP FICO面试题",
+      "questions": [
+        {
+          "questionNo": "Q1",
+          "questionContent": "What is SAP FICO, and how does it integrate with other SAP modules?",
+          "questionContentCN": "什么是SAP FICO？它如何与SAP其他模块集成？",
+          "sampleAnswer": "SAP FICO stands for Financial Accounting (FI) and Controlling\n(CO). It's a core module in SAP ERP that manages financial transactions and\ninternal reporting.\n\nFI (Financial Accounting): Deals with external reporting like balance\nsheets, P&L statements, tax, etc.\n\nCO (Controlling): Focuses on internal cost tracking, budgeting, and\nprofitability analysis.\n\nIntegration Examples:\n\nMM (Materials Management): Integration through GR/IR accounts when goods\nare received or invoiced.\n\nSD (Sales & Distribution): Revenue postings when invoices are raised.\n\nPP (Production Planning): Cost tracking of production processes.\n\nHCM (Human Capital Management): Payroll results are posted to FI.",
+          "sampleAnswerCN": "SAP FICO是财务会计（FI）和管理会计（CO）的统称，是SAP\nERP的核心模块，用于管理财务交易与内部报表编制。\n\n财务会计（FI）：负责资产负债表、利润表、税务等外部财务报告。\n\n管理会计（CO）：聚焦企业内部成本跟踪、预算编制和盈利能力分析。\n\n集成示例：\n\n物料管理模块（MM）：收货或收票时，通过GR/IR清账科目实现集成；\n\n销售与分销模块（SD）：开具发票时自动进行收入过账；\n\n生产计划模块（PP）：对生产流程进行成本跟踪；\n\n人力资本管理模块（HCM）：薪资核算结果过账至财务会计模块。"
+        },
+        {
+          "questionNo": "Q2",
+          "questionContent": "Explain the difference between SAP FI and SAP CO？",
+          "questionContentCN": "阐述SAP财务会计（FI）与管理会计（CO）的区别。",
+          "sampleAnswer": "SAP FI\n\n用途：External financial reporting  外部财务报告\n\n核心重点：Legal compliance (balance sheet, P&L)\n法定合规，如编制资产负债表、利润表\n\n集成对象：MM, SD, HCM\n\n应用示例： Vendor payments, customer billing  供应商付款、客户开票\n\nSAP CO\n\n用途： Internal cost tracking and control  内部成本跟踪与控制\n\n核心重点：Profitability, cost centers, budgeting\n盈利能力、成本中心、预算管理\n\n集成对象：FI, PP, SD\n\n应用示例：Cost allocation, variance analysis  成本分配、差异分析",
+          "sampleAnswerCN": ""
+        },
+        {
+          "questionNo": "Q3",
+          "questionContent": "What is a Chart of Accounts (COA) in SAP FI?",
+          "questionContentCN": "SAP FI中，会计科目表（COA）指的是什么？",
+          "sampleAnswer": "A Chart of Accounts (COA) is a list of all general ledger\naccounts used by one or more company codes. It provides the structure for\ncategorizing financial transactions.\n\nTypes of COA:\n\nOperating COA: Used for daily postings.\n\nGroup COA: Used for consolidation.\n\nCountry-specific COA: Used to meet local legal reporting needs.\n\nEach G/L account in the COA contains details like account type, tax\ncategory, etc.",
+          "sampleAnswerCN": "会计科目表（COA）是一个或多个公司代码所使用的全部总分类账科目的清单，为\n财务交易的分类核算提供框架。\n\n会计科目表类型：\n\n运营会计科目表：用于日常业务过账；\n\n集团会计科目表：用于集团合并报表编制；\n\n国家特定会计科目表：满足当地法定报告要求。\n\n会计科目表中的每个总分类账科目均包含科目类型、税务类别等详细信息。"
+        },
+        {
+          "questionNo": "Q4",
+          "questionContent": "What is the difference between a company and a company code in SAP FI?",
+          "questionContentCN": "SAP FI中，公司与公司代码的区别是什么？",
+          "sampleAnswer": "Company（公司）\n\n定义: The highest organizational unit for consolidation\n集团合并的最高组织单元\n\n用途: Consolidation of multiple company codes  合并多个公司代码的财务数据\n\n示例：Holding company (e.g., ABC Group)  控股公司，如ABC集团\n\nCompany Code（公司代码）\n\n定义：Smallest unit for which financial statements are created\n可编制财务报表的最小组织单元\n\n用途: Represents an independent legal accounting unit\n代表独立的法定会计主体\n\n示例：Subsidiaries (e.g., ABC India Pvt Ltd, ABC US Inc)\n子公司，如ABC印度私人有限公司、ABC美国分公司",
+          "sampleAnswerCN": "Company（公司）\n\n定义: The highest organizational unit for consolidation\n集团合并的最高组织单元\n\n用途: Consolidation of multiple company codes  合并多个公司代码的财务数据\n\n示例：Holding company (e.g., ABC Group)  控股公司，如ABC集团\n\nCompany Code（公司代码）\n\n定义：Smallest unit for which financial statements are created\n可编制财务报表的最小组织单元\n\n用途: Represents an independent legal accounting unit\n代表独立的法定会计主体\n\n示例：Subsidiaries (e.g., ABC India Pvt Ltd, ABC US Inc)\n子公司，如ABC印度私人有限公司、ABC美国分公司"
+        },
+        {
+          "questionNo": "Q5",
+          "questionContent": "What is the purpose of a fiscal year variant in SAP?",
+          "questionContentCN": "SAP中会计年度变式的用途是什么？",
+          "sampleAnswer": "A Fiscal Year Variant defines the accounting year in terms of\nperiods and their start/end dates.\n\nTypes:\n\nCalendar Year: Jan to Dec (e.g., 12 periods = 12 months).\n\nNon-calendar Year: Can start in any month (e.g., Apr to Mar).\n\nCan include special periods (up to 4) for year-end adjustments.\n\nUsed to match an organization's financial reporting cycle.",
+          "sampleAnswerCN": "会计年度变式用于定义会计年度的期间划分及各期间的起止日期。\n\n类型：\n\n日历年：1月至12月（如12个期间对应12个自然月）；\n\n非日历年：可从任意月份开始（如4月至次年3月）。\n\n会计年度变式可包含最多4个特殊期间，用于年末调整，其设置可匹配企业的财务报告周\n期。"
+        },
+        {
+          "questionNo": "Q6",
+          "questionContent": "What are posting keys in SAP FI?",
+          "questionContentCN": "SAP FI中的过账码指的是什么？",
+          "sampleAnswer": "A Posting Key is a two-digit numeric code that determines:\n\nAccount type (Customer, Vendor, G/L)\n\nDebit or Credit posting\n\nField status (which fields are required/optional during entry)\n\nExample:\n\n40 - Debit entry for G/L\n\n50 - Credit entry for G/L\n\n01 - Customer Invoice\n\nThey streamline and control the posting process in journal entries.",
+          "sampleAnswerCN": "过账码是两位数字编码，用于确定以下内容：\n\n科目类型（客户、供应商、总分类账）；\n\n借贷方向；\n\n字段状态（录入时哪些字段为必录/可选）。\n\n示例：\n\n40 - 总分类账借方过账；\n\n50 - 总分类账贷方过账；\n\n01 - 客户发票。\n\n过账码可简化并管控记账凭证的过账流程。"
+        },
+        {
+          "questionNo": "Q7",
+          "questionContent": "What are field status groups, and how are they used in SAP FI?",
+          "questionContentCN": "SAP FI中的字段状态组是什么？如何使用？",
+          "sampleAnswer": "Field Status Groups control the appearance\n(optional/required/suppressed) of fields during G/L account posting.\n\nAssigned in:\n\nG/L account master record (in company code section)\n\nFor example:\n\nFor a cash account, the bank details field may be required.\n\nFor a revenue account, the cost center field may be optional.\n\nHelps ensure data accuracy and relevance during transaction posting.",
+          "sampleAnswerCN": "字段状态组用于管控总分类账科目过账时各字段的显示状态（可选/必录/隐藏）\n。\n\n分配位置：\n\n总分类账科目主数据的公司代码层。\n\n示例：\n\n现金科目中，银行明细字段设为必录；\n\n收入科目中，成本中心字段设为可选。\n\n字段状态组可确保交易过账时数据的准确性和相关性。"
+        },
+        {
+          "questionNo": "Q8",
+          "questionContent": "What is the purpose of document types in SAP FI?",
+          "questionContentCN": "SAP FI中凭证类型的用途是什么？",
+          "sampleAnswer": "A Document Type determines:\n\nThe type of transaction (invoice, payment, etc.)\n\nThe number range used\n\nThe account types allowed\n\nExamples:\n\nSA - General Ledger\n\nKR - Vendor Invoice\n\nDR - Customer Invoice\n\nThis helps categorize and control financial transactions.",
+          "sampleAnswerCN": "凭证类型用于确定：\n\n交易类型（发票、付款等）；\n\n使用的编号范围；\n\n允许过账的科目类型。\n\n示例：\n\nSA - 总分类账凭证；\n\nKR - 供应商发票；\n\nDR - 客户发票。\n\n凭证类型可对财务交易进行分类和管控。"
+        },
+        {
+          "questionNo": "Q9",
+          "questionContent": "Explain the concept of parallel currencies in SAP FI？",
+          "questionContentCN": "阐述SAP FI中平行货币的概念。",
+          "sampleAnswer": "Parallel currencies allow a company code to record\ntransactions in more than one currency.\n\nCurrency Types:\n\nLocal currency: Based on company code country\n\nGlobal currency: For group reporting (usually USD or EUR)\n\nHard/Index currency: Used in certain countries for inflation accounting\n\nThis enables multi-national companies to comply with both local and group\nreporting requirements.",
+          "sampleAnswerCN": "平行货币允许一个公司代码以多种货币记录交易。\n\n货币类型：\n\n本位币：根据公司代码所属国家确定；\n\n集团货币：用于集团报告（通常为美元或欧元）；\n\n硬货币/指数货币：部分国家用于通货膨胀会计核算。\n\n平行货币可满足跨国企业的本地和集团双重报告要求。"
+        },
+        {
+          "questionNo": "Q10",
+          "questionContent": "What is a special G/L transaction in SAP FI?",
+          "questionContentCN": "SAP FI中的特殊总分类账交易指的是什么？",
+          "sampleAnswer": "Special G/L Transactions are used for postings that are not\nstandard like:\n\nDown payments\n\nBills of exchange\n\nGuarantees\n\nThese postings are managed separately from normal items but are still tied\nto the customer/vendor accounts.\n\nThey have:\n\nSpecial G/L indicator\n\nSeparate reconciliation accounts\n\nExample: Posting a down payment for a vendor before receiving\ngoods/services.",
+          "sampleAnswerCN": "特殊总分类账交易用于核算非标准的过账业务，例如：\n\n预付款、汇票、担保。\n\n此类过账与常规项目分开管理，但仍关联至对应的客户/供应商科目，其特征为：\n\n带有特殊总分类账标识；\n\n拥有独立的统驭科目。\n\n示例：向供应商预付货款，尚未收到货物/服务时的过账。"
+        }
+      ]
+    },
+    {
+      "partId": "SCENARIO2",
+      "partName": "Automatic Payment Program (APP) Interview",
+      "questions": [
+        {
+          "questionNo": "Q11",
+          "questionContent": "What is the Automatic Payment Program (APP) in SAP FI?",
+          "questionContentCN": "SAP FI中的自动付款程序（APP）是什么？",
+          "sampleAnswer": "The Automatic Payment Program (APP) is a tool in SAP FI used\nto automate vendor/customer invoice payments. It selects open invoices,\nprocesses payments, and generates payment documents and files for bank\ntransfers or cheques.\n\nTransaction Code: F110\n\nBenefits:\n\nSaves time\n\nMinimizes errors\n\nSupports mass payments\n\nAutomates selection, scheduling, and execution of payments",
+          "sampleAnswerCN": "自动付款程序（APP）是SAP\nFI中的工具，用于实现供应商/客户发票付款的自动化，可筛选未清发票、处理付款业务\n，并生成银行转账或支票所需的付款凭证及文件。\n\n事务代码：F110\n\n优势：\n\n节省时间、减少错误、支持批量付款、实现付款的筛选、计划和执行自动化。"
+        },
+        {
+          "questionNo": "Q12",
+          "questionContent": "What are the main steps in configuring APP?",
+          "questionContentCN": "配置自动付款程序（APP）的主要步骤有哪些？",
+          "sampleAnswer": "APP configuration is done via T-code: FBZP and includes:\n\nAll company codes: Define paying company codes\n\nPaying company codes: Define payment parameters\n\nPayment methods in country: Set up methods like cheque, transfer, etc.\n\nPayment methods in company code: Assign payment methods at company code\nlevel\n\nBank determination: Define ranking order, bank accounts, and charges\n\nHouse banks: Define bank accounts used for payments\n\nForms: Define print program/form for checks or payment files",
+          "sampleAnswerCN": "自动付款程序通过事务代码FBZP配置，步骤包括：\n\n所有公司代码：定义付款公司代码；\n\n付款公司代码：定义付款参数；\n\n国家层面付款方式：配置支票、转账等付款方式；\n\n公司代码层面付款方式：在公司代码层分配付款方式；\n\n银行确定：定义银行优先级、银行账户及手续费规则；\n\n内部银行：定义用于付款的银行账户；\n\n表单：定义支票或付款文件的打印程序/表单。"
+        },
+        {
+          "questionNo": "Q13",
+          "questionContent": "What are the prerequisites for running APP in SAP FI?",
+          "questionContentCN": "在SAP FI中运行自动付款程序（APP）的前提条件有哪些？",
+          "sampleAnswer": "Before running APP:\n\n✅ Vendor/customer master records should have:\n\nPayment terms\n\nPayment methods\n\nBank details\n\nReconciliation account\n\n✅ Open items should:\n\nBe due for payment\n\nNot be blocked for payment\n\n✅ System configurations (FBZP) must be complete.",
+          "sampleAnswerCN": "运行自动付款程序前需满足：\n\n✅ 供应商/客户主数据维护以下信息：付款条件、付款方式、银行明细、统驭科目；\n\n✅ 未清项状态：已到付款日期、未被设置付款冻结；\n\n✅ 系统配置（FBZP）已完成。"
+        },
+        {
+          "questionNo": "Q14",
+          "questionContent": "What are the different types of payment methods in APP?",
+          "questionContentCN": "自动付款程序（APP）中有哪些不同的付款方式？",
+          "sampleAnswer": "Common payment methods:\n\nC - Cheque\n\nT - Bank transfer (EFT/NEFT/RTGS)\n\nD - Direct Debit\n\nW - Bill of Exchange\n\nE - Electronic payment formats (SEPA, ACH, etc.)\n\nYou can define custom codes like \"Z1\" for country-specific needs.",
+          "sampleAnswerCN": "常见付款方式：\n\nC - 支票；\n\nT - 银行转账（电子资金转账/全国电子资金转账/实时全额清算）；\n\nD - 直接借记；\n\nW - 汇票；\n\nE - 电子支付格式（单一欧元支付区、自动清算所等）。\n\n可根据国家特定需求定义自定义编码，如Z1。"
+        },
+        {
+          "questionNo": "Q15",
+          "questionContent": "What is the difference between a payment run and a proposal run in APP?",
+          "questionContentCN": "自动付款程序（APP）中，付款运行与提议运行的区别是什么？",
+          "sampleAnswer": "Proposal Run（提议运行）\n\n用途：Simulates the payment without posting（模拟付款，不产生过账）\n\n是否可冲销：Yes, can be edited or deleted（是，可编辑/删除）\n\n使用场景：Review selected documents（核对筛选出的凭证）\n\nPayment Run（付款运行）\n\n用途：Executes the actual payment（执行实际付款）\n\n是否可冲销：No, creates financial postings（否，会生成财务过账）\n\n使用场景：Final step after proposal review（提议运行核对后的最终步骤）",
+          "sampleAnswerCN": "Proposal Run（提议运行）\n\n用途：Simulates the payment without posting（模拟付款，不产生过账）\n\n是否可冲销：Yes, can be edited or deleted（是，可编辑/删除）\n\n使用场景：Review selected documents（核对筛选出的凭证）\n\nPayment Run（付款运行）\n\n用途：Executes the actual payment（执行实际付款）\n\n是否可冲销：No, creates financial postings（否，会生成财务过账）\n\n使用场景：Final step after proposal review（提议运行核对后的最终步骤）"
+        },
+        {
+          "questionNo": "Q16",
+          "questionContent": "How does bank determination work in APP?",
+          "questionContentCN": "自动付款程序（APP）中，银行确定的工作原理是什么？",
+          "sampleAnswer": "Bank determination decides which bank account will be used for\na payment.\n\nConfiguration includes:\n\nRanking Order: Priority of banks for payment\n\nBank Accounts: House banks linked to G/L accounts\n\nAvailable Amount: Minimum balance needed\n\nCharges: Defines who pays transaction fees (payer/payee)\n\nSet via: FBZP > Bank determination",
+          "sampleAnswerCN": "银行确定用于判定付款所使用的银行账户，其配置内容包括：\n\n优先级：付款银行的先后顺序；\n\n银行账户：关联总分类账科目的内部银行；\n\n可用金额：账户所需的最低余额；\n\n手续费：定义交易手续费的承担方（付款方/收款方）。\n\n配置路径：FBZP>银行确定。"
+        },
+        {
+          "questionNo": "Q17",
+          "questionContent": "What are common errors encountered in APP, and how do you troubleshoot",
+          "questionContentCN": "自动付款程序（APP）中常见的错误有哪些？如何排查解决？",
+          "sampleAnswer": "错误/排查解决方法\n\nMissing bank details（银行明细缺失）/ Maintain bank details in\nvendor/customer master（在供应商/客户主数据中维护银行明细）\n\nNo payment method assigned（未分配付款方式）/ Assign payment method in\nmaster data（在主数据中分配付款方式）\n\nPosting blocked（过账被冻结）/ Remove payment block on\ninvoice（取消发票的付款冻结）\n\nNo open items selected（未筛选出未清项）/Ensure due date and selection\ncriteria match（确保付款日期与筛选条件匹配）\n\nPayment method not defined in config（配置中未定义付款方式）/ Check FBZP\npayment method settings（检查FBZP中的付款方式配置）\n\nHouse bank not found（未找到内部银行）/Check bank determination and master\ndata（检查银行确定配置及主数据）",
+          "sampleAnswerCN": "错误/排查解决方法\n\nMissing bank details（银行明细缺失）/ Maintain bank details in\nvendor/customer master（在供应商/客户主数据中维护银行明细）\n\nNo payment method assigned（未分配付款方式）/ Assign payment method in\nmaster data（在主数据中分配付款方式）\n\nPosting blocked（过账被冻结）/ Remove payment block on\ninvoice（取消发票的付款冻结）\n\nNo open items selected（未筛选出未清项）/Ensure due date and selection\ncriteria match（确保付款日期与筛选条件匹配）\n\nPayment method not defined in config（配置中未定义付款方式）/ Check FBZP\npayment method settings（检查FBZP中的付款方式配置）\n\nHouse bank not found（未找到内部银行）/Check bank determination and master\ndata（检查银行确定配置及主数据）"
+        },
+        {
+          "questionNo": "Q18",
+          "questionContent": "What is the significance of house banks in APP?",
+          "questionContentCN": "自动付款程序（APP）中，内部银行的重要性是什么？",
+          "sampleAnswer": "A House Bank represents your company's bank in SAP. It stores:\n\nBank account number\n\nBank key (SWIFT, IFSC, etc.)\n\nG/L account linking\n\nPayment medium settings\n\nUsed to:\n\nSelect bank during payment\n\nGenerate payment documents\n\nInterface with external banks\n\nConfigured via T-code FI12 or FBZP",
+          "sampleAnswerCN": "内部银行是企业在SAP中维护的自身银行账户信息，存储内容包括：银行账号、银\n行代码（环球银行金融电信协会代码、印度金融系统代码等）、关联的总分类账科目、\n付款介质设置。\n\n内部银行的用途：\n\n付款时选择对应银行、生成付款凭证、与外部银行对接。\n\n配置事务代码：FI12或FBZP。"
+        },
+        {
+          "questionNo": "Q19",
+          "questionContent": "What are the different payment mediums supported in APP?",
+          "questionContentCN": "自动付款程序（APP）支持哪些不同的付款介质？",
+          "sampleAnswer": "Common payment mediums:\n\nPrint forms (e.g., check printing)\n\nDME (Data Medium Exchange) - generates files for electronic transfer\n\nSEPA XML, ACH, BAI2\n\nIDOC formats for integration with third-party systems\n\nPayment Advice Notes (PDF or email)\n\nCustomization can be done using DMEE Tree and F110.",
+          "sampleAnswerCN": "常见付款介质：\n\n打印表单（如支票打印）；\n\n数据介质交换（DME）：生成电子转账文件；\n\n单一欧元支付区XML格式、自动清算所格式、BAI2格式；\n\n用于与第三方系统集成的IDOC格式；\n\n付款通知（PDF或邮件形式）。\n\n可通过DMEE树和F110对付款介质进行自定义配置。"
+        },
+        {
+          "questionNo": "Q20",
+          "questionContent": "How do you configure payment terms in APP?",
+          "questionContentCN": "如何在自动付款程序（APP）中配置付款条件？",
+          "sampleAnswer": "Steps:\n\nDefine payment terms: T-code OBB8\n\nDefine due date rules (e.g., Net 30, 2% discount if paid in 10 days)\n\nAssign to vendors/customers: Maintain in master data\n\nUsed during invoice posting: Due dates and discounts calculated\nautomatically\n\nInfluences APP selection: Items become eligible based on due date",
+          "sampleAnswerCN": "配置步骤：\n\n1. 定义付款条件：事务代码OBB8；\n\n2. 定义到期日规则（如净30天付款、10天内付款享受2%折扣）；\n\n3. 分配至供应商/客户：在主数据中维护；\n\n发票过账时，系统会自动计算付款到期日和折扣，付款条件会影响自动付款程序的筛选\n结果：仅到期的未清项会被纳入付款范围。"
+        }
+      ]
+    },
+    {
+      "partId": "SCENARIO3",
+      "partName": "Electronic Bank Statement (EBS) Interview",
+      "questions": [
+        {
+          "questionNo": "Q21",
+          "questionContent": "What is the Electronic Bank Statement (EBS) in SAP FI?",
+          "questionContentCN": "SAP FI中的电子银行对账单（EBS）是什么？",
+          "sampleAnswer": "EBS is an automated tool in SAP that allows banks to send\ndaily or periodic bank statements in electronic format (e.g., MT940, BAI,\nCAMT). These statements are imported into SAP and automatically reconciled\nwith internal bank ledger entries, minimizing manual effort.",
+          "sampleAnswerCN": "电子银行对账单（EBS）是SAP中的自动化工具，支持银行以电子格式（如MT940、\nBAI、CAMT）发送每日或定期银行对账单，该对账单可导入SAP系统，并与企业内部银行\n总账记录自动对账，大幅减少人工操作。"
+        },
+        {
+          "questionNo": "Q22",
+          "questionContent": "How is EBS configured in SAP?",
+          "questionContentCN": "如何在SAP中配置电子银行对账单（EBS）？",
+          "sampleAnswer": "EBS configuration involves several key steps:\n\nDefine House Bank and Account ID (T-code: FI12)\n\nAssign Bank Statement Format (e.g., MT940, BAI, CAMT)\n\nDefine Transaction Types (e.g., debit/credit indicators)\n\nAssign Posting Rules via T-code: OT83\n\nDefine Account Symbols (OT59) to map to G/L accounts\n\nCreate Interpretation Algorithms (for identifying postings)\n\nSet Posting Parameters in transaction OBPM1 or FF_5",
+          "sampleAnswerCN": "电子银行对账单的配置包含以下关键步骤：\n\n1. 定义内部银行和账户ID（事务代码FI12）；\n\n2. 分配银行对账单格式（如MT940、BAI、CAMT）；\n\n3. 定义交易类型（如借方/贷方标识）；\n\n4. 分配过账规则（事务代码OT83）；\n\n5. 定义科目符号（OT59），并映射至总分类账科目；\n\n6. 创建解析算法（用于识别过账对象）；\n\n7. 在事务代码OBPM1或FF_5中设置过账参数。"
+        },
+        {
+          "questionNo": "Q23",
+          "questionContent": "What are the key components of an Electronic Bank Statement?",
+          "questionContentCN": "电子银行对账单（EBS）的核心组成部分有哪些？",
+          "sampleAnswer": "Opening Balance\n\nLine Items:\n\nTransaction Type (e.g., cheque, wire transfer)\n\nAmount\n\nDate\n\nReference Number\n\nCustomer/Vendor account info\n\nClosing Balance\n\nEach item is matched against SAP documents using rules and logic.",
+          "sampleAnswerCN": "期初余额；\n\n行项目：包含交易类型（如支票、电汇）、金额、交易日期、参考编号、客户/供应商账\n户信息；\n\n期末余额。\n\n系统会通过预设规则和逻辑，将每个行项目与SAP系统中的凭证进行匹配。"
+        },
+        {
+          "questionNo": "Q24",
+          "questionContent": "What is the difference between EBS and Manual Bank Statement (MBS)?",
+          "questionContentCN": "电子银行对账单（EBS）与手工银行对账单（MBS）的区别是什么？",
+          "sampleAnswer": "EBS (Electronic Bank Statement)\n\n录入来源：File from bank (e.g., MT940, BAI)（银行提供的电子文件）\n\n自动化程度：Fully automated（完全自动化）\n\n过账与对账：Automatic using posting rules（通过过账规则自动过账、对账）\n\n效率：High - Suitable for large volumes（效率高，适用于大交易量）\n\nMBS (Manual Bank Statement)\n\n录入来源：Manually entered by user（用户手工录入）\n\n自动化程度：Manual data entry（手工录入数据）\n\n过账与对账：Manual matching and posting（手工匹配并过账）\n\n效率：Low - Time-consuming（效率低，耗时）",
+          "sampleAnswerCN": ""
+        },
+        {
+          "questionNo": "Q25",
+          "questionContent": "What is the role of interpretation algorithms in EBS?",
+          "questionContentCN": "电子银行对账单（EBS）中，解析算法的作用是什么？",
+          "sampleAnswer": "Interpretation algorithms help SAP interpret which document or\naccount should be posted for each bank statement line.\n\nExamples:\n\n001 - Posting based on document number in note to payee\n\n015 - Search for reference in text field\n\n019 - Post using bank account number and customer/vendor\n\nConfigured in transaction OT83.",
+          "sampleAnswerCN": "解析算法用于帮助SAP系统识别银行对账单的每个行项目应过账至哪个凭证或科目\n。\n\n示例：\n\n001 - 根据付款附言中的凭证编号过账；\n\n015 - 在文本字段中搜索参考信息进行匹配；\n\n019 - 通过银行账号和客户/供应商信息进行过账。\n\n解析算法在事务代码OT83中配置。"
+        },
+        {
+          "questionNo": "Q26",
+          "questionContent": "How do you define bank statement posting rules in SAP?",
+          "questionContentCN": "如何在SAP中定义银行对账单过账规则？",
+          "sampleAnswer": "Go to T-code: OT83\n\nDefine a transaction type (e.g., withdrawal, deposit)\n\nAssign posting rule (clearing with open items, G/L posting, etc.)\n\nMap with account symbols to determine G/L accounts\n\nLink interpretation algorithms if needed\n\nEach rule dictates how SAP should interpret and post a bank transaction.",
+          "sampleAnswerCN": "1. 进入事务代码OT83；\n\n2. 定义交易类型（如取款、存款）；\n\n3. 分配过账规则（如清账未清项、总分类账过账等）；\n\n4. 与科目符号映射，确定对应的总分类账科目；\n\n5. 必要时关联解析算法。\n\n每条过账规则均规定了SAP系统解析和过账银行交易的方式。"
+        },
+        {
+          "questionNo": "Q27",
+          "questionContent": "What is the significance of bank reconciliation in SAP FI?",
+          "questionContentCN": "SAP FI中，银行对账的重要性是什么？",
+          "sampleAnswer": "Bank reconciliation ensures that bank balances in SAP match\nactual balances from bank statements. It helps:\n\nDetect discrepancies or fraud\n\nIdentify unposted transactions (e.g., fees, interest)\n\nTrack uncleared checks or deposits\n\nMaintain audit trail\n\nEBS enables automatic reconciliation, improving speed and accuracy.",
+          "sampleAnswerCN": "银行对账用于确保SAP系统中的银行余额与银行对账单的实际余额一致，其作用包\n括：\n\n发现账实差异或欺诈行为；\n\n识别未过账的交易（如银行手续费、利息）；\n\n跟踪未兑现的支票或未到账的存款；\n\n保留审计轨迹。\n\n电子银行对账单可实现自动对账，提升对账的速度和准确性。"
+        },
+        {
+          "questionNo": "Q28",
+          "questionContent": "What are common errors encountered in EBS, and how do you resolve them?",
+          "questionContentCN": "电子银行对账单（EBS）中常见的错误有哪些？如何解决？",
+          "sampleAnswer": "错误/解决方法\n\nIncorrect/missing G/L accounts（总分类账科目错误/缺失）/ Check account\nsymbol mapping (OT59)（检查科目符号映射，事务代码OT59）\n\nPosting rule not found（未找到过账规则）/ Ensure rule is defined in\nOT83（确保在OT83中定义了对应的过账规则）\n\nDocument not cleared（凭证未清账）/ Use interpretation algorithm for\nreference（通过解析算法匹配参考信息）\n\nWrong amounts posted（过账金额错误）/ Validate bank configuration and file\nstructure（验证银行配置和电子文件结构）\n\nReconciliation not working（对账失败）/ Check customer/vendor master data\nand text fields（检查客户/供应商主数据及文本字段）\n\n补充（英）：Always validate file format and mapping during import (T-code:\nFF_5)\n\n（中）：导入电子银行对账单时，需始终验证文件格式和映射关系（事务代码FF_5）",
+          "sampleAnswerCN": "错误/解决方法\n\nIncorrect/missing G/L accounts（总分类账科目错误/缺失）/ Check account\nsymbol mapping (OT59)（检查科目符号映射，事务代码OT59）\n\nPosting rule not found（未找到过账规则）/ Ensure rule is defined in\nOT83（确保在OT83中定义了对应的过账规则）\n\nDocument not cleared（凭证未清账）/ Use interpretation algorithm for\nreference（通过解析算法匹配参考信息）\n\nWrong amounts posted（过账金额错误）/ Validate bank configuration and file\nstructure（验证银行配置和电子文件结构）\n\nReconciliation not working（对账失败）/ Check customer/vendor master data\nand text fields（检查客户/供应商主数据及文本字段）\n\n补充（英）：Always validate file format and mapping during import (T-code:\nFF_5)\n\n（中）：导入电子银行对账单时，需始终验证文件格式和映射关系（事务代码FF_5）"
+        },
+        {
+          "questionNo": "Q29",
+          "questionContent": "What are the different bank statement formats supported in SAP (MT940,",
+          "questionContentCN": "SAP支持哪些不同的银行对账单格式（MT940、BAI、CAMT）？",
+          "sampleAnswer": "SAP supports several standard formats:\n\nMT940 (SWIFT) - Widely used in Europe\n\nBAI / BAI2 (Bank Administration Institute) - Popular in the U.S.\n\nCAMT.053 / CAMT.054 - ISO 20022 XML formats (modern, detailed structure)\n\nMulticash / CSV / Custom Formats - With custom parsing\n\nChoose based on bank and country standards.",
+          "sampleAnswerCN": "SAP支持多种标准银行对账单格式：\n\nMT940（环球银行金融电信协会格式）：在欧洲广泛使用；\n\nBAI/BAI2（银行管理协会格式）：在美国主流使用；\n\nCAMT.053/CAMT.054：ISO 20022标准的XML格式（现代化，结构详细）；\n\n多现金格式/CSV格式/自定义格式：支持自定义解析。\n\n可根据合作银行和所在国家的标准选择对应格式。"
+        },
+        {
+          "questionNo": "Q30",
+          "questionContent": "How does SAP handle automatic reconciliation of bank statements?",
+          "questionContentCN": "SAP如何处理银行对账单的自动对账？",
+          "sampleAnswer": "SAP uses the following mechanisms for automatic reconciliation:\n\nUpload bank file via FF_5\n\nBank file lines are read and matched using:\n\nPosting rules\n\nInterpretation algorithms\n\nAccount symbols\n\nOpen items are cleared based on matching reference (e.g., invoice number)\n\nReconciled transactions are posted to clearing accounts\n\nUnmatched items go to suspense or clearing G/L accounts for manual\nresolution\n\nResults can be reviewed in FEBAN or FEBA (bank statement processing).",
+          "sampleAnswerCN": "SAP通过以下机制实现银行对账单自动对账：\n\n1. 通过事务代码FF_5上传银行电子文件；\n\n2. 系统通过过账规则、解析算法、科目符号读取并匹配银行文件的行项目；\n\n3. 根据匹配的参考信息（如发票编号）清账未清项；\n\n4. 已对账的交易过账至清账科目；\n\n5. 未匹配的行项目转入暂记科目或清账总分类账科目，等待手工处理。\n\n可在事务代码FEBAN或FEBA（银行对账单处理）中查看对账结果。"
+        }
+      ]
+    },
+    {
+      "partId": "SCENARIO4",
+      "partName": "Dunning Process Interview Questions  催款流程面试题",
+      "questions": [
+        {
+          "questionNo": "Q31",
+          "questionContent": "What is the Dunning process in SAP FI?",
+          "questionContentCN": "SAP FI中的催款流程指的是什么？",
+          "sampleAnswer": "The Dunning process is used to remind customers of overdue\npayments. SAP can send Dunning letters automatically at scheduled intervals\nbased on customer account status.\n\nIt includes:\n\nIdentifying overdue invoices\n\nAssigning Dunning levels\n\nCalculating interest/fees (if any)\n\nGenerating and sending Dunning notices",
+          "sampleAnswerCN": "催款流程用于向客户提醒逾期未付的款项，SAP可根据客户账户状态，按预设时间\n间隔自动发送催款函，流程包含：\n\n识别逾期发票、分配催款级别、计算催款利息/手续费（如有）、生成并发送催款通知。"
+        },
+        {
+          "questionNo": "Q32",
+          "questionContent": "What are the key steps involved in configuring Dunning?",
+          "questionContentCN": "配置催款流程的关键步骤有哪些？",
+          "sampleAnswer": "Configuration steps (T-code: FBMP):\n\nDefine Dunning Areas (optional - for organizational segmentation)\n\nDefine Dunning Procedure (core settings: levels, intervals, charges)\n\nAssign Dunning Procedures to customer master data\n\nDefine Dunning Texts (for each level)\n\nConfigure Dunning Forms (SAPScript/SmartForms)\n\nSchedule Dunning Run (T-code: F150)",
+          "sampleAnswerCN": "配置步骤（事务代码FBMP）：\n\n1. 定义催款范围（可选，用于企业内部组织细分）；\n\n2. 定义催款程序（核心设置：催款级别、催款间隔、催款手续费）；\n\n3. 将催款程序分配至客户主数据；\n\n4. 定义催款文本（为每个催款级别配置对应文本）；\n\n5. 配置催款表单（SAP脚本/智能表单）；\n\n6. 计划催款运行（事务代码F150）。"
+        },
+        {
+          "questionNo": "Q33",
+          "questionContent": "What are Dunning levels, and how do they work?",
+          "questionContentCN": "催款级别是什么？其工作机制如何？",
+          "sampleAnswer": "Dunning Levels represent the severity or number of reminders\nsent to a customer.\n\nLevel 0 = No dunning (not overdue)\n\nLevel 1 = First reminder (e.g., 10 days overdue)\n\nLevel 2 = Stronger reminder (e.g., 20 days)\n\nLevel 3 = Final warning/legal action (e.g., 30+ days)\n\nEach level can have different texts, charges, and tone.",
+          "sampleAnswerCN": "催款级别代表向客户发送催款提醒的严重程度或次数：\n\n0级 = 无需催款（款项未逾期）；\n\n1级 = 首次催款提醒（如逾期10天）；\n\n2级 = 二次催款提醒（语气更强，如逾期20天）；\n\n3级 = 最终警告/法律行动预警（如逾期30天及以上）。\n\n每个催款级别可配置不同的催款文本、手续费和语气。"
+        },
+        {
+          "questionNo": "Q34",
+          "questionContent": "What is the role of Dunning Areas and Dunning Keys?",
+          "questionContentCN": "催款范围和催款码的作用是什么？",
+          "sampleAnswer": "Dunning Area:\n\nOptional organizational unit\n\nAllows separate dunning for business units within a company code (e.g.,\ndivisions)\n\nDunning Key:\n\nControls whether and how an individual line item should be dunned\n\nCan block an item from being dunned or delay its inclusion\n\nUseful for partial payments, disputes, etc.",
+          "sampleAnswerCN": "催款范围：\n\n可选的组织单元，允许对一个公司代码内的不同业务单元（如各部门）单独执行催款；\n\n催款码：\n\n用于管控单个行项目是否需要催款、如何催款，可冻结行项目的催款流程或延迟其纳入\n催款范围，适用于部分付款、款项争议等场景。"
+        },
+        {
+          "questionNo": "Q35",
+          "questionContent": "How do you configure Dunning Charges and Interest Calculation?",
+          "questionContentCN": "如何配置催款手续费和催款利息计算规则？",
+          "sampleAnswer": "In Dunning Procedure config:\n\nSet fixed charges for each Dunning level\n\nSet interest rate/calculation method\n\nInterest is calculated based on:\n\nOverdue days\n\nInterest rate in master record\n\nDocument amount and baseline date\n\nAlso configure:\n\nMinimum charge amounts\n\nCharge thresholds (e.g., only if balance > ₹100)",
+          "sampleAnswerCN": "在催款程序配置中：\n\n1. 为每个催款级别设置固定的催款手续费；\n\n2. 设置催款利率和计算方式。\n\n催款利息根据以下因素计算：逾期天数、客户主数据中的利率、凭证金额和基准日期。\n\n同时还需配置：最低手续费金额、手续费起征点（如仅当余额大于100卢比时收取手续费\n）。"
+        },
+        {
+          "questionNo": "Q36",
+          "questionContent": "What are the different Dunning Notices, and how are they generated?",
+          "questionContentCN": "有哪些不同类型的催款通知？如何生成？",
+          "sampleAnswer": "Dunning Notices are letters/emails sent to customers based on Dunning\nlevel.\n\nNotices differ in wording and tone based on severity.\n\nThey include:\n\nCustomer details\n\nOverdue invoice list\n\nCharges and interest\n\nDue dates\n\nGenerated via:\n\nT-code F150 → Schedule Dunning run → Print Notices",
+          "sampleAnswerCN": "催款通知是根据催款级别向客户发送的催款函/催款邮件，其措辞和语气会根据催款的严\n重程度有所不同，内容包含：客户信息、逾期发票清单、催款手续费及利息、付款到期\n日。\n\n生成方式：\n\n事务代码F150→计划催款运行→打印/发送催款通知。"
+        },
+        {
+          "questionNo": "Q37",
+          "questionContent": "How do you configure Dunning Texts and Forms?",
+          "questionContentCN": "如何配置催款文本和催款表单？",
+          "sampleAnswer": "Dunning Texts:\n\nSet in FBMP → Texts section for each level\n\nUse different templates for different Dunning levels\n\nLanguage-specific texts also possible\n\nForms:\n\nUse SAPScript or SmartForms\n\nDefine in Dunning Procedure → Print Parameters\n\nCustomize logo, layout, customer details",
+          "sampleAnswerCN": "催款文本：\n\n在事务代码FBMP中，为每个催款级别单独配置文本板块，不同催款级别可使用不同模板\n，也可配置多语言版本的催款文本；\n\n催款表单：\n\n使用SAP脚本或智能表单制作，在催款程序的打印参数中分配表单，可自定义表单的企业\nlogo、版式和客户信息展示项。"
+        },
+        {
+          "questionNo": "Q38",
+          "questionContent": "What is the difference between Static Dunning and Dynamic Dunning?",
+          "questionContentCN": "静态催款与动态催款的区别是什么？",
+          "sampleAnswer": "Static Dunning（静态催款）\n\n判定依据：Based on days overdue（根据逾期天数）\n\n级别升级：Manual/Fixed schedule（手工升级/按固定计划升级）\n\n使用场景：Simple scenarios（简单的催款场景）\n\nDynamic Dunning（动态催款）\n\n判定依据：Based on net due date（根据净付款到期日）\n\n级别升级：Automatically adjusts based on payment\ndelays（根据付款延迟情况自动调整）\n\n使用场景：Complex payment tracking needs（复杂的付款跟踪场景）\n\n补充英文：Dynamic dunning requires additional configuration for flexibility\nand automation.\n\n补充",
+          "sampleAnswerCN": "Static Dunning（静态催款）\n\n判定依据：Based on days overdue（根据逾期天数）\n\n级别升级：Manual/Fixed schedule（手工升级/按固定计划升级）\n\n使用场景：Simple scenarios（简单的催款场景）\n\nDynamic Dunning（动态催款）\n\n判定依据：Based on net due date（根据净付款到期日）\n\n级别升级：Automatically adjusts based on payment\ndelays（根据付款延迟情况自动调整）\n\n使用场景：Complex payment tracking needs（复杂的付款跟踪场景）"
+        },
+        {
+          "questionNo": "Q39",
+          "questionContent": "How do you define the Dunning Interval and Grace Period?",
+          "questionContentCN": "如何定义催款间隔和宽限期？",
+          "sampleAnswer": "Dunning Interval:\n\nNumber of days between Dunning runs (e.g., 7 days)\n\nEnsures customers aren't reminded too frequently\n\nGrace Period:\n\nDays added after due date before Dunning starts (e.g., 5 days)\n\nHelps avoid early reminders\n\nConfigured per Dunning Procedure in FBMP",
+          "sampleAnswerCN": "催款间隔：\n\n两次催款运行之间的天数（如7天），可避免过于频繁地向客户发送催款提醒；\n\n宽限期：\n\n款项到期日后，延迟开始催款的天数（如5天），可避免过早催款。\n\n两者均在FBMP中按每个催款程序单独配置。"
+        },
+        {
+          "questionNo": "Q40",
+          "questionContent": "How do you troubleshoot Dunning Errors and Missing Dunning Notices?",
+          "questionContentCN": "如何排查解决催款错误和催款通知缺失的问题？",
+          "sampleAnswer": "问题/解决方法\n\nCustomer not included in run（客户未被纳入催款运行）/ Check Dunning\nprocedure assigned in master（检查客户主数据中是否分配了催款程序\n\nItems not overdue（项目未显示逾期）/Review due dates and grace\nperiod（核对付款到期日和宽限期设置）\n\nDunning level not increased（催款级别未升级）/ Ensure enough days passed\nsince last run（确保自上次催款后已过足够的天数）\n\nNo output generated（未生成催款输出）/ Check Print Parameters (form,\ndevice)（检查打印参数，如表单、输出设备）\n\nDunning blocked（催款被冻结）/ Remove Dunning block from\ncustomer/item（取消客户/行项目的催款冻结）\n\nIncorrect text（催款文本错误）/Check Dunning text setup and language\nversions（检查催款文本设置及语言版本）\n\n补充英文：Check logs after F150 run for details.\n\n补充",
+          "sampleAnswerCN": "问题/解决方法\n\nCustomer not included in run（客户未被纳入催款运行）/ Check Dunning\nprocedure assigned in master（检查客户主数据中是否分配了催款程序\n\nItems not overdue（项目未显示逾期）/Review due dates and grace\nperiod（核对付款到期日和宽限期设置）\n\nDunning level not increased（催款级别未升级）/ Ensure enough days passed\nsince last run（确保自上次催款后已过足够的天数）\n\nNo output generated（未生成催款输出）/ Check Print Parameters (form,\ndevice)（检查打印参数，如表单、输出设备）\n\nDunning blocked（催款被冻结）/ Remove Dunning block from\ncustomer/item（取消客户/行项目的催款冻结）\n\nIncorrect text（催款文本错误）/Check Dunning text setup and language\nversions（检查催款文本设置及语言版本）"
+        }
+      ]
+    },
+    {
+      "partId": "SCENARIO5",
+      "partName": "FI-MM Integration Interview Questions   FI-MM集成面试题",
+      "questions": [
+        {
+          "questionNo": "Q41",
+          "questionContent": "How does SAP FI integrate with SAP MM?",
+          "questionContentCN": "SAP FI如何与SAP MM模块集成？",
+          "sampleAnswer": "SAP FI integrates with SAP MM to ensure seamless financial tracking of\ninventory movements and procurement processes. When goods are procured,\nreceived, or invoiced, FI automatically posts accounting entries (e.g., G/L\npostings) based on the MM transaction.\n\nKey Integration Points:\n\nGoods Receipt (GR)\n\nInvoice Receipt (IR)\n\nGoods Issue\n\nPurchase Order creation",
+          "sampleAnswerCN": "SAP\nFI与MM模块集成，可实现对库存移动和采购流程的无缝财务跟踪，当发生采购、收货、\n收票等业务时，FI模块会根据MM模块的交易数据自动生成会计凭证（如总分类账过账）\n。\n\n核心集成节点：收货（GR）、收票（IR）、发货、采购订单创建。"
+        },
+        {
+          "questionNo": "Q42",
+          "questionContent": "What are the key accounting entries in FI-MM integration?",
+          "questionContentCN": "FI-MM集成中的核心会计分录有哪些？",
+          "sampleAnswer": "MM业务/会计分录\n\nGoods Receipt (GR)（收货）/ Dr. Inventory A/C, Cr. GR/IR Clearing\nA/C（借：存货科目 贷：GR/IR清账科目）\n\nInvoice Receipt (IR)（收票）/ Dr. GR/IR Clearing A/C, Cr. Vendor\nA/C（借：GR/IR清账科目 贷：供应商科目）\n\n补充英文：These entries are automatic and are controlled via account\ndetermination in OBYC.\n\n补充",
+          "sampleAnswerCN": "MM业务/会计分录\n\nGoods Receipt (GR)（收货）/ Dr. Inventory A/C, Cr. GR/IR Clearing\nA/C（借：存货科目 贷：GR/IR清账科目）\n\nInvoice Receipt (IR)（收票）/ Dr. GR/IR Clearing A/C, Cr. Vendor\nA/C（借：GR/IR清账科目 贷：供应商科目）"
+        },
+        {
+          "questionNo": "Q43",
+          "questionContent": "What is the impact of Goods Receipt (GR) and Invoice Receipt (IR) on",
+          "questionContentCN": "收货（GR）和收票（IR）对FI模块的影响是什么？",
+          "sampleAnswer": "GR Impact:\n\nIncreases Inventory (Asset)\n\nCreates a liability placeholder in GR/IR clearing account\n\nIR Impact:\n\nClears the GR/IR account\n\nPosts an actual payable to the vendor\n\nThis ensures three-way matching between PO, GR, and IR for accurate\nfinancial reporting.",
+          "sampleAnswerCN": "收货的影响：\n\n增加存货资产、在GR/IR清账科目中产生临时负债；\n\n收票的影响：\n\n冲销GR/IR清账科目的余额、确认对供应商的实际应付款。\n\n该流程实现了采购订单、收货、收票的三方匹配，保障财务报告的准确性。"
+        },
+        {
+          "questionNo": "Q44",
+          "questionContent": "What is the accounting entry for Goods Receipt (GR)?",
+          "questionContentCN": "收货（GR）的会计分录是什么？",
+          "sampleAnswer": "When goods are received (without invoice), the system posts:\n\nDr. Inventory Account (based on material valuation)\n\nCr. GR/IR Clearing Account\n\nInventory is debited (asset increase)\n\nGR/IR is credited (temporary liability)",
+          "sampleAnswerCN": "收到货物但尚未收到发票时，系统自动过账：\n\n借：存货科目（金额基于物料估值）\n\n贷：GR/IR清账科目\n\n存货科目借方发生额表示资产增加，GR/IR清账科目贷方发生额表示产生临时负债。"
+        },
+        {
+          "questionNo": "Q45",
+          "questionContent": "What is the accounting entry for Invoice Receipt (IR)?",
+          "questionContentCN": "收票（IR）的会计分录是什么？",
+          "sampleAnswer": "When an invoice is received:\n\nDr. GR/IR Clearing Account\n\nCr. Vendor Account\n\nGR/IR is cleared (liability placeholder removed)\n\nVendor payable is created (actual liability)",
+          "sampleAnswerCN": "收到供应商发票时，系统自动过账：\n\n借：GR/IR清账科目\n\n贷：供应商科目\n\nGR/IR清账科目被冲销（临时负债消除），同时确认对供应商的应付款（实际负债产生）\n。"
+        },
+        {
+          "questionNo": "Q46",
+          "questionContent": "What are the key account determination settings in FI-MM integration?",
+          "questionContentCN": "FI-MM集成中的核心科目确定设置有哪些？",
+          "sampleAnswer": "Account determination is configured via T-code: OBYC, and includes:\n\nTransaction keys like BSX (Inventory), WRX (GR/IR), GBB (Consumption)\n\nValuation class (linked to material master)\n\nValuation grouping code (linked to plant/company code)\n\nChart of Accounts\n\nThis mapping ensures the right G/L accounts are picked during postings.",
+          "sampleAnswerCN": "科目确定通过事务代码OBYC配置，核心设置包括：\n\n交易码（如BSX=存货、WRX=GR/IR清账、GBB=消耗）；\n\n估值类别（关联物料主数据）；\n\n估值分组码（关联工厂/公司代码）；\n\n会计科目表。\n\n该映射关系确保系统过账时自动匹配正确的总分类账科目。"
+        },
+        {
+          "questionNo": "Q47",
+          "questionContent": "What is the purpose of Transaction OBYC in FI-MM integration?",
+          "questionContentCN": "FI-MM集成中，事务代码OBYC的用途是什么？",
+          "sampleAnswer": "OBYC is the central configuration point where automatic G/L account\nassignments are defined for MM transactions.\n\nYou assign G/L accounts based on:\n\nTransaction Key (e.g., BSX, WRX)\n\nValuation Class\n\nValuation Grouping Code\n\nThis enables seamless automatic postings during goods and invoice\nmovements.",
+          "sampleAnswerCN": "OBYC是FI-\nMM集成的核心配置节点，用于为MM模块的各类交易定义自动总分类账科目分配规则，可\n根据交易码（如BSX、WRX）、估值类别、估值分组码分配对应的总分类账科目，实现货\n物和发票移动时的无缝自动过账。"
+        },
+        {
+          "questionNo": "Q48",
+          "questionContent": "What are valuation classes, and how do they affect FI-MM integration?",
+          "questionContentCN": "估值类别是什么？其对FI-MM集成有何影响？",
+          "sampleAnswer": "Valuation Class links a material type to the relevant G/L accounts. It is\nmaintained in the material master and used in OBYC to determine the correct\naccount.\n\nExamples:\n\nRaw Material - Valuation Class 3000\n\nFinished Goods - Valuation Class 7920\n\nDifferent valuation classes post to different inventory and consumption\naccounts.",
+          "sampleAnswerCN": "估值类别用于将物料类型与对应的总分类账科目关联，维护在物料主数据中，并在OBYC\n中用于确定正确的过账科目。\n\n示例：\n\n英材料 - 估值类别3000；\n\n产成品 - 估值类别7920。\n\n不同的估值类别会过账至不同的存货和消耗科目。"
+        },
+        {
+          "questionNo": "Q49",
+          "questionContent": "How does Price Control (Standard Price vs. Moving Average Price) impact",
+          "questionContentCN": "价格控制（标准价与移动平均价）对FI模块有何影响？",
+          "sampleAnswer": "价格控制类型/对FI的影响\n\nStandard Price (S)（标准价）/ Price variances are posted separately to\nprice difference accounts（价格差异单独过账至价格差异科目\n\nMoving Average Price (V)（移动平均价）/ Inventory value updates with each\nGR; no price difference unless major\nfluctuation（每次收货后存货价值自动更新，除非发生重大波动，否则无价格差异）\n\n补充英文：Maintained in material master → Costing 2 view\n\n补充",
+          "sampleAnswerCN": "价格控制类型/对FI的影响\n\nStandard Price (S)（标准价）/ Price variances are posted separately to\nprice difference accounts（价格差异单独过账至价格差异科目\n\nMoving Average Price (V)（移动平均价）/ Inventory value updates with each\nGR; no price difference unless major\nfluctuation（每次收货后存货价值自动更新，除非发生重大波动，否则无价格差异）"
+        },
+        {
+          "questionNo": "Q50",
+          "questionContent": "What is the impact of Material Ledger on FI postings?",
+          "questionContentCN": "物料分类账对FI过账有何影响？",
+          "sampleAnswer": "Material Ledger (ML) enables multi-currency and actual costing for\nmaterials.\n\nImpacts:\n\nRecords price variances and actual costs\n\nEnhances inventory valuation accuracy\n\nRevalues inventory during month-end closing\n\nWorks closely with FI and CO\n\nRequired for S/4HANA and beneficial for detailed costing scenarios.",
+          "sampleAnswerCN": "物料分类账（ML）支持物料的多货币核算和实际成本核算，对FI过账的影响包括：\n\n记录价格差异和实际成本、提升存货估值的准确性、月末关账时对存货进行重估，物料\n分类账与FI和CO模块深度协同，是SAP\nS/4HANA的必配功能，适用于精细化的成本核算场景。"
+        }
+      ]
+    },
+    {
+      "partId": "SCENARIO6",
+      "partName": "FI-SD Integration Interview Questions   FI-SD集成面试题",
+      "questions": [
+        {
+          "questionNo": "Q51",
+          "questionContent": "How does SAP FI integrate with SAP SD?",
+          "questionContentCN": "SAP FI如何与SAP SD模块集成？",
+          "sampleAnswer": "SAP FI integrates with SD to ensure that sales transactions are reflected\nin financial accounting. When goods are sold and billed to a customer, the\nsystem automatically posts accounting entries in FI.\n\nIntegration occurs at:\n\nGoods Issue (GI): Cost of Goods Sold (COGS) posted\n\nBilling (Invoice): Revenue and tax posted\n\nCustomer Payment: Incoming payment posted in FI",
+          "sampleAnswerCN": "SAP\nFI与SD模块集成，确保销售交易实时反映在财务会计中，当货物销售并向客户开票时，\n系统在FI模块自动生成会计分录，核心集成节点为：\n\n发货（GI）：自动过账产品销售成本（COGS）；\n\n开票（发票）：自动过账收入和税金；\n\n客户付款：在FI模块过账收款。"
+        },
+        {
+          "questionNo": "Q52",
+          "questionContent": "What are the key accounting entries in FI-SD integration?",
+          "questionContentCN": "FI-SD集成中的核心会计分录有哪些？",
+          "sampleAnswer": "SD业务/ FI会计分录\n\nGoods Issue（发货）/ Dr. COGS, Cr. Inventory（借：产品销售成本 贷：存货）\n\nBilling/Invoice（开票）/ Dr. Customer, Cr. Revenue & Tax（借：客户科目\n贷：收入科目 贷：税金科目）\n\nPayment Receipt（收款）/ Dr. Bank A/C, Cr. Customer A/C（借：银行科目\n贷：客户科目）\n\n补充英文：All postings are automatic, driven by account determination\nsettings (VKOA).\n\n补充",
+          "sampleAnswerCN": "SD业务/ FI会计分录\n\nGoods Issue（发货）/ Dr. COGS, Cr. Inventory（借：产品销售成本 贷：存货）\n\nBilling/Invoice（开票）/ Dr. Customer, Cr. Revenue & Tax（借：客户科目\n贷：收入科目 贷：税金科目）\n\nPayment Receipt（收款）/ Dr. Bank A/C, Cr. Customer A/C（借：银行科目\n贷：客户科目）"
+        },
+        {
+          "questionNo": "Q53",
+          "questionContent": "What is the accounting entry for Sales Order Processing?",
+          "questionContentCN": "销售订单处理的会计分录是什么？",
+          "sampleAnswer": "There is no accounting entry at the Sales Order stage, as it is a\nlogistical document. It only reserves inventory and pricing details.\n\nAccounting entries begin at:\n\nGoods Issue\n\nBilling",
+          "sampleAnswerCN": "销售订单阶段无会计分录，该单据为物流单据，仅用于预留库存和维护定价信息。\n\n会计分录从以下环节开始生成：\n\n发货、开票。"
+        },
+        {
+          "questionNo": "Q54",
+          "questionContent": "What is the accounting entry for Goods Issue?",
+          "questionContentCN": "发货的会计分录是什么？",
+          "sampleAnswer": "When goods are shipped:\n\nDr. Cost of Goods Sold (COGS)\n\nCr. Inventory Account\n\nReduces stock\n\nPosts the cost to P&L\n\nDriven by valuation and material master settings",
+          "sampleAnswerCN": "货物发出时，系统过账分录：\n\n借：产品销售成本\n\n贷：存货科目\n\n该分录减少库存数量，将成本计入利润表，过账金额由物料估值方式和物料主数据设置\n决定。"
+        },
+        {
+          "questionNo": "Q55",
+          "questionContent": "What is the accounting entry for Billing?",
+          "questionContentCN": "开票的会计分录是什么？",
+          "sampleAnswer": "When invoice is generated:\n\nDr. Customer Account\n\nCr. Revenue Account\n\nCr. Tax Payable Account (if applicable)\n\nRevenue is recognized\n\nAccounts Receivable (A/R) is created\n\nBased on pricing procedure in SD",
+          "sampleAnswerCN": "开具销售发票时，系统过账分录：\n\n借：客户科目\n\n贷：收入科目\n\n贷：应交税金科目（如适用）\n\n该分录确认收入并生成应收账款，过账规则依据SD模块中的定价过程。"
+        },
+        {
+          "questionNo": "Q56",
+          "questionContent": "What is the role of Revenue Account Determination in SAP SD?",
+          "questionContentCN": "SAP SD中收入科目确定的作用是什么？",
+          "sampleAnswer": "Revenue Account Determination ensures that revenue, discounts,\nand freight are posted to the correct G/L accounts during billing.\n\nIt links:\n\nCondition types (e.g., PR00, K007)\n\nTo revenue accounts in FI\n\nBased on combination of customer, material, sales org, etc.\n\nConfigured via T-code VKOA.",
+          "sampleAnswerCN": "收入科目确定用于确保开票时，收入、折扣和运费能准确过账至对应的总分类账\n科目。\n\n它将SD模块中的条件类型（如PR00定价、K007折扣）与FI模块的收入科目建立关联，关\n联依据包含客户、物料、销售组织等组合条件，通过事务代码VKOA配置。"
+        },
+        {
+          "questionNo": "Q57",
+          "questionContent": "What is the purpose of Transaction VKOA in FI-SD integration?",
+          "questionContentCN": "FI-SD集成中事务代码VKOA的用途是什么？",
+          "sampleAnswer": "VKOA is used to configure account determination for SD\nconditions, such as:\n\nRevenue (PR00)\n\nDiscounts (K007)\n\nFreight (KF00)\n\nYou define access sequences using criteria like:\n\nSales Org\n\nCustomer Account Assignment Group\n\nMaterial Account Assignment Group\n\nCondition Type\n\nEach condition posts to a different G/L account.",
+          "sampleAnswerCN": "VKOA用于为SD模块的各类核算条件配置科目确定规则，涉及的条件包括收入（PR\n00）、折扣（K007）、运费（KF00）。\n\n可通过销售组织、客户科目分配组、物料科目分配组、条件类型等标准定义科目查找规\n则，不同的条件类型会过账至专属的总分类账科目。"
+        },
+        {
+          "questionNo": "Q58",
+          "questionContent": "What are Key Account Determination Settings in FI-SD?",
+          "questionContentCN": "FI-SD集成中科目确定的核心配置项有哪些？",
+          "sampleAnswer": "Main settings include:\n\nCustomer Account Assignment Group (from customer master)\n\nMaterial Account Assignment Group (from material master)\n\nCondition Type (e.g., PR00, K007)\n\nChart of Accounts\n\nSales Org, Application, Account Key\n\nAll are used in VKOA to determine correct posting G/Ls.",
+          "sampleAnswerCN": "核心配置项包含：\n\n客户科目分配组（维护于客户主数据）；\n\n物料科目分配组（维护于物料主数据）；\n\n条件类型（如PR00、K007）；\n\n会计科目表；\n\n销售组织、应用程序、科目键。\n\n以上所有配置项均在VKOA中协同作用，确定开票时的正确过账科目。"
+        },
+        {
+          "questionNo": "Q59",
+          "questionContent": "How do you handle Deferred Revenue Recognition in SAP?",
+          "questionContentCN": "在SAP中如何处理递延收入确认？",
+          "sampleAnswer": "Deferred revenue is used when revenue should be recognized\nover time (e.g., subscriptions).\n\nSteps:\n\nPost to Deferred Revenue Account during billing\n\n(Dr. Customer, Cr. Deferred Revenue)\n\nUse Recurring Entry or Revenue Recognition Program to move amounts monthly:\n(Dr. Deferred Revenue, Cr. Actual Revenue)\n\nRequires Revenue Recognition functionality (or Contract Accounting in\nadvanced cases).",
+          "sampleAnswerCN": "当收入需要在一段时间内分期确认时（如订阅服务），需采用递延收入核算方式\n，具体步骤：\n\n1. 开票时将收入过账至递延收入科目，分录为：借：客户科目\n      贷：递延收入科目；\n\n2.\n      通过周期性过账或收入确认程序，每月将递延收入结转至实际收入科目，分录为：借\n      ：递延收入科目 贷：实际收入科目。\n\n该操作需要启用SAP的收入确认功能，复杂场景下可使用合同会计模块。"
+        },
+        {
+          "questionNo": "Q60",
+          "questionContent": "How do Discounts, Taxes, and Freight Charges impact FI-SD integration?",
+          "questionContentCN": "折扣、税金和运费对FI-SD集成有何影响？",
+          "sampleAnswer": "Each SD condition type (e.g., discount, freight, tax) is\nlinked to a G/L account via VKOA:\n\nCondition/ Impact in FI\n\nDiscount (K007)/ Cr. Revenue, Dr. Customer - Lower revenue\n\nFreight (KF00)/ Cr. Freight Revenue Account\n\nTax (MWST)/ Cr. Output Tax Payable Account\n\nProper mapping ensures accurate profit margins and tax liability in FI.",
+          "sampleAnswerCN": "SD模块中的折扣、运费、税金等各类条件类型，均通过VKOA与FI的总分类账科目\n建立映射关系，对FI核算的具体影响如下：\n\n条件类型/对FI的影响\n\n折扣（K007）/借：客户科目 贷：收入科目，最终减少企业确认的收入\n\n运费（KF00）/贷：运费收入科目，单独确认运费相关收入\n\n税金（MWST）/贷：销项税金科目，确认企业的税务负债\n\n合理的科目映射能确保FI模块中利润边际和纳税负债核算的准确性。"
+        }
+      ]
+    },
+    {
+      "partId": "SCENARIO7",
+      "partName": "Asset Accounting Interview Questions  资产会计（AA）面试题",
+      "questions": [
+        {
+          "questionNo": "Q61",
+          "questionContent": "What is Asset Accounting (AA) in SAP FI?",
+          "questionContentCN": "SAP FI中的资产会计（AA）是什么？",
+          "sampleAnswer": "Asset Accounting (AA) is a sub-module of SAP FI used to manage\nand monitor fixed assets. It handles the lifecycle of assets-from\nacquisition to retirement-and calculates depreciation, revaluation, and\nasset balances for reporting purposes.\n\nIt integrates with:\n\nFI for financial postings\n\nMM for asset procurement\n\nCO for cost center assignment",
+          "sampleAnswerCN": "资产会计（AA）是SAP\nFI的子模块，用于管理和监控企业固定资产，覆盖资产从购置到处置的全生命周期，同\n时核算资产的折旧、重估及资产余额，满足财务报告需求。\n\n该模块的集成对象包括：FI（财务过账）、MM（资产采购）、CO（成本中心分配）。"
+        },
+        {
+          "questionNo": "Q62",
+          "questionContent": "What is the significance of asset classes in SAP AA?",
+          "questionContentCN": "SAP AA中资产类别的重要性是什么？",
+          "sampleAnswer": "An asset class is the category to which an asset belongs\n(e.g., buildings, machinery, vehicles).\n\nDetermines the default G/L accounts for asset transactions\n\nAssigns number ranges for asset master records\n\nGroups assets for reporting and control\n\nEach asset must be assigned to one asset class.",
+          "sampleAnswerCN": "资产类别是资产的分类依据（如房屋建筑、机器设备、运输工具），其核心作用\n为：\n\n为资产交易确定默认的总分类账科目；\n\n为资产主数据分配编号范围；\n\n对资产进行分组，便于报表编制和管理控制。\n\n每一项资产必须且仅能分配至一个资产类别。"
+        },
+        {
+          "questionNo": "Q63",
+          "questionContent": "Explain the different types of depreciation methods in SAP AA.",
+          "questionContentCN": "阐述SAP AA中不同的折旧方法。",
+          "sampleAnswer": "SAP supports various depreciation methods, including:\n\nStraight-Line Depreciation: Equal depreciation amount over asset life\n\nDeclining Balance: Higher depreciation in earlier years\n\nUnits of Production: Based on usage or output\n\nManual Depreciation: User-defined amount per period\n\nAccelerated/Special Depreciation: For tax or incentive purposes\n\nDepreciation methods are defined in depreciation keys.",
+          "sampleAnswerCN": "SAP支持多种折旧核算方法，具体包括：\n\n直线折旧法：资产使用年限内，每期折旧金额均等；\n\n余额递减法：资产使用前期折旧金额较高，后期逐步减少；\n\n工作量法：根据资产的实际使用量或产出量核算折旧；\n\n手工折旧法：人工自定义每期的折旧金额；\n\n加速/特殊折旧法：基于税务优惠或政策激励核算的折旧。\n\n各类折旧方法均在折旧码中定义。"
+        },
+        {
+          "questionNo": "Q64",
+          "questionContent": "What is the purpose of depreciation areas in SAP Asset Accounting?",
+          "questionContentCN": "SAP资产会计中折旧范围的用途是什么？",
+          "sampleAnswer": "Depreciation areas allow the calculation of multiple\ndepreciation values for the same asset, used for different purposes:\n\nBook depreciation (per company accounting policy)\n\nTax depreciation (for government compliance)\n\nCost accounting depreciation (for internal analysis)\n\nEach area posts to separate ledgers/accounts if required.",
+          "sampleAnswerCN": "折旧范围允许对同一资产核算多版本的折旧金额，满足企业不同的核算需求，主\n要包括：\n\n账面折旧（遵循企业会计政策）；\n\n税务折旧（满足政府税务合规要求）；\n\n成本会计折旧（用于企业内部分析）。\n\n若有需要，不同的折旧范围可过账至独立的会计账簿/科目。"
+        },
+        {
+          "questionNo": "Q65",
+          "questionContent": "What are the different asset transactions in SAP FI (Acquisition,",
+          "questionContentCN": "SAP FI中主要的资产交易有哪些（购置、处置、转移）？",
+          "sampleAnswer": "Acquisition: Purchase of asset via vendor or direct entry (e.g., Dr. Asset\nA/C, Cr. Vendor/Bank)\n\nRetirement (Disposal): Removal of asset from books, with or without revenue\n(e.g., Dr. Accum. Depreciation, Cr. Asset; Dr. Customer/Bank, Cr.\nGain/Loss)\n\nTransfer: Moving an asset from one cost center or company code to another\n(e.g., Internal or Intercompany asset transfer)\n\nHandled through transaction codes like ABZON, ABAVN, ABUMN, ABT1N",
+          "sampleAnswerCN": "资产购置：通过供应商采购或直接入账的方式获取资产，分录示例：借：资产科目\n贷：供应商/银行科目；\n\n资产处置（报废）：将资产从账面上核销，分为有收入和无收入两种情况，分录示例：\n借：累计折旧科目 贷：资产科目；若有处置收入，另做分录借：客户/银行科目\n贷：处置利得/损失科目；\n\n资产转移：将资产从一个成本中心或公司代码转移至另一主体，包括内部资产转移和公\n司间资产转移。\n\n相关事务代码：ABZON（资产购置）、ABAVN（资产处置）、ABUMN（内部资产转移）、A\nBT1N（公司间资产转移）。"
+        },
+        {
+          "questionNo": "Q66",
+          "questionContent": "How does SAP handle asset revaluation?",
+          "questionContentCN": "SAP如何处理资产重估？",
+          "sampleAnswer": "Asset revaluation adjusts asset book value to reflect fair\nmarket value.\n\nConfigured using Revaluation keys\n\nAffects book value and depreciation base\n\nCan be manual or mass revaluation\n\nUsed for inflation adjustment or fair value reporting (IFRS).",
+          "sampleAnswerCN": "资产重估用于调整资产的账面金额，使其反映公允价值，相关配置通过重估码完\n成。\n\n资产重估会影响资产的账面价值和折旧计提基数，支持手工单资产重估和批量资产重估\n两种方式，主要用于通货膨胀调整或遵循国际财务报告准则的公允价值列报。"
+        },
+        {
+          "questionNo": "Q67",
+          "questionContent": "What is an Asset Under Construction (AUC) in SAP?",
+          "questionContentCN": "SAP中的在建工程（AUC）是什么？",
+          "sampleAnswer": "AUC represents an asset that is not yet ready for use.\n\nCosts are collected during the construction phase\n\nNot depreciated while under construction\n\nOn completion, settled to a final asset using transaction AIAB / AIBU\n\nAUCs can be line item managed for detailed tracking.",
+          "sampleAnswerCN": "在建工程（AUC）代表尚未达到可使用状态的资产，在建设期间会归集各项相关成\n本，且在建期间不计提折旧。\n\n资产完工后，通过事务代码AIAB（分配）/AIBU（结算）将在建工程的成本结转至最终的\n固定资产科目，在建工程可启用行项目管理，实现成本的精细化跟踪。"
+        },
+        {
+          "questionNo": "Q68",
+          "questionContent": "What is the difference between ordinary depreciation and special",
+          "questionContentCN": "普通折旧与特殊折旧的区别是什么？",
+          "sampleAnswer": "Type/ Description\n\nOrdinary Depreciation/ Regular, scheduled depreciation based on asset life\n\nSpecial Depreciation/Additional depreciation for tax relief/incentives\n\nUnplanned Depreciation/ Due to damage, obsolescence, etc. (not scheduled)\n\nEach is managed via different depreciation keys and posting accounts.",
+          "sampleAnswerCN": "折旧类型/说明\n\n普通折旧/根据资产使用年限计提的常规、计划性折旧\n\n特殊折旧/为享受税务减免/政策激励计提的额外折旧\n\n非计划折旧/因资产损坏、淘汰等非计划原因计提的折旧\n\n三种折旧类型均通过专属的折旧码和过账科目进行管理。"
+        },
+        {
+          "questionNo": "Q69",
+          "questionContent": "What is the impact of asset disposal in SAP FI?",
+          "questionContentCN": "SAP FI中资产处置对财务核算有何影响？",
+          "sampleAnswer": "Disposing an asset posts the net book value removal and any\ngain or loss from the sale.\n\nTypical Entry:\n\nDr. Accumulated Depreciation\n\nDr. Loss on Disposal / Cr. Gain\n\nCr. Asset Account\n\nDr. Bank / Customer A/C (if sold)\n\nHandled via T-code: ABAVN (without revenue), F-92 or ABAON (with revenue).",
+          "sampleAnswerCN": "资产处置会核销资产的账面净值，并确认处置产生的利得或损失，典型会计分录\n：\n\n借：累计折旧科目\n\n借：资产处置损失/贷：资产处置利得\n\n贷：资产科目\n\n若资产处置有收入，另做分录：借：银行/客户科目。\n\n相关事务代码：ABAVN（无收入资产处置）、F-92/ABAON（有收入资产处置）。"
+        },
+        {
+          "questionNo": "Q70",
+          "questionContent": "How do you configure automatic account determination for assets in SAP?",
+          "questionContentCN": "在SAP中如何配置资产的自动科目确定？",
+          "sampleAnswer": "Configured using T-code: AO90, where you assign:\n\nChart of accounts\n\nAsset transaction types (e.g., acquisition, retirement)\n\nAsset account determination\n\nG/L accounts for:\n\nAsset acquisition\n\nAccumulated depreciation\n\nRevenue/loss/gain on sale\n\nDepreciation expenses\n\nSettings are based on asset class and transaction type.",
+          "sampleAnswerCN": "通过事务代码AO90配置资产自动科目确定，核心为为以下核算项分配总分类账科\n目：资产购置、累计折旧、处置利得/损失、折旧费用，配置时需关联会计科目表、资产\n交易类型（如购置、处置）、资产科目确定码。\n\n所有科目分配规则均基于资产类别和交易类型制定。"
+        }
+      ]
+    },
+    {
+      "partId": "SCENARIO8",
+      "partName": "Controlling (CO) Interview Questions  管理会计（CO）面试题",
+      "questions": [
+        {
+          "questionNo": "Q71",
+          "questionContent": "What is the purpose of Cost Center Accounting (CCA)?",
+          "questionContentCN": "成本中心会计（CCA）的用途是什么？",
+          "sampleAnswer": "Cost Center Accounting (CCA) helps track and manage costs\nincurred by different departments or functions (e.g., HR, IT, Production).\n\nObjectives:\n\nMonitor internal costs\n\nAssign budgets and compare actual vs. planned\n\nAnalyze costs by responsibility area\n\nServe as a receiver in cost allocations",
+          "sampleAnswerCN": "成本中心会计（CCA）用于跟踪和管理企业各部门/职能单元产生的成本（如人力\n资源部、信息技术部、生产部），核心目标：\n\n监控企业内部成本发生情况；\n\n为成本中心分配预算，并对比实际成本与计划成本；\n\n按责任中心分析成本构成；\n\n作为成本分配的接收方，承接企业内部分配的成本。"
+        },
+        {
+          "questionNo": "Q72",
+          "questionContent": "What is the difference between Cost Centers and Profit Centers?",
+          "questionContentCN": "成本中心与利润中心的区别是什么？",
+          "sampleAnswer": "中英文：\n\nCost Center/ Profit Center\n\nPurpose：Track and control costs 跟踪并管控成本/ Measure profitability\n(revenue vs. cost) 核算盈利能力（收入与成本匹配）\n\nFocus：Internal cost control 企业内部成本控制/ External/internal\nperformance measurement 内外部经营业绩考核\n\nRevenue Handling：No direct revenue 不核算直接收入/ Revenue and costs both\ntracked 同时核算收入和成本\n\nExamples：HR, Admin, IT 人力资源部、行政部、信息技术部/ Product Lines,\nBusiness Units, Regions 产品线、业务单元、各区域分部",
+          "sampleAnswerCN": ""
+        },
+        {
+          "questionNo": "Q73",
+          "questionContent": "Explain the concept of Internal Orders in SAP CO？",
+          "questionContentCN": "阐述SAP CO中内部订单的概念？",
+          "sampleAnswer": "An Internal Order is a temporary cost object used to track\nspecific costs for projects or events, such as marketing campaigns or\nmaintenance jobs.\n\nKey Features:\n\nTracks actual and planned costs\n\nCan settle to cost centers, assets, or other objects\n\nUsed when more detailed tracking is needed than cost centers alone",
+          "sampleAnswerCN": "内部订单是临时性的成本对象，用于跟踪特定项目或事项的成本（如市场营销活\n动、设备维修项目），核心特征：\n\n可同时跟踪实际成本和计划成本；\n\n项目结束后，可将归集的成本结算至成本中心、资产或其他核算对象；\n\n适用于比成本中心更精细化的成本跟踪场景。"
+        },
+        {
+          "questionNo": "Q74",
+          "questionContent": "What is the purpose of Profitability Analysis (COPA) in SAP CO?",
+          "questionContentCN": "SAP CO中盈利能力分析（COPA）的用途是什么？",
+          "sampleAnswer": "COPA allows analysis of profitability by dimensions such as:\n\nCustomer\n\nProduct\n\nRegion\n\nSales Org\n\nKey Uses:\n\nEvaluate contribution margins\n\nBreak down revenues and costs at granular levels\n\nSupport decision-making for sales and marketing strategies\n\nTypes:\n\nAccount-based COPA\n\nCosting-based COPA",
+          "sampleAnswerCN": "盈利能力分析（COPA）支持按多维度分析企业盈利情况，核心维度包括客户、产\n品、地区、销售组织，主要用途：\n\n评估各维度的边际贡献；\n\n对收入和成本进行精细化拆解分析；\n\n为企业销售和营销策略制定提供决策支持。\n\nCOPA分为两种类型：基于科目的盈利能力分析、基于成本核算的盈利能力分析。"
+        },
+        {
+          "questionNo": "Q75",
+          "questionContent": "What are statistical key figures in SAP CO?",
+          "questionContentCN": "SAP CO中的统计关键指标是什么？",
+          "sampleAnswer": "Statistical Key Figures (SKF) are quantitative values (e.g.,\nnumber of employees, floor space) used to allocate costs proportionally\nacross cost centers or internal orders.\n\nTypes:\n\nFixed values: Remain constant for the period\n\nTotal values: Accumulate over the period\n\nUsed in cost distribution or assessment cycles.",
+          "sampleAnswerCN": "统计关键指标（SKF）是量化的参考数值（如员工人数、办公面积），用于将成本\n按比例分配至各成本中心或内部订单，分为两种类型：\n\n固定值：在一个会计期间内保持不变；\n\n总计值：在会计期间内累计发生。\n\n统计关键指标主要应用于成本分配和成本分摊循环。"
+        },
+        {
+          "questionNo": "Q76",
+          "questionContent": "How does cost element accounting work in SAP CO?",
+          "questionContentCN": "SAP CO中的成本要素会计如何运作？",
+          "sampleAnswer": "Cost Element Accounting represents the detailed breakdown of\ncosts flowing into SAP CO.\n\nPrimary cost elements mirror G/L accounts from FI\n\nSecondary cost elements used for internal allocations (not visible in FI)\n\nCost elements help trace the origin and nature of costs, supporting\naccurate planning and reporting.",
+          "sampleAnswerCN": "成本要素会计是对流入CO模块的成本进行精细化拆解核算的模块，其中初级成本\n要素与FI的总分类账科目一一对应，次级成本要素仅用于CO模块内部的成本分配，在FI\n中无对应科目。\n\n成本要素可追溯成本的来源和性质，为企业成本计划和成本报表编制提供准确数据。"
+        },
+        {
+          "questionNo": "Q77",
+          "questionContent": "What is the difference between primary and secondary cost elements?",
+          "questionContentCN": "初级成本要素与次级成本要素的区别是什么？",
+          "sampleAnswer": "中英文：\n\nPrimary Cost Elements/ Secondary Cost Elements\n\nOrigin：From FI G/L accounts 源自FI的总分类账科目/ Created only in CO\n仅在CO模块中创建\n\nUse：External costs (e.g., salaries, rent) 核算外部成本（如薪资、租金）/\nInternal transactions (e.g., allocations) 核算内部交易（如成本分配）\n\nPosting：Automatic from FI 从FI模块自动过账至CO/ Only within CO (e.g.,\ndistribution, assessment)  仅在CO模块内部过账（如成本分配、成本分摊）",
+          "sampleAnswerCN": ""
+        },
+        {
+          "questionNo": "Q78",
+          "questionContent": "How do you allocate costs in SAP CO?",
+          "questionContentCN": "在SAP CO中如何进行成本分配？",
+          "sampleAnswer": "SAP provides multiple methods to allocate costs:\n\nDistribution:\n\nTransfers costs from one object to another\n\nKeeps original cost element\n\nAssessment:\n\nSummarizes and posts to receiver with assessment cost element\n\nActivity Allocation:\n\nBased on activity quantity (e.g., labor hours, machine time)\n\nSettlement:\n\nUsed with Internal Orders, Projects, AUCs, etc.",
+          "sampleAnswerCN": "SAP提供多种成本分配方法，具体如下：\n\n成本分配：将成本从一个核算对象转移至另一对象，保留原始成本要素；\n\n成本分摊：将成本汇总后，通过分摊成本要素过账至成本接收方；\n\n作业分配：根据实际作业量（如人工工时、机器工时）进行成本分配；\n\n成本结算：适用于内部订单、项目、在建工程等核算对象的成本结转。"
+        },
+        {
+          "questionNo": "Q79",
+          "questionContent": "What is the purpose of activity-based costing in SAP CO?",
+          "questionContentCN": "SAP CO中作业成本法（ABC）的用途是什么？",
+          "sampleAnswer": "Activity-Based Costing (ABC) assigns costs based on actual\nactivities that generate costs, rather than volume or output alone.\n\nAdvantages:\n\nMore accurate cost attribution\n\nIdentifies high-cost activities\n\nImproves process efficiency and cost control\n\nExample: Allocate IT support cost based on number of service tickets per\ndepartment.",
+          "sampleAnswerCN": "作业成本法（ABC）根据产生成本的实际作业活动分配成本，而非单纯按产量或产\n出量分配，核心优势：\n\n成本归属更精准；\n\n识别企业的高成本作业环节；\n\n提升业务流程效率和成本管控能力。\n\n示例：根据各部门的服务工单数量，分配信息技术支持部门的成本。"
+        },
+        {
+          "questionNo": "Q80",
+          "questionContent": "What is the difference between a Cost Center and an Internal Order?",
+          "questionContentCN": "成本中心与内部订单的区别是什么？",
+          "sampleAnswer": "中英文：\n\nCost Center/ Internal Order\n\nPurpose：Ongoing, routine cost tracking 核算持续、日常的成本/ Temporary,\nspecific cost tracking 核算临时性、专项的成本\n\nLifespan：Permanent 永久性/ Short-term (projects/events)\n短期性（随项目/事项结束而终止）\n\nBudget Monitoring：Basic 基础级监控/ Detailed and strict 精细化、严格的监控\n\nExample：HR Department 人力资源部/ Marketing Campaign, Repairs Project\n市场营销活动、设备维修项目",
+          "sampleAnswerCN": ""
+        }
+      ]
+    },
+    {
+      "partId": "SCENARIO9",
+      "partName": "Real-Time SAP FICO Scenario-Based Questions   SAP FICO实时场景题",
+      "questions": [
+        {
+          "questionNo": "Q81",
+          "questionContent": "What would you do if an invoice is posted to the wrong vendor account?",
+          "questionContentCN": "若发票被过账至错误的供应商账户，该如何处理？",
+          "sampleAnswer": "Reverse the incorrect invoice using FB08 (if it's within the same period)\nor F.80 (if it's across periods).\n\nRepost the invoice correctly using FB60 (manual) or MIRO (PO-based).\n\nVerify with stakeholders and ensure audit trail compliance.\n\nCheck if payments were made - if so, reverse them too.",
+          "sampleAnswerCN": "1. 若在同一会计期间，使用FB08冲销错误发票；若跨会计期间，使用F.80冲销；\n\n2.\n      通过FB60（手工发票）或MIRO（基于采购订单的发票）将发票正确过账至目标供应商\n      账户；\n\n3. 与相关负责人核对确认，确保操作符合审计轨迹要求；\n\n4. 检查是否已向错误供应商支付款项，若已支付，同步冲销付款凭证。"
+        },
+        {
+          "questionNo": "Q82",
+          "questionContent": "How do you handle a failed Automatic Payment Run?",
+          "questionContentCN": "如何处理失败的自动付款运行？",
+          "sampleAnswer": "Check logs in F110 for errors (missing bank details, incorrect payment\nmethods, blocked invoices).\n\nValidate:\n\nVendor/customer master data\n\nPayment method setup in FBZP\n\nOpen item due dates\n\nCorrect the issue and re-run the proposal or payment run.\n\nClear any inconsistent entries or delete the proposal before retrying.",
+          "sampleAnswerCN": "1.\n      在F110中查看付款日志，定位错误原因（如银行明细缺失、付款方式错误、发票被冻\n      结）；\n\n2. 核对供应商/客户主数据、FBZP中的付款方式配置、未清项的付款到期日；\n\n3. 修正问题后，重新运行付款提议或付款执行；\n\n4. 重试前，清理系统中的不一致分录或删除原付款提议。"
+        },
+        {
+          "questionNo": "Q83",
+          "questionContent": "What happens if a customer pays an invoice twice?",
+          "questionContentCN": "若客户对同一发票重复付款，该如何处理？",
+          "sampleAnswer": "Options to resolve:\n\nRefund the excess using F-53 (manual payment)\n\nPost as a credit and apply against a future invoice\n\nUse F-28 to post the duplicate payment to unapplied credit\n\nCommunicate with the customer for confirmation of handling preference",
+          "sampleAnswerCN": "可选择以下处理方式，且需先与客户沟通确认其偏好：\n\n1. 通过F-53手工向客户退回多付的款项；\n\n2. 将重复付款记为客户贷方余额，用于冲抵客户未来的发票款项；\n\n3. 使用F-28将重复付款过账至客户未清贷方科目，暂存该笔款项。"
+        },
+        {
+          "questionNo": "Q84",
+          "questionContent": "How do you troubleshoot an issue where the bank reconciliation",
+          "questionContentCN": "如何排查银行对账单对账不平的问题？",
+          "sampleAnswer": "Compare bank GL balance with actual bank statement.\n\nUse FEBAN or FEBA to review posted/unposted EBS transactions.\n\nCheck:\n\nMissing postings\n\nReversal entries\n\nTiming differences (in-transit cheques)\n\nValidate GR/IR clearing and suspense accounts.\n\nManually adjust or post corrections if needed.",
+          "sampleAnswerCN": "1. 对比SAP中银行总账科目余额与银行实际对账单余额；\n\n2. 使用FEBAN或FEBA查看已过账/未过账的电子银行对账单交易；\n\n3. 检查是否存在未过账交易、冲销分录及时间性差异（如在途支票）；\n\n4. 核对GR/IR清账科目和暂记科目的余额；\n\n5. 若有需要，手工编制调整分录完成对账。"
+        },
+        {
+          "questionNo": "Q85",
+          "questionContent": "What is the impact of incorrect OBYC settings in FI-MM integration?",
+          "questionContentCN": "FI-MM集成中OBYC配置错误会产生哪些影响？",
+          "sampleAnswer": "Wrong GL postings during Goods Receipt or Invoice Receipt\n\nFailed postings if accounts are missing\n\nMisstated financials (e.g., incorrect inventory or COGS)\n\nErrors like \"account determination failed\"\n\n✅ Fix by correcting account assignment in OBYC (e.g., WRX, BSX, GBB).",
+          "sampleAnswerCN": "1. 收货或收票时产生错误的总账过账；\n\n2. 若缺失对应科目，会导致业务过账失败；\n\n3. 财务数据失真（如存货、产品销售成本核算错误）；\n\n4. 系统抛出“科目确定失败”类错误。\n\n解决方法：修正OBYC中的科目分配规则（如WRX、BSX、GBB等交易码的科目配置）。"
+        },
+        {
+          "questionNo": "Q86",
+          "questionContent": "How do you handle an incorrect depreciation calculation in SAP Asset",
+          "questionContentCN": "在SAP资产会计中，如何处理折旧核算错误的问题？",
+          "sampleAnswer": "Check asset master data:\n\nUseful life\n\nDepreciation key\n\nCapitalization date\n\nVerify depreciation areas and parameters\n\nUse AW01N to simulate correct values\n\nRun AFAB again after corrections\n\nIf needed, post manual adjustment via ABAAL or ABZU",
+          "sampleAnswerCN": "1. 检查资产主数据的关键信息：使用年限、折旧码、资本化日期；\n\n2. 核对折旧范围及相关参数配置；\n\n3. 使用AW01N模拟修正后的折旧金额；\n\n4. 修正问题后，重新运行AFAB执行折旧计提；\n\n5. 若需要，通过ABAAL或ABZU手工编制折旧调整分录。"
+        },
+        {
+          "questionNo": "Q87",
+          "questionContent": "What steps do you take to analyze an incorrect financial statement in",
+          "questionContentCN": "在SAP中，如何分析财务报表核算错误的问题？",
+          "sampleAnswer": "Use F.01 (Financial Statement) or S_ALR_87012284 (Balance Sheet/P&L).\n\nDrill down into incorrect balances.\n\nCheck:\n\nWrong posting keys\n\nIncorrect account assignments\n\nMissing period-end entries (accruals/depreciation)\n\nValidate document postings and GL balances using FS10N / FAGLB03.\n\nAdjust through journal entries or configuration if needed.",
+          "sampleAnswerCN": "1.\n      通过F.01（财务报表）或S_ALR_87012284（资产负债表/利润表）调出错误报表；\n\n2. 对错误的余额进行钻取分析，定位具体的异常科目；\n\n3.\n      检查是否存在过账码使用错误、科目分配错误、期末调整分录缺失（如预提、折旧）\n      等问题；\n\n4. 使用FS10N/FAGLB03验证凭证过账情况和总账科目余额；\n\n5. 若为账务错误，编制调整分录；若为配置错误，修正系统配置。"
+        },
+        {
+          "questionNo": "Q88",
+          "questionContent": "How do you process an intercompany transaction in SAP FI?",
+          "questionContentCN": "在SAP FI中如何处理公司间交易？",
+          "sampleAnswer": "Use FB01 or F-02 to post:\n\nDr. Expense (Company A)\n\nCr. Intercompany Payable (Company A)\n\nDr. Intercompany Receivable (Company B)\n\nCr. Revenue (Company B)\n\nSet up intercompany configuration (OBYA):\n\nDefine company relationships\n\nAssign clearing accounts\n\nEnsure tax compliance and reconciliation\n\nUse document splitting if needed for reporting",
+          "sampleAnswerCN": "1. 使用FB01或F-02编制公司间记账凭证，分录示例：\n\n1. 公司A：借：费用科目 贷：公司间应付款科目；\n\n1. 公司B：借：公司间应收款科目 贷：收入科目；\n\n2. 通过OBYA完成公司间交易的基础配置：定义公司关系、分配公司间清账科目；\n\n3. 确保交易处理符合税务合规要求，并做好公司间往来对账；\n\n4. 若报表需要，启用凭证拆分功能。"
+        },
+        {
+          "questionNo": "Q89",
+          "questionContent": "What are the steps to reverse a posted transaction in SAP FI?",
+          "questionContentCN": "在SAP FI中，冲销已过账交易的步骤是什么？",
+          "sampleAnswer": "Use FB08 (with reversal reason) for single document reversal\n\nUse F.80 for mass reversal\n\nKey prerequisites:\n\nOpen period\n\nNo payment made (for invoices)\n\nProper reversal reason assigned\n\nRepost if needed\n\nCheck document trail using FB03",
+          "sampleAnswerCN": "1. 冲销单张凭证：使用FB08，并选择冲销原因；\n\n2. 批量冲销凭证：使用F.80；\n\n冲销前提：冲销的会计期间处于开放状态、发票未被支付、正确分配冲销原因；\n\n3. 若需要，重新编制正确的凭证过账；\n\n4. 使用FB03查看凭证轨迹，确认冲销操作无误。"
+        },
+        {
+          "questionNo": "Q90",
+          "questionContent": "How do you handle a missing EBS transaction in SAP?",
+          "questionContentCN": "在SAP中如何处理电子银行对账单交易缺失的问题？",
+          "sampleAnswer": "Check if the bank file contains the missing transaction.\n\nRe-upload using FF_5 (import statement)\n\nValidate:\n\nMapping rules (OT83)\n\nInterpretation algorithms\n\nAccount symbols and G/L accounts\n\nPost the entry manually in FEBAN\n\nReconcile again to match the bank balance",
+          "sampleAnswerCN": "1. 检查银行提供的电子文件中是否包含缺失的交易；\n\n2. 通过FF_5重新导入银行对账单文件；\n\n3. 验证OT83的映射规则、解析算法、科目符号与总账科目的对应关系；\n\n4. 若文件中无该交易，在FEBAN中手工编制该笔银行交易的过账分录；\n\n5. 重新执行银行对账，确保SAP银行余额与实际银行余额一致。"
+        },
+        {
+          "questionNo": "Q91",
+          "questionContent": "What are the key challenges in SAP FICO implementation?",
+          "questionContentCN": "实施SAP FICO的核心挑战有哪些？",
+          "sampleAnswer": "Complex organizational structures (multi-company, multi-currency)\n\nMaster data management (vendors/customers/GLs)\n\nIntegrating FI with MM, SD, HCM, CO\n\nAccurate tax, legal, and compliance configurations\n\nData migration and reconciliation\n\nUser training and change management\n\nEnsuring performance and scalability post go-live",
+          "sampleAnswerCN": "1. 企业组织架构复杂（如多公司、多货币核算场景）；\n\n2. 主数据管理难度大（供应商、客户、总账科目等主数据的梳理和标准化）；\n\n3. FI与MM、SD、HCM、CO等模块的集成调试工作繁琐；\n\n4. 税务、法务及合规性配置的精准性要求高；\n\n5. 历史数据迁移和账实核对工作量大；\n\n6. 终端用户培训和企业管理模式的变革管理难度高；\n\n7. 系统上线后，性能和可扩展性的保障难度大。"
+        },
+        {
+          "questionNo": "Q92",
+          "questionContent": "How do you optimize SAP FICO performance in a large organization?",
+          "questionContentCN": "在大型企业中，如何优化SAP FICO的系统性能？",
+          "sampleAnswer": "Archive old data using SAP Data Archiving (SARA)\n\nUse parallel processing in transaction runs (like F110, F.13)\n\nImplement New GL and document splitting for better reporting\n\nMinimize custom code and optimize ABAP routines\n\nUse Indexing and tuning of GL accounts and tables\n\nSchedule jobs in off-peak hours",
+          "sampleAnswerCN": "1. 通过SAP数据归档工具（SARA）归档历史数据，减少系统数据量；\n\n2. 对批量交易运行启用并行处理（如F110自动付款、F.13自动清账）；\n\n3. 实施新总账和凭证拆分功能，提升报表生成效率；\n\n4. 尽量减少自定义开发，优化ABAP程序；\n\n5. 对总账科目和相关数据表建立索引并进行性能调优；\n\n6. 在非业务高峰时段调度后台作业，避免业务高峰期系统资源占用。"
+        },
+        {
+          "questionNo": "Q93",
+          "questionContent": "What are common reconciliation issues in SAP FI and how do you resolve",
+          "questionContentCN": "SAP FI中常见的对账问题有哪些？如何解决？",
+          "sampleAnswer": "Common Issues:\n\nGR/IR not clearing\n\nVendor/customer open item mismatch\n\nBank statement discrepancies\n\nIntercompany imbalance\n\nResolutions:\n\nUse F.13 for automatic clearing\n\nPerform manual clearing (F-03)\n\nRegularly monitor reconciliations using reports\n\nVerify posting periods, document types, and master data",
+          "sampleAnswerCN": "常见问题：GR/IR清账科目余额未清、供应商/客户未清项对账不平、银行对账单账实差\n异、公司间往来余额不平衡。\n\n解决方法：\n\n1. 使用F.13执行自动清账；\n\n2. 通过F-03对未清项进行手工清账；\n\n3. 通过报表定期监控各科目对账情况，提前发现问题；\n\n4. 核对交易的过账期间、凭证类型及主数据信息，修正错误配置或账务。"
+        },
+        {
+          "questionNo": "Q94",
+          "questionContent": "How do you configure SAP FICO for multi-currency transactions?",
+          "questionContentCN": "如何配置SAP FICO以支持多货币交易？",
+          "sampleAnswer": "Assign company code currency and global currency (OB22)\n\nEnable parallel currencies in New GL\n\nMaintain exchange rates (OB08)\n\nDefine translation ratios and exchange rate types\n\nUse correct document types that allow foreign currencies",
+          "sampleAnswerCN": "1. 通过OB22为公司代码分配本位币和集团货币；\n\n2. 在新总账中启用平行货币核算功能；\n\n3. 通过OB08维护汇率信息；\n\n4. 定义汇率换算比例和汇率类型；\n\n5. 使用支持外币交易的凭证类型进行业务过账。"
+        },
+        {
+          "questionNo": "Q95",
+          "questionContent": "What is the impact of incorrect tax configuration in SAP FI?",
+          "questionContentCN": "SAP FI中税务配置错误会产生哪些影响？",
+          "sampleAnswer": "Wrong tax amounts in invoices\n\nLegal non-compliance (especially for VAT, GST, etc.)\n\nInaccurate financial statements\n\nErrors in tax reporting and returns\n\nFailed integration with SD/MM for tax calculations\n\n✅ Regularly audit T-codes: FTXP, OB40, OBYZ",
+          "sampleAnswerCN": "1. 发票中的税金计算错误；\n\n2. 企业面临税务合规风险（如增值税、消费税等税种核算违规）；\n\n3. 财务报表中税务相关数据失真；\n\n4. 税务申报和纳税申报表编制错误；\n\n5. FI与SD/MM模块的税务计算集成失败，无法自动过账税金。\n\n防范措施：定期审计税务相关事务代码（FTXP、OB40、OBYZ）的配置。"
+        },
+        {
+          "questionNo": "Q96",
+          "questionContent": "How do you handle foreign currency revaluation in SAP?",
+          "questionContentCN": "在SAP中如何处理外币重估？",
+          "sampleAnswer": "Run F.05 – Foreign Currency Valuation\n\nConfigure valuation methods and accounts in OB59\n\nUse valuation area and exchange rate types\n\nRevaluation adjusts:\n\nOpen items (vendor/customer)\n\nGL balances (in foreign currencies)\n\nSystem posts gain/loss to defined exchange difference accounts",
+          "sampleAnswerCN": "1. 执行事务代码F.05完成外币重估；\n\n2. 通过OB59配置外币重估方法和对应的过账科目；\n\n3. 选择合适的重估范围和汇率类型；\n\n4. 外币重估会对供应商/客户的外币未清项和外币总账科目余额进行调整；\n\n5. 系统会将重估产生的汇兑损益自动过账至预定义的汇兑差异科目。"
+        },
+        {
+          "questionNo": "Q97",
+          "questionContent": "What are the steps to close a fiscal year in SAP FI?",
+          "questionContentCN": "在SAP FI中，会计年度关账的步骤是什么？",
+          "sampleAnswer": "Close sub-ledgers (AP/AR/AA) – use AJAB for Asset Accounting\n\nRun foreign currency revaluation – F.05\n\nPost accruals/deferrals – FBS1\n\nPerform adjustment postings\n\nRun balance carryforward (F.16) to bring balances into new fiscal year\n\nClose fiscal periods via OB52",
+          "sampleAnswerCN": "1.\n      完成子模块关账（应付账款/应收账款/资产会计），其中资产会计关账使用AJAB；\n\n2. 执行F.05完成外币重估；\n\n3. 通过FBS1编制预提/待摊费用的调整分录；\n\n4. 编制其他期末调整分录（如成本结转、损益调整）；\n\n5. 执行F.16将本年科目余额结转到下一个会计年度；\n\n6. 通过OB52关闭当前会计年度的过账期间。"
+        },
+        {
+          "questionNo": "Q98",
+          "questionContent": "How do you handle a missing invoice in SAP FI?",
+          "questionContentCN": "在SAP FI中如何处理发票缺失的问题？",
+          "sampleAnswer": "Search using FB03, FBL1N (vendor), or MIR4 (MM invoice)\n\nCheck PO history (ME23N) if PO-based\n\nIf missing:\n\nRe-enter manually (FB60 for direct, MIRO for PO-based)\n\nCheck workflow or approval blocks\n\nValidate with vendor and reconcile statements",
+          "sampleAnswerCN": "1. 通过FB03、FBL1N（供应商未清项）或MIR4（MM模块发票）搜索缺失的发票；\n\n2. 若为基于采购订单的发票，检查ME23N中的采购订单历史记录；\n\n若确认发票缺失：\n\n1. 重新录入发票（手工发票用FB60，基于采购订单的发票用MIRO）；\n\n2. 检查系统工作流或审批冻结设置，确认是否因审批问题导致发票未过账；\n\n3. 与供应商核对发票信息，完成双方往来对账。"
+        },
+        {
+          "questionNo": "Q99",
+          "questionContent": "What is the best approach to handle open items in SAP FI?",
+          "questionContentCN": "在SAP FI中，处理未清项的最佳方法是什么？",
+          "sampleAnswer": "Run F.13 for automatic clearing regularly\n\nUse F-03 for manual clearing with reference fields\n\nPerform open item analysis using:\n\nFBL1N/FBL5N/FS10N\n\nClear partial payments using residual/partial methods\n\nInvestigate and resolve long-pending items during period-end",
+          "sampleAnswerCN": "1. 定期执行F.13进行自动清账，减少手工操作；\n\n2. 通过F-03，依据参考字段对未清项进行精准手工清账；\n\n3.\n      使用FBL1N（供应商）/FBL5N（客户）/FS10N（总账）进行未清项分析，定位长期挂\n      账项；\n\n4. 使用剩余付款/部分付款的方式处理部分结清的款项；\n\n5. 期末对长期挂账的未清项进行全面排查和清理，确保账务准确。"
+        },
+        {
+          "questionNo": "Q100",
+          "questionContent": "How do you generate a financial statement version in SAP FI?",
+          "questionContentCN": "在SAP FI中，如何生成财务报表版本？",
+          "sampleAnswer": "Use T-code: OB58\n\nCreate a new version or copy from an existing one\n\nDefine hierarchy nodes (Assets, Liabilities, Income, Expenses)\n\nAssign GL accounts or account ranges to groups\n\nUse it in F.01 (Financial Statement Report)\n\nThis allows flexible and customized reporting for stakeholders.",
+          "sampleAnswerCN": "1. 执行事务代码OB58；\n\n2. 新建财务报表版本，或复制现有版本进行修改（提高配置效率）；\n\n3. 定义报表的层级节点（如资产、负债、收入、费用），匹配财务报表格式；\n\n4. 将总账科目或科目范围分配至对应的报表组；\n\n5. 在F.01（财务报表）中选择该版本生成报表。"
+        }
+      ]
+    }
+  ]
+}

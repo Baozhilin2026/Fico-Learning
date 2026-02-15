@@ -1,0 +1,156 @@
+
+{
+  "interviewContents": [
+    {
+      "interviewStage": "自我介绍 (Self-introduction)",
+      "questions": [
+        {
+          "englishQuestion": "Can you briefly introduce yourself and your experience as an SAP FICO consultant?",
+          "chineseTranslation": "你能简要介绍一下自己以及作为SAP FICO顾问的经验吗？",
+          "englishAnswer": "",
+          "chineseAnswer": ""
+        },
+        {
+          "englishQuestion": "What motivated you to specialize in SAP FICO, and what aspects of FICO do you enjoy the most?",
+          "chineseTranslation": "是什么促使你专注于SAP FICO领域？你最喜欢FICO的哪些方面？",
+          "englishAnswer": "",
+          "chineseAnswer": ""
+        },
+        {
+          "englishQuestion": "Could you highlight one project that best demonstrates your FICO expertise?",
+          "chineseTranslation": "你能重点介绍一个最能体现你FICO专业能力的项目吗？",
+          "englishAnswer": "",
+          "chineseAnswer": ""
+        },
+        {
+          "englishQuestion": "How do you keep your FICO knowledge up-to-date with new SAP releases?",
+          "chineseTranslation": "随着SAP新版本的发布，你如何保持自己的FICO知识与时俱进？",
+          "englishAnswer": "",
+          "chineseAnswer": ""
+        }
+      ]
+    },
+    {
+      "interviewStage": "项目经验 (Project experience)",
+      "questions": [
+        {
+          "englishQuestion": "Can you describe the most challenging SAP FICO implementation you have worked on? What was your role?",
+          "chineseTranslation": "你能描述一下你参与过的最具挑战性的SAP FICO实施项目吗？你的角色是什么？",
+          "englishAnswer": "",
+          "chineseAnswer": ""
+        },
+        {
+          "englishQuestion": "How did you handle a situation where the project scope changed significantly during an FICO rollout?",
+          "chineseTranslation": "在FICO系统上线过程中，当项目范围发生重大变化时，你是如何处理的？",
+          "englishAnswer": "",
+          "chineseAnswer": ""
+        },
+        {
+          "englishQuestion": "Can you give an example of a process improvement you implemented in a previous FICO project?",
+          "chineseTranslation": "你能举一个在之前的FICO项目中，你实施的流程改进案例吗？",
+          "englishAnswer": "",
+          "chineseAnswer": ""
+        },
+        {
+          "englishQuestion": "Have you ever had to integrate SAP FICO with other modules (like SD or MM)? How did you handle the integration?",
+          "chineseTranslation": "你是否有过将SAP FICO与其他模块（如SD或MM）集成的经验？你是如何处理集成工作的？",
+          "englishAnswer": "",
+          "chineseAnswer": ""
+        }
+      ]
+    },
+    {
+      "interviewStage": "技术问题 (Technical questions)",
+      "questions": [
+        {
+          "englishQuestion": "Can you explain the difference between a primary and a secondary cost element in SAP CO?",
+          "chineseTranslation": "你能解释一下SAP CO中初级成本要素和次级成本要素的区别吗？",
+          "englishAnswer": "",
+          "chineseAnswer": ""
+        },
+        {
+          "englishQuestion": "How do you configure a dunning procedure in Accounts Receivable?",
+          "chineseTranslation": "你如何在应收账款（AR）中配置催款程序？",
+          "englishAnswer": "",
+          "chineseAnswer": ""
+        },
+        {
+          "englishQuestion": "What is the difference between asset acquisition and asset retirement in Asset Accounting (AA)?",
+          "chineseTranslation": "在资产会计（AA）中，资产购置和资产报废的区别是什么？",
+          "englishAnswer": "",
+          "chineseAnswer": ""
+        },
+        {
+          "englishQuestion": "How would you troubleshoot a discrepancy between GL and subledger in SAP FICO?",
+          "chineseTranslation": "在SAP FICO中，当总账（GL）和子ledger存在差异时，你会如何排查问题？",
+          "englishAnswer": "",
+          "chineseAnswer": ""
+        },
+        {
+          "englishQuestion": "Explain the difference between order settlement and allocation in Controlling.",
+          "chineseTranslation": "解释一下控制模块（CO）中订单结算和分配的区别。",
+          "englishAnswer": "",
+          "chineseAnswer": ""
+        }
+      ]
+    },
+    {
+      "interviewStage": "真实场景问题 (Real project scenarios / Interaction with key users)",
+      "questions": [
+        {
+          "englishQuestion": "A key user complains that the month-end closing takes too long. How would you investigate and propose a solution?",
+          "chineseTranslation": "一位关键用户（Keyuser）抱怨月末结账耗时过长，你会如何调查并提出解决方案？",
+          "englishAnswer": "",
+          "chineseAnswer": ""
+        },
+        {
+          "englishQuestion": "The finance director wants a report showing profit by product line, but the system doesn’t have a standard report. How would you handle it?",
+          "chineseTranslation": "财务总监需要一份按产品线显示利润的报告，但系统中没有标准报告，你会如何处理？",
+          "englishAnswer": "",
+          "chineseAnswer": ""
+        },
+        {
+          "englishQuestion": "During a project, the business wants to change the chart of accounts mid-implementation. How would you manage this request?",
+          "chineseTranslation": "在项目实施过程中，业务方希望修改会计科目表，你会如何管理这个需求？",
+          "englishAnswer": "",
+          "chineseAnswer": ""
+        },
+        {
+          "englishQuestion": "How do you handle conflicts between key users’ requirements and SAP best practices?",
+          "chineseTranslation": "当关键用户（Keyuser）的需求与SAP最佳实践发生冲突时，你会如何处理？",
+          "englishAnswer": "",
+          "chineseAnswer": ""
+        }
+      ]
+    },
+    {
+      "interviewStage": "反问环节 (Candidate questions / Reverse questions)",
+      "questions": [
+        {
+          "englishQuestion": "Can you tell me more about the typical SAP FICO projects your company handles?",
+          "chineseTranslation": "你能多介绍一下贵公司常见的SAP FICO项目类型吗？",
+          "englishAnswer": "",
+          "chineseAnswer": ""
+        },
+        {
+          "englishQuestion": "How does your team handle SAP upgrades and new module implementations?",
+          "chineseTranslation": "你们团队是如何处理SAP升级和新模块实施工作的？",
+          "englishAnswer": "",
+          "chineseAnswer": ""
+        },
+        {
+          "englishQuestion": "What are the biggest challenges your FICO consultants face on projects?",
+          "chineseTranslation": "你们的FICO顾问在项目中面临的最大挑战是什么？",
+          "englishAnswer": "",
+          "chineseAnswer": ""
+        },
+        {
+          "englishQuestion": "Are there opportunities to get involved in cross-functional projects with other SAP modules?",
+          "chineseTranslation": "有机会参与其他SAP模块的跨职能项目吗？",
+          "englishAnswer": "",
+          "chineseAnswer": ""
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "authorizationCodes": [
+    "8f3d9e2a1c7b6f4e",
+    "2a9b7c3d8e1f4a6c",
+    "f1e8d4c7b3a9f2e6"
+  ],
+  "lastUpdated": "2025-02-07T00:00:00Z",
+  "adminContact": "admin@fico-learning.com",
+  "version": "1.0.0",
+  "interviewConfig": {
+    "questionsPerStage": 2,
+    "timePerQuestion": 30,
+    "stages": [
+      "自我介绍",
+      "项目经验",
+      "技术问题",
+      "真实场景问题",
+      "反问环节"
+    ]
+  },
+  "glm": {
+    "apiKey": "f356990e72ff4b5a89ef5f0c87e0c6c9.oGaKTihDKkz8lM7A",
+    "model": "glm-4-flash",
+    "baseUrl": "https://open.bigmodel.cn/api/paas/v4/chat/completions",
+    "maxTokens": 2000,
+    "temperature": 0.7
+  },
+  "jobLevels": {
+    "junior": {
+      "name": "FICO初级实施顾问",
+      "experience": "0-2年",
+      "questionsPerSession": 5,
+      "timePerQuestion": 180,
+      "document": "FICO初级顾问岗位要求.docx",
+      "competencies": {
+        "technical": [
+          "Basic FI/CO module knowledge",
+          "General Ledger configuration",
+          "Accounts Payable/Receivable basics",
+          "Document posting and reversal",
+          "Basic reporting tools"
+        ],
+        "business": [
+          "Understanding of business cycles",
+          "Basic accounting principles",
+          "Month-end closing concepts"
+        ],
+        "project": [
+          "Documentation skills",
+          "Basic troubleshooting",
+          "Communication with users"
+        ]
+      }
+    },
+    "middle": {
+      "name": "FICO中级实施顾问",
+      "experience": "2-5年",
+      "questionsPerSession": 7,
+      "timePerQuestion": 300,
+      "document": "FICO中级顾问岗位要求.docx",
+      "competencies": {
+        "technical": [
+          "Advanced FI/CO configuration",
+          "Asset Accounting",
+          "Controlling module (CO)",
+          "Cost Center accounting",
+          "Product Costing",
+          "Integration with other modules"
+        ],
+        "business": [
+          "Industry-specific processes",
+          "Business process optimization",
+          "Financial statement analysis"
+        ],
+        "project": [
+          "Project leadership",
+          "Requirement gathering",
+          "Solution design"
+        ]
+      }
+    },
+    "senior": {
+      "name": "FICO高级实施顾问",
+      "experience": "5年以上",
+      "questionsPerSession": 8,
+      "timePerQuestion": 360,
+      "document": "FICO高级顾问岗位要求.docx",
+      "competencies": {
+        "technical": [
+          "S/4HANA migration experience",
+          "New GL concepts",
+          "Advanced CO-PA",
+          "Complex integrations",
+          "Custom development oversight"
+        ],
+        "business": [
+          "Strategic planning",
+          "Business transformation",
+          "C-level communication"
+        ],
+        "project": [
+          "Project management",
+          "Team leadership",
+          "Client relationship management"
+        ]
+      }
+    }
+  },
+  "industries": {
+    "manufacturing": "制造业",
+    "retail": "零售/电商",
+    "finance": "金融服务",
+    "energy": "能源与化工",
+    "pharma": "医药与生命科学",
+    "technology": "高科技与互联网",
+    "logistics": "物流与运输",
+    "public": "公共部门与教育",
+    "realestate": "房地产与建筑",
+    "other": "其他"
+  }
+}
