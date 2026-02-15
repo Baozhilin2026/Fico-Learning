@@ -4,6 +4,7 @@ import { resolve } from 'path'
 
 export default defineConfig({
   plugins: [vue()],
+  base: "/",
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src')
@@ -15,9 +16,5 @@ export default defineConfig({
         additionalData: `@use "@/assets/styles/variables.scss" as *;`
       }
     }
-  },
-  server: {
-    port: 3000,
-    open: true
   }
 })
