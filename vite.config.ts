@@ -4,7 +4,6 @@ import { resolve } from 'path'
 
 export default defineConfig({
   plugins: [vue()],
-  base: '/fico-learning/', // GitHub 仓库名，请根据实际修改
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src')
