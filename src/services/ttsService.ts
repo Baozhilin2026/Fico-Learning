@@ -25,11 +25,11 @@ class TTSService {
   }
 
   // Gender settings for browser TTS
-  // Male: Very low pitch (0.3-0.5 range) - more masculine sound
-  // Female: Higher pitch (1.1-1.3 range) - feminine but not too high
+  // Male: Lower pitch (0.7-0.8 range) - masculine but not too deep
+  // Female: Higher pitch (1.1-1.2 range) - feminine but natural
   private genderSettings: Record<TTSGender, { pitch: number; rateMultiplier?: number }> = {
-    male: { pitch: 0.4, rateMultiplier: 0.92 },
-    female: { pitch: 1.2, rateMultiplier: 1.0 }
+    male: { pitch: 0.75, rateMultiplier: 0.95 },
+    female: { pitch: 1.15, rateMultiplier: 1.0 }
   }
 
   constructor() {
@@ -58,18 +58,21 @@ class TTSService {
     console.log('============================')
   }
 
-  // Comprehensive voice name to gender mapping for Microsoft and other TTS providers
-  // Microsoft voices use gendered names rather than "Male"/"Female" labels
+  // Comprehensive voice name to gender mapping for Microsoft, Apple, and other TTS providers
+  // iOS/iPadOS uses different voice names than desktop
   private femaleVoiceNames = [
     // Microsoft female voices
     'neerja', 'ava', 'heera', 'shruti', 'veda', 'anitha', 'padma', 'roshni', 'tara', 'zira',
     'samantha', 'karen', 'susan', 'fiona', 'victoria', 'jasm', 'shreyas', 'shyla', 'chitra',
     'priya', 'anita', 'laxmi', 'sheela', 'kalpana', 'geeta', 'rani', 'meena', 'kavita',
-    'sonia', 'pooja', 'deepa', 'reena', 'meena', 'savita', 'sunita',
+    'sonia', 'pooja', 'deepa', 'reena', 'meena', 'savita', 'sunita', 'natalia', 'nana',
+    // Apple iOS/iPadOS female voices (enhanced)
+    'samantha', 'karen', 'moira', 'tessa', 'veena', 'nora', 'elle', 'fiona', 'siri',
+    'kyoko', 'sin-ji', 'tingting', 'meijia', 'xiao', 'yu-sheng', 'liza', 'juli',
+    'ellen', 'filiz', ' aurelie', 'amelie', 'thomas', 'carmen', 'monica', 'paulina',
+    'ioana', 'joana', 'sara', 'luciana', 'marlene', 'penelope', 'mari', 'damayanti',
     // Google female voices
     'google uk english female',
-    // Apple female voices
-    'siri', 'karen', 'moira', 'tessa', 'veena', 'samantha',
     // Generic labels
     'female'
   ]
@@ -80,6 +83,11 @@ class TTSService {
     'ralph', 'bruce', 'steve', 'tony', 'mike', 'richard', 'george', 'henry', 'ronald',
     'ravi', 'raj', 'amit', 'sunil', 'arun', 'vikram', 'rahul', 'deepak', 'pradeep',
     'suresh', 'mahesh', 'naresh', 'ramesh', 'dinesh', 'mohan', 'krishna', 'balu',
+    // Apple iOS/iPadOS male voices (enhanced)
+    'daniel', 'thomas', 'alex', 'lee', 'aaron', 'junior', 'raju', 'ramesh', 'ji-ho',
+    'yuna', 'lenka', 'paulina', 'nora', 'ozlem', 'rohit', 'rishi', 'satu', 'arjun',
+    'spencer', 'thomas', 'diego', 'alvaro', 'guillermo', 'jorge', 'carlos', 'alberto',
+    'juan', 'marco', 'renzo', 'andres', 'felipe', 'ricardo', 'raul', 'luca',
     // Generic labels
     'male'
   ]
@@ -99,7 +107,6 @@ class TTSService {
 
     // Fallback for Indian accent: if no en-IN, try en-GB or en-AU
     if (matchedVoices.length === 0 && accent === 'indian') {
-      // Try British or Australian English as they're closer to Indian English
       matchedVoices = voices.filter(v => v.lang.startsWith('en-GB') || v.lang.startsWith('en-AU'))
     }
 
@@ -116,57 +123,70 @@ class TTSService {
     // Log for debugging
     console.log('Available voices for', accent, '(', gender, '):', matchedVoices.map(v => `${v.name} (${v.lang})`))
 
-    // First try exact "Male"/"Female" match (case-sensitive) for Google voices
+    // Separate voices by gender using scoring system
+    const scoredVoices = matchedVoices.map(voice => {
+      let maleScore = 0
+      let femaleScore = 0
+      const voiceNameLower = voice.name.toLowerCase()
+
+      // Check against known voice name patterns
+      for (const name of this.maleVoiceNames) {
+        if (voiceNameLower.includes(name)) {
+          maleScore += 10
+        }
+      }
+      for (const name of this.femaleVoiceNames) {
+        if (voiceNameLower.includes(name)) {
+          femaleScore += 10
+        }
+      }
+
+      // Check for exact "Male"/"Female" in name (case-sensitive)
+      if (voice.name.includes('Male')) maleScore += 20
+      if (voice.name.includes('Female')) femaleScore += 20
+
+      // Check for common gender indicators
+      if (voiceNameLower.includes(' mr ') || voiceNameLower.includes(' mr.')) maleScore += 5
+      if (voiceNameLower.includes(' mrs ') || voiceNameLower.includes(' mrs.')) femaleScore += 5
+      if (voiceNameLower.includes(' miss ') || voiceNameLower.includes(' ms.')) femaleScore += 5
+
+      return { voice, maleScore, femaleScore }
+    })
+
+    // Select voice based on gender preference
     if (gender === 'male') {
-      const exactMaleVoice = matchedVoices.find(v => v.name.includes('Male'))
-      if (exactMaleVoice) {
-        console.log('Selected exact male voice:', exactMaleVoice.name)
-        return exactMaleVoice
+      // Prefer voices with high male score and low female score
+      const maleVoices = scoredVoices.filter(v => v.maleScore > v.femaleScore)
+      if (maleVoices.length > 0) {
+        // Sort by male score descending, female score ascending
+        maleVoices.sort((a, b) => (b.maleScore - a.femaleScore) - (a.maleScore - a.femaleScore))
+        const selected = maleVoices[0].voice
+        console.log('Selected male voice:', selected.name, '(Male score:', maleVoices[0].maleScore, 'Female score:', maleVoices[0].femaleScore, ')')
+        return selected
+      }
+      // Fallback: voice with lowest female score
+      const neutralVoices = scoredVoices.filter(v => v.femaleScore === 0)
+      if (neutralVoices.length > 0) {
+        const selected = neutralVoices[0].voice
+        console.log('Selected neutral voice for male:', selected.name)
+        return selected
       }
     } else {
-      const exactFemaleVoice = matchedVoices.find(v => v.name.includes('Female'))
-      if (exactFemaleVoice) {
-        console.log('Selected exact female voice:', exactFemaleVoice.name)
-        return exactFemaleVoice
+      // Prefer voices with high female score and low male score
+      const femaleVoices = scoredVoices.filter(v => v.femaleScore > v.maleScore)
+      if (femaleVoices.length > 0) {
+        // Sort by female score descending, male score ascending
+        femaleVoices.sort((a, b) => (b.femaleScore - a.maleScore) - (a.femaleScore - a.maleScore))
+        const selected = femaleVoices[0].voice
+        console.log('Selected female voice:', selected.name, '(Female score:', femaleVoices[0].femaleScore, 'Male score:', femaleVoices[0].maleScore, ')')
+        return selected
       }
-    }
-
-    // Filter voices by gender based on voice name patterns
-    if (gender === 'male') {
-      // Priority 1: Find known male voices
-      const maleVoice = matchedVoices.find(v =>
-        this.maleVoiceNames.some(name => v.name.toLowerCase().includes(name))
-      )
-      if (maleVoice) {
-        console.log('Selected male voice (by name):', maleVoice.name)
-        return maleVoice
-      }
-
-      // Priority 2: Exclude known female voices
-      const nonFemaleVoice = matchedVoices.find(v =>
-        !this.femaleVoiceNames.some(name => v.name.toLowerCase().includes(name))
-      )
-      if (nonFemaleVoice) {
-        console.log('Selected non-female voice:', nonFemaleVoice.name)
-        return nonFemaleVoice
-      }
-    } else {
-      // Priority 1: Find known female voices
-      const femaleVoice = matchedVoices.find(v =>
-        this.femaleVoiceNames.some(name => v.name.toLowerCase().includes(name))
-      )
-      if (femaleVoice) {
-        console.log('Selected female voice (by name):', femaleVoice.name)
-        return femaleVoice
-      }
-
-      // Priority 2: Exclude known male voices
-      const nonMaleVoice = matchedVoices.find(v =>
-        !this.maleVoiceNames.some(name => v.name.toLowerCase().includes(name))
-      )
-      if (nonMaleVoice) {
-        console.log('Selected non-male voice:', nonMaleVoice.name)
-        return nonMaleVoice
+      // Fallback: voice with lowest male score
+      const neutralVoices = scoredVoices.filter(v => v.maleScore === 0)
+      if (neutralVoices.length > 0) {
+        const selected = neutralVoices[0].voice
+        console.log('Selected neutral voice for female:', selected.name)
+        return selected
       }
     }
 
