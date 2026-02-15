@@ -45,6 +45,9 @@ export function useTTS() {
     rate?: number
   }): Promise<void> {
     try {
+      // Stop any current playback before starting new one
+      unifiedTTSService.stop()
+
       isPlaying.value = true
       isPaused.value = false
       progress.value = 0
