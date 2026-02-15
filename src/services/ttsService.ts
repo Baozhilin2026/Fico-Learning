@@ -15,21 +15,21 @@ class TTSService {
   }
 
   // Browser TTS accent settings - optimized for Web Speech API
-  // Indian: Use en-IN with higher rate for characteristic rhythm
+  // Indian: Slower rate for clarity, especially for female voices
   // Singapore: Use en-AU or en-GB with adjusted rate
   // Western: Standard en-US
   private accentSettings: Record<TTSAccent, { rate: number; lang?: string }> = {
-    indian: { rate: 1.15, lang: 'en-IN' },
+    indian: { rate: 0.95, lang: 'en-IN' },
     singapore: { rate: 0.98, lang: 'en-AU' },
     western: { rate: 1.0, lang: 'en-US' }
   }
 
   // Gender settings for browser TTS
-  // Male: Lower pitch (0.7-0.8 range) - masculine but not too deep
-  // Female: Higher pitch (1.1-1.2 range) - feminine but natural
+  // Male: Lower pitch (0.8-0.85 range) - masculine but not too deep
+  // Female: Higher pitch (1.1-1.15 range) - feminine but natural
   private genderSettings: Record<TTSGender, { pitch: number; rateMultiplier?: number }> = {
-    male: { pitch: 0.75, rateMultiplier: 0.95 },
-    female: { pitch: 1.15, rateMultiplier: 1.0 }
+    male: { pitch: 0.82, rateMultiplier: 1.0 },
+    female: { pitch: 1.12, rateMultiplier: 0.95 }
   }
 
   constructor() {
@@ -61,15 +61,17 @@ class TTSService {
   // Comprehensive voice name to gender mapping for Microsoft, Apple, and other TTS providers
   // iOS/iPadOS uses different voice names than desktop
   private femaleVoiceNames = [
-    // Microsoft female voices
-    'neerja', 'ava', 'heera', 'shruti', 'veda', 'anitha', 'padma', 'roshni', 'tara', 'zira',
-    'samantha', 'karen', 'susan', 'fiona', 'victoria', 'jasm', 'shreyas', 'shyla', 'chitra',
+    // Microsoft female voices (Indian English)
+    'neerja', 'heera', 'shruti', 'veda', 'anitha', 'padma', 'roshni', 'tara',
     'priya', 'anita', 'laxmi', 'sheela', 'kalpana', 'geeta', 'rani', 'meena', 'kavita',
-    'sonia', 'pooja', 'deepa', 'reena', 'meena', 'savita', 'sunita', 'natalia', 'nana',
-    // Apple iOS/iPadOS female voices (enhanced)
-    'samantha', 'karen', 'moira', 'tessa', 'veena', 'nora', 'elle', 'fiona', 'siri',
+    'sonia', 'pooja', 'deepa', 'reena', 'savita', 'sunita',
+    // Microsoft female voices (other English)
+    'ava', 'zira', 'susan', 'fiona', 'victoria', 'jasm', 'shreyas', 'shyla',
+    'natalia', 'nana',
+    // Apple iOS/iPadOS female voices (Compact/Enhanced)
+    'samantha', 'karen', 'moira', 'tessa', 'veena', 'nora', 'elle', 'fiona',
     'kyoko', 'sin-ji', 'tingting', 'meijia', 'xiao', 'yu-sheng', 'liza', 'juli',
-    'ellen', 'filiz', ' aurelie', 'amelie', 'thomas', 'carmen', 'monica', 'paulina',
+    'ellen', 'filiz', 'aurelie', 'amelie', 'carmen', 'monica', 'paulina',
     'ioana', 'joana', 'sara', 'luciana', 'marlene', 'penelope', 'mari', 'damayanti',
     // Google female voices
     'google uk english female',
@@ -78,15 +80,16 @@ class TTSService {
   ]
 
   private maleVoiceNames = [
-    // Microsoft male voices
-    'william', 'david', 'daniel', 'james', 'robert', 'mark', 'alex', 'fred', 'junior',
-    'ralph', 'bruce', 'steve', 'tony', 'mike', 'richard', 'george', 'henry', 'ronald',
+    // Microsoft male voices (Indian English)
     'ravi', 'raj', 'amit', 'sunil', 'arun', 'vikram', 'rahul', 'deepak', 'pradeep',
     'suresh', 'mahesh', 'naresh', 'ramesh', 'dinesh', 'mohan', 'krishna', 'balu',
-    // Apple iOS/iPadOS male voices (enhanced)
-    'daniel', 'thomas', 'alex', 'lee', 'aaron', 'junior', 'raju', 'ramesh', 'ji-ho',
-    'yuna', 'lenka', 'paulina', 'nora', 'ozlem', 'rohit', 'rishi', 'satu', 'arjun',
-    'spencer', 'thomas', 'diego', 'alvaro', 'guillermo', 'jorge', 'carlos', 'alberto',
+    // Microsoft male voices (other English)
+    'william', 'david', 'james', 'robert', 'mark', 'fred', 'junior',
+    'ralph', 'bruce', 'steve', 'tony', 'mike', 'richard', 'george', 'henry', 'ronald',
+    // Apple iOS/iPadOS male voices (Compact/Enhanced)
+    'daniel', 'alex', 'lee', 'aaron', 'raju', 'ji-ho',
+    'yuna', 'lenka', 'ozlem', 'rohit', 'rishi', 'satu', 'arjun',
+    'spencer', 'diego', 'alvaro', 'guillermo', 'jorge', 'carlos', 'alberto',
     'juan', 'marco', 'renzo', 'andres', 'felipe', 'ricardo', 'raul', 'luca',
     // Generic labels
     'male'
@@ -122,6 +125,81 @@ class TTSService {
 
     // Log for debugging
     console.log('Available voices for', accent, '(', gender, '):', matchedVoices.map(v => `${v.name} (${v.lang})`))
+
+    // Special handling for western accent male voices
+    if (accent === 'western' && gender === 'male') {
+      // First, try to find exact "Male" labeled voices
+      const exactMaleVoice = matchedVoices.find(v => v.name.includes('Male'))
+      if (exactMaleVoice) {
+        console.log('Selected exact Male voice for western:', exactMaleVoice.name)
+        return exactMaleVoice
+      }
+
+      // For iOS/iPadOS, prefer specific male voice names
+      const iosMaleVoice = matchedVoices.find(v =>
+        v.name.toLowerCase().includes('daniel') ||
+        v.name.toLowerCase().includes('alex') ||
+        v.name.toLowerCase().includes('lee') ||
+        v.name.toLowerCase().includes('aaron') ||
+        v.name.toLowerCase().includes('david')
+      )
+      if (iosMaleVoice) {
+        console.log('Selected iOS male voice for western:', iosMaleVoice.name)
+        return iosMaleVoice
+      }
+
+      // For Microsoft, prefer William or other known male voices
+      const msMaleVoice = matchedVoices.find(v =>
+        v.name.toLowerCase().includes('william') ||
+        v.name.toLowerCase().includes('david') ||
+        v.name.toLowerCase().includes('james') ||
+        v.name.toLowerCase().includes('mark')
+      )
+      if (msMaleVoice) {
+        console.log('Selected Microsoft male voice for western:', msMaleVoice.name)
+        return msMaleVoice
+      }
+    }
+
+    // Special handling for indian accent
+    if (accent === 'indian') {
+      if (gender === 'male') {
+        // For Indian male voices, prefer voices with Indian male names
+        const indianMaleVoice = matchedVoices.find(v =>
+          v.name.toLowerCase().includes('ravi') ||
+          v.name.toLowerCase().includes('raj') ||
+          v.name.toLowerCase().includes('amit') ||
+          v.name.toLowerCase().includes('arun') ||
+          v.name.toLowerCase().includes('rahul')
+        )
+        if (indianMaleVoice) {
+          console.log('Selected Indian male voice:', indianMaleVoice.name)
+          return indianMaleVoice
+        }
+
+        // If no Indian male voice found, try to exclude obvious female voices
+        const nonFemaleVoice = matchedVoices.find(v =>
+          !this.femaleVoiceNames.some(name => v.name.toLowerCase().includes(name))
+        )
+        if (nonFemaleVoice) {
+          console.log('Selected non-female voice for Indian male:', nonFemaleVoice.name)
+          return nonFemaleVoice
+        }
+      } else {
+        // For Indian female voices
+        const indianFemaleVoice = matchedVoices.find(v =>
+          v.name.toLowerCase().includes('neerja') ||
+          v.name.toLowerCase().includes('heera') ||
+          v.name.toLowerCase().includes('shruti') ||
+          v.name.toLowerCase().includes('priya') ||
+          v.name.toLowerCase().includes('anita')
+        )
+        if (indianFemaleVoice) {
+          console.log('Selected Indian female voice:', indianFemaleVoice.name)
+          return indianFemaleVoice
+        }
+      }
+    }
 
     // Separate voices by gender using scoring system
     const scoredVoices = matchedVoices.map(voice => {
