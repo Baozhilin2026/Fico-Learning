@@ -15,7 +15,10 @@ class DataLoader {
 
   private async fetchJSON<T>(filename: string): Promise<T> {
     try {
-      const basePath = import.meta.env.MODE === 'production' ? '/Fico-Learning/' : '/'
+      // Detect Vercel environment and use appropriate base path
+      const isVercel = import.meta.env.MODE === 'production' &&
+                       (import.meta.env.VERCEL || import.meta.env.VERCEL_ENV)
+      const basePath = (import.meta.env.MODE === 'production' && !isVercel) ? '/Fico-Learning/' : '/'
       const response = await fetch(`${basePath}data/${filename}`)
       if (!response.ok) {
         throw new Error(`Failed to load ${filename}: ${response.statusText}`)
