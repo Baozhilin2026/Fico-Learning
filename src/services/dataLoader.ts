@@ -15,10 +15,17 @@ class DataLoader {
 
   private async fetchJSON<T>(filename: string): Promise<T> {
     try {
-      // Detect Vercel environment and use appropriate base path
-      const isVercel = import.meta.env.MODE === 'production' &&
-                       (import.meta.env.VERCEL || import.meta.env.VERCEL_ENV)
-      const basePath = (import.meta.env.MODE === 'production' && !isVercel) ? '/Fico-Learning/' : '/'
+      // Detect deployment platform by hostname
+      let basePath = '/'
+      if (import.meta.env.MODE === 'production') {
+        // Check if running on Vercel
+        if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
+          basePath = '/'
+        } else {
+          // Assume GitHub Pages
+          basePath = '/Fico-Learning/'
+        }
+      }
       const response = await fetch(`${basePath}data/${filename}`)
       if (!response.ok) {
         throw new Error(`Failed to load ${filename}: ${response.statusText}`)
