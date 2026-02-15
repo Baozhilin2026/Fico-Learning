@@ -15,7 +15,7 @@ class DataLoader {
 
   private async fetchJSON<T>(filename: string): Promise<T> {
     try {
-      const basePath = '/Fico-Learning/'
+      const basePath = import.meta.env.MODE === 'production' ? '/Fico-Learning/' : '/'
       const response = await fetch(`${basePath}data/${filename}`)
       if (!response.ok) {
         throw new Error(`Failed to load ${filename}: ${response.statusText}`)

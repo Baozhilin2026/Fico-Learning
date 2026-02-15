@@ -1,5 +1,5 @@
 import { ref, computed, onUnmounted, watch } from 'vue'
-import { unifiedTTSService, type TTSEngine } from '@/services/unifiedTTSService'
+import { unifiedTTSService } from '@/services/unifiedTTSService'
 import { useSettingsStore } from '@/stores/settings'
 import type { TTSAccent, TTSGender } from '@/types'
 
@@ -10,9 +10,6 @@ export function useTTS() {
   const isPaused = ref(false)
   const currentSpeed = ref(1.0)
   const progress = ref(0)
-
-  // TTS Engine
-  const currentEngine = ref<TTSEngine>('google')
 
   // Sync currentSpeed with settingsStore.ttsRate
   currentSpeed.value = settingsStore.ttsRate
@@ -48,9 +45,6 @@ export function useTTS() {
         gender: options?.gender || currentSettings.value.gender,
         rate: options?.rate || currentSettings.value.rate
       }
-
-      // Update engine before speaking
-      unifiedTTSService.setEngine(currentEngine.value)
 
       await unifiedTTSService.speak(text, settings)
 
@@ -99,12 +93,6 @@ export function useTTS() {
     settingsStore.setTTSGender(gender)
   }
 
-  // Set TTS engine
-  function setEngine(engine: TTSEngine) {
-    currentEngine.value = engine
-    unifiedTTSService.setEngine(engine)
-  }
-
   // Cleanup on unmount
   onUnmounted(() => {
     stop()
@@ -117,7 +105,6 @@ export function useTTS() {
     progress,
     currentAccent: computed(() => currentSettings.value.accent),
     currentGender: computed(() => currentSettings.value.gender),
-    currentEngine,
     engineInfo,
     speak,
     pause,
@@ -125,7 +112,6 @@ export function useTTS() {
     stop,
     setSpeed,
     setAccent,
-    setGender,
-    setEngine
+    setGender
   }
 }

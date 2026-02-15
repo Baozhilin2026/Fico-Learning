@@ -500,9 +500,9 @@ onUnmounted(() => {
 .board-container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: $spacing-lg;
+  gap: $spacing-xl;
   margin: 0 auto;
-  max-width: 900px;
+  max-width: 1400px;
   padding: $spacing-2xl;
   background: rgba(255, 255, 255, 0.95);
   border-radius: $border-radius-xl;
@@ -564,7 +564,7 @@ onUnmounted(() => {
   }
 
   .card-text {
-    font-size: 18px;
+    font-size: 24px;
     font-weight: $font-weight-semibold;
     color: $text-primary;
     line-height: 1.4;
