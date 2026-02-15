@@ -94,7 +94,8 @@ const currentQuestions = ref<Array<{
 }>>([])
 
 const answers = ref<InterviewAnswer[]>([])
-const feedback = ref<InterviewFeedback | null>(null)
+const feedback = ref<InterviewFeedback | AIInterviewFeedback | null>(null)
+const referenceAnswers = ref<Map<string, { answer: string }>>(new Map())
 const generatingProgress = ref(0)
 
 const jobLevelDisplay = computed(() => {

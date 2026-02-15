@@ -159,19 +159,19 @@ export interface InterviewFeedback {
     score: number
   }
   ficoProfessionalism: {
-    strengths: string[]
-    weaknesses: string[]
-    suggestions: string[]
-    score: number
+    strengths?: string[]
+    weaknesses?: string[]
+    suggestions?: string[]
+    score?: number
     technicalAccuracy?: string[]
     industryContext?: string[]
     keywordUsage?: string[]
   }
   interviewSkills: {
-    strengths: string[]
-    weaknesses: string[]
-    suggestions: string[]
-    score: number
+    strengths?: string[]
+    weaknesses?: string[]
+    suggestions?: string[]
+    score?: number
     clarity?: string[]
     structure?: string[]
     completeness?: string[]
