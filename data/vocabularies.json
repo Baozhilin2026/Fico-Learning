@@ -1,0 +1,1274 @@
+{
+    "FICO词汇表": [
+        {
+            "章节": "基本概念",
+            "词汇列表": [
+                {
+                    "序号": 1,
+                    "英文": "Financial Accounting (FI)",
+                    "读音": "/faɪˈnænʃl əˈkaʊntɪŋ/",
+                    "中文翻译": "财务会计",
+                    "中文解释": "用于对外财务报表和法定披露的会计模块，强调合规、准确和可审计性。",
+                    "SAP场景例句": "FI is mainly used for statutory and external reporting.",
+                    "常见会议说法": [
+                        "This belongs to FI scope.",
+                        "FI posting is completed."
+                    ],
+                    "常见错误用法": [
+                        "把 FI 当成全部财务管理",
+                        "用 FI 数据直接做内部经营分析"
+                    ]
+                },
+                {
+                    "序号": 2,
+                    "英文": "General Ledger (G/L)",
+                    "读音": "/ˈdʒenrəl ˈledʒər/",
+                    "中文翻译": "总账",
+                    "中文解释": "所有财务业务最终汇总的账簿，是资产负债表和利润表的直接来源。",
+                    "SAP场景例句": "All postings are finally reflected in the General Ledger.",
+                    "常见会议说法": [
+                        "Check the G/L balance."
+                    ],
+                    "常见错误用法": [
+                        "把子账当成总账",
+                        "忽略与 AR / AP 的对账关系"
+                    ]
+                },
+                {
+                    "序号": 3,
+                    "英文": "G/L Account",
+                    "读音": "/ˌdʒiː ˈel əˈkaʊnt/",
+                    "中文翻译": "总账科目",
+                    "中文解释": "用于记录某一类资产、负债、费用或收入的会计科目。",
+                    "SAP场景例句": "The expense is posted to the correct G/L account.",
+                    "常见会议说法": [
+                        "Which G/L should we use?"
+                    ],
+                    "常见错误用法": [
+                        "把 G/L 当分析维度",
+                        "手工过账统驭科目"
+                    ]
+                },
+                {
+                    "序号": 4,
+                    "英文": "Chart of Accounts (COA)",
+                    "读音": "/tʃɑːrt əv əˈkaʊnts/",
+                    "中文翻译": "会计科目表",
+                    "中文解释": "定义企业全部总账科目结构的基础配置。",
+                    "SAP场景例句": "All company codes use the same chart of accounts.",
+                    "常见会议说法": [
+                        "This G/L is not in the COA."
+                    ],
+                    "常见错误用法": [
+                        "随意新增科目",
+                        "不评估跨公司影响"
+                    ]
+                },
+                {
+                    "序号": 5,
+                    "英文": "Company Code",
+                    "读音": "/ˈkʌmpəni koʊd/",
+                    "中文翻译": "公司代码",
+                    "中文解释": "SAP 中最小的法定会计单位，可以独立出具财务报表。",
+                    "SAP场景例句": "Each company code represents one legal entity.",
+                    "常见会议说法": [
+                        "Which company code is affected?"
+                    ],
+                    "常见错误用法": [
+                        "当成部门或成本中心",
+                        "跨公司代码随意过账"
+                    ]
+                },
+                {
+                    "序号": 6,
+                    "英文": "Fiscal Year",
+                    "读音": "/ˈfɪskl jɪr/",
+                    "中文翻译": "会计年度 / 财政年度",
+                    "中文解释": "企业用于会计核算的年度周期，不一定等同自然年。",
+                    "SAP场景例句": "The fiscal year variant controls posting periods.",
+                    "常见会议说法": [
+                        "Which fiscal year is open?"
+                    ],
+                    "常见错误用法": [
+                        "默认所有公司都是 1–12 月"
+                    ]
+                },
+                {
+                    "序号": 7,
+                    "英文": "Posting",
+                    "读音": "/ˈpoʊstɪŋ/",
+                    "中文翻译": "过账",
+                    "中文解释": "将业务正式记录进财务账簿的系统行为。",
+                    "SAP场景例句": "The posting failed due to missing tax code.",
+                    "常见会议说法": [
+                        "Posting is done."
+                    ],
+                    "常见错误用法": [
+                        "保存 ≠ 过账",
+                        "忽略过账日期"
+                    ]
+                },
+                {
+                    "序号": 8,
+                    "英文": "Accounting Document",
+                    "读音": "/əˈkaʊntɪŋ ˈdɒkjʊmənt/",
+                    "中文翻译": "会计凭证",
+                    "中文解释": "SAP 中记录一笔完整财务业务的正式凭证。",
+                    "SAP场景例句": "An accounting document was generated.",
+                    "常见会议说法": [
+                        "Provide the document number."
+                    ],
+                    "常见错误用法": [
+                        "把单行项目当整张凭证"
+                    ]
+                },
+                {
+                    "序号": 9,
+                    "英文": "Document Number",
+                    "读音": "/ˈdɒkjʊmənt ˈnʌmbər/",
+                    "中文翻译": "凭证编号",
+                    "中文解释": "系统自动分配、用于追踪凭证的唯一编号。",
+                    "SAP场景例句": "Please share the document number.",
+                    "常见会议说法": [
+                        "What’s the document number?"
+                    ],
+                    "常见错误用法": [
+                        "当成发票号"
+                    ]
+                },
+                {
+                    "序号": 10,
+                    "英文": "Posting Date",
+                    "读音": "/ˈpoʊstɪŋ deɪt/",
+                    "中文翻译": "过账日期",
+                    "中文解释": "决定该凭证计入哪个会计期间的关键日期。",
+                    "SAP场景例句": "Posting date determines the fiscal period.",
+                    "常见会议说法": [
+                        "Posting date is incorrect."
+                    ],
+                    "常见错误用法": [
+                        "与凭证日期混用"
+                    ]
+                },
+                {
+                    "序号": 11,
+                    "英文": "Document Date",
+                    "读音": "/ˈdɒkjʊmənt deɪt/",
+                    "中文翻译": "凭证日期",
+                    "中文解释": "反映业务实际发生时间，用于参考和审计。",
+                    "SAP场景例句": "Document date reflects invoice issue date.",
+                    "常见会议说法": [
+                        "Document date is for reference."
+                    ],
+                    "常见错误用法": [
+                        "用来控制期间"
+                    ]
+                }
+            ]
+        },
+        {
+            "章节": "银行会计（FI-BL）",
+            "词汇列表": [
+                {
+                    "序号": 12,
+                    "英文": "Debit",
+                    "读音": "/ˈdebɪt/",
+                    "中文翻译": "借方",
+                    "中文解释": "会计分录中表示价值流入或资产增加的一侧，含义依科目而定。",
+                    "SAP场景例句": "Expense is posted on the debit side.",
+                    "常见会议说法": [
+                        "Debit the expense account."
+                    ],
+                    "常见错误用法": [
+                        "认为借方永远是增加"
+                    ]
+                },
+                {
+                    "序号": 13,
+                    "英文": "Credit",
+                    "读音": "/ˈkredɪt/",
+                    "中文翻译": "贷方",
+                    "中文解释": "会计分录中表示价值流出或负债增加的一侧。",
+                    "SAP场景例句": "The vendor account is credited.",
+                    "常见会议说法": [
+                        "Post to credit."
+                    ],
+                    "常见错误用法": [
+                        "与“信用”混淆"
+                    ]
+                },
+                {
+                    "序号": 14,
+                    "英文": "Balance",
+                    "读音": "/ˈbæləns/",
+                    "中文翻译": "余额",
+                    "中文解释": "某一时间点账户累计后的净额。",
+                    "SAP场景例句": "The balance looks incorrect.",
+                    "常见会议说法": [
+                        "Check the balance."
+                    ],
+                    "常见错误用法": [
+                        "用发生额当余额"
+                    ]
+                },
+                {
+                    "序号": 15,
+                    "英文": "Local Currency",
+                    "读音": "/ˈloʊkəl ˈkʌrənsi/",
+                    "中文翻译": "本位币",
+                    "中文解释": "公司代码用于法定报表的主币种。",
+                    "SAP场景例句": "Reports are shown in local currency.",
+                    "常见会议说法": [
+                        "Local currency amount."
+                    ],
+                    "常见错误用法": [
+                        "与交易币种混淆"
+                    ]
+                },
+                {
+                    "序号": 16,
+                    "英文": "Foreign Currency",
+                    "读音": "/ˈfɒrən ˈkʌrənsi/",
+                    "中文翻译": "外币",
+                    "中文解释": "不同于公司本位币的交易币种。",
+                    "SAP场景例句": "Invoice is posted in foreign currency.",
+                    "常见会议说法": [
+                        "FX difference."
+                    ],
+                    "常见错误用法": [
+                        "不处理汇兑差异"
+                    ]
+                },
+                {
+                    "序号": 17,
+                    "英文": "Exchange Rate",
+                    "读音": "/ɪksˈtʃeɪndʒ reɪt/",
+                    "中文翻译": "汇率",
+                    "中文解释": "用于不同币种金额换算的比率。",
+                    "SAP场景例句": "Exchange rate is missing.",
+                    "常见会议说法": [
+                        "Maintain exchange rate."
+                    ],
+                    "常见错误用法": [
+                        "手工改历史汇率"
+                    ]
+                }
+            ]
+        },
+        {
+            "章节": "应付（AP） & 应收（AR）",
+            "词汇列表": [
+                {
+                    "序号": 18,
+                    "英文": "Accounts Receivable (AR)",
+                    "读音": "/əˈkaʊnts rɪˈsiːvəbl/",
+                    "中文翻译": "应收账款",
+                    "中文解释": "用于管理客户欠款、收款和清账的子模块。",
+                    "SAP场景例句": "Invoice is posted to AR.",
+                    "常见会议说法": [
+                        "AR issue."
+                    ],
+                    "常见错误用法": [
+                        "用总账替代 AR"
+                    ]
+                },
+                {
+                    "序号": 19,
+                    "英文": "Customer",
+                    "读音": "/ˈkʌstəmər/",
+                    "中文翻译": "客户",
+                    "中文解释": "在 SAP 中指需要向公司付款的业务对象。",
+                    "SAP场景例句": "Customer is blocked.",
+                    "常见会议说法": [
+                        "Which customer?"
+                    ],
+                    "常见错误用法": [
+                        "重复建客户主数据"
+                    ]
+                },
+                {
+                    "序号": 20,
+                    "英文": "Customer Master Data",
+                    "读音": "/ˈkʌstəmər ˈmæstər ˈdeɪtə/",
+                    "中文翻译": "客户主数据",
+                    "中文解释": "定义客户结算、付款、信用等规则的数据集合。",
+                    "SAP场景例句": "Customer master data is incomplete.",
+                    "常见会议说法": [
+                        "Update customer master."
+                    ],
+                    "常见错误用法": [
+                        "为临时交易频繁新建"
+                    ]
+                },
+                {
+                    "序号": 21,
+                    "英文": "Accounts Payable (AP)",
+                    "读音": "/əˈkaʊnts ˈpeɪəbl/",
+                    "中文翻译": "应付账款",
+                    "中文解释": "用于管理公司对供应商的欠款、付款和清账的财务子模块。",
+                    "SAP场景例句": "Vendor invoices are processed in Accounts Payable.",
+                    "常见会议说法": [
+                        "This is an AP issue.",
+                        "AP posting is completed."
+                    ],
+                    "常见错误用法": [
+                        "用总账直接处理供应商业务",
+                        "绕过 AP 子模块手工记账"
+                    ]
+                },
+                {
+                    "序号": 22,
+                    "英文": "Vendor",
+                    "读音": "/ˈvendər/",
+                    "中文翻译": "供应商",
+                    "中文解释": "在 SAP 中指向公司提供商品或服务，并需要公司付款的业务对象。",
+                    "SAP场景例句": "This vendor is used for service procurement.",
+                    "常见会议说法": [
+                        "Vendor is blocked for payment."
+                    ],
+                    "常见错误用法": [
+                        "把客户当供应商用",
+                        "为同一供应商重复建主数据"
+                    ]
+                },
+                {
+                    "序号": 23,
+                    "英文": "Vendor Master Data",
+                    "读音": "/ˈvendər ˈmæstər ˈdeɪtə/",
+                    "中文翻译": "供应商主数据",
+                    "中文解释": "定义供应商付款方式、银行信息、税务信息等结算规则的数据。",
+                    "SAP场景例句": "Vendor master data needs to be maintained.",
+                    "常见会议说法": [
+                        "Please update vendor master."
+                    ],
+                    "常见错误用法": [
+                        "随意修改银行账户",
+                        "不走审批流程"
+                    ]
+                },
+                {
+                    "序号": 24,
+                    "英文": "Vendor Invoice",
+                    "读音": "/ˈvendər ˈɪnvɔɪs/",
+                    "中文翻译": "供应商发票",
+                    "中文解释": "供应商向公司开具、要求付款的账单凭证。",
+                    "SAP场景例句": "Vendor invoice has been posted successfully.",
+                    "常见会议说法": [
+                        "Invoice is parked.",
+                        "Invoice is posted."
+                    ],
+                    "常见错误用法": [
+                        "不做三单匹配就过账",
+                        "发票金额与采购不一致"
+                    ]
+                },
+                {
+                    "序号": 25,
+                    "英文": "Outgoing Payment",
+                    "读音": "/ˈaʊtˌɡoʊɪŋ ˈpeɪmənt/",
+                    "中文翻译": "付款 / 付出款项",
+                    "中文解释": "公司向供应商实际支付资金并完成清账的行为。",
+                    "SAP场景例句": "Outgoing payment cleared the vendor invoice.",
+                    "常见会议说法": [
+                        "Payment has been executed."
+                    ],
+                    "常见错误用法": [
+                        "付款但未清账",
+                        "重复付款同一发票"
+                    ]
+                },
+                {
+                    "序号": 26,
+                    "英文": "Payment Run",
+                    "读音": "/ˈpeɪmənt rʌn/",
+                    "中文翻译": "自动付款运行",
+                    "中文解释": "SAP 中用于批量选择应付款并自动生成付款凭证的处理流程。",
+                    "SAP场景例句": "The payment run is scheduled tonight.",
+                    "常见会议说法": [
+                        "Execute payment run.",
+                        "Check payment proposal."
+                    ],
+                    "常见错误用法": [
+                        "不检查付款建议就直接执行",
+                        "未锁定银行余额"
+                    ]
+                },
+                {
+                    "序号": 27,
+                    "英文": "Payment Term",
+                    "读音": "/ˈpeɪmənt tɜːrm/",
+                    "中文翻译": "付款条件",
+                    "中文解释": "定义付款到期日、现金折扣规则的结算条款。",
+                    "SAP场景例句": "Due date is calculated based on payment terms.",
+                    "常见会议说法": [
+                        "Payment term is wrong."
+                    ],
+                    "常见错误用法": [
+                        "手工改到期日但不改条款"
+                    ]
+                },
+                {
+                    "序号": 28,
+                    "英文": "Due Date",
+                    "读音": "/duː deɪt/",
+                    "中文翻译": "到期日",
+                    "中文解释": "系统根据付款条件自动计算出的最晚付款日期。",
+                    "SAP场景例句": "The invoice is overdue.",
+                    "常见会议说法": [
+                        "Due date is next week."
+                    ],
+                    "常见错误用法": [
+                        "认为是人工输入字段"
+                    ]
+                },
+                {
+                    "序号": 29,
+                    "英文": "Invoice",
+                    "读音": "/ˈɪnvɔɪs/",
+                    "中文翻译": "发票",
+                    "中文解释": "在 AR 中，指公司向客户开具、用于确认应收款的销售发票。",
+                    "SAP场景例句": "Customer invoice is posted in Accounts Receivable.",
+                    "常见会议说法": [
+                        "Invoice is posted.",
+                        "Invoice is still open."
+                    ],
+                    "常见错误用法": [
+                        "把发票等同于收款",
+                        "未过账就认为已确认收入"
+                    ]
+                },
+                {
+                    "序号": 30,
+                    "英文": "Incoming Payment",
+                    "读音": "/ˈɪnkʌmɪŋ ˈpeɪmənt/",
+                    "中文翻译": "收款",
+                    "中文解释": "客户向公司实际支付款项，并用于清账应收发票。",
+                    "SAP场景例句": "Incoming payment clears the customer invoice.",
+                    "常见会议说法": [
+                        "Payment is received.",
+                        "Incoming payment is posted."
+                    ],
+                    "常见错误用法": [
+                        "收款但未清账",
+                        "清错客户或发票"
+                    ]
+                },
+                {
+                    "序号": 31,
+                    "英文": "Down Payment",
+                    "读音": "/daʊn ˈpeɪmənt/",
+                    "中文翻译": "预收款 / 预付款",
+                    "中文解释": "客户在正式开票前支付的款项，属于负债性质。",
+                    "SAP场景例句": "Down payment is received before delivery.",
+                    "常见会议说法": [
+                        "Clear the down payment."
+                    ],
+                    "常见错误用法": [
+                        "直接当收入确认",
+                        "不做清账处理"
+                    ]
+                },
+                {
+                    "序号": 32,
+                    "英文": "Open Item",
+                    "读音": "/ˈoʊpən ˈaɪtəm/",
+                    "中文翻译": "未清项",
+                    "中文解释": "尚未被付款或清账的应收或应付项目。",
+                    "SAP场景例句": "There are open items on the customer account.",
+                    "常见会议说法": [
+                        "Check open items."
+                    ],
+                    "常见错误用法": [
+                        "把未清项当错误数据"
+                    ]
+                },
+                {
+                    "序号": 33,
+                    "英文": "Cleared Item",
+                    "读音": "/klɪrd ˈaɪtəm/",
+                    "中文翻译": "已清项",
+                    "中文解释": "已通过付款、对冲等方式完成清账的项目。",
+                    "SAP场景例句": "The invoice is fully cleared.",
+                    "常见会议说法": [
+                        "Item is cleared."
+                    ],
+                    "常见错误用法": [
+                        "清账但余额仍存在"
+                    ]
+                },
+                {
+                    "序号": 34,
+                    "英文": "Dunning",
+                    "读音": "/ˈdʌnɪŋ/",
+                    "中文翻译": "催款",
+                    "中文解释": "对逾期未付款客户进行系统化催收的流程。",
+                    "SAP场景例句": "Dunning run is executed monthly.",
+                    "常见会议说法": [
+                        "Customer is dunned."
+                    ],
+                    "常见错误用法": [
+                        "未区分客户信用关系"
+                    ]
+                },
+                {
+                    "序号": 35,
+                    "英文": "Dunning Level",
+                    "读音": "/ˈdʌnɪŋ ˈlevl/",
+                    "中文翻译": "催款级别",
+                    "中文解释": "根据逾期天数逐级升级的催款阶段。",
+                    "SAP场景例句": "Customer is at dunning level 2.",
+                    "常见会议说法": [
+                        "Increase dunning level."
+                    ],
+                    "常见错误用法": [
+                        "所有客户使用同一级别策略"
+                    ]
+                }
+            ]
+        },
+        {
+            "章节": "资产会计（FI-AA）",
+            "词汇列表": [
+                {
+                    "序号": 36,
+                    "英文": "Asset Accounting (AA)",
+                    "读音": "/ˈæsɛt əˈkaʊntɪŋ/",
+                    "中文翻译": "资产会计",
+                    "中文解释": "用于管理固定资产生命周期、折旧和资产报表的模块。",
+                    "SAP场景例句": "Fixed assets are managed in Asset Accounting.",
+                    "常见会议说法": [
+                        "This is an AA topic."
+                    ],
+                    "常见错误用法": [
+                        "把资产直接当费用处理"
+                    ]
+                },
+                {
+                    "序号": 37,
+                    "英文": "Fixed Asset",
+                    "读音": "/fɪkst ˈæsɛt/",
+                    "中文翻译": "固定资产",
+                    "中文解释": "长期使用、价值较高、需要分期折旧的公司资源。",
+                    "SAP场景例句": "This equipment is recorded as a fixed asset.",
+                    "常见会议说法": [
+                        "Capitalize the asset."
+                    ],
+                    "常见错误用法": [
+                        "小额消耗品也资本化"
+                    ]
+                },
+                {
+                    "序号": 38,
+                    "英文": "Asset Master",
+                    "读音": "/ˈæsɛt ˈmæstər/",
+                    "中文翻译": "资产主数据",
+                    "中文解释": "定义资产类别、折旧方法、使用年限等规则的主数据。",
+                    "SAP场景例句": "Asset master has been created.",
+                    "常见会议说法": [
+                        "Check asset master data."
+                    ],
+                    "常见错误用法": [
+                        "折旧参数随意更改"
+                    ]
+                },
+                {
+                    "序号": 39,
+                    "英文": "Capitalization",
+                    "读音": "/ˌkæpɪtəlaɪˈzeɪʃn/",
+                    "中文翻译": "资本化",
+                    "中文解释": "将支出计入资产，而不是一次性计入费用。",
+                    "SAP场景例句": "The cost is capitalized as a fixed asset.",
+                    "常见会议说法": [
+                        "Should we capitalize this?"
+                    ],
+                    "常见错误用法": [
+                        "不符合会计准则仍资本化"
+                    ]
+                },
+                {
+                    "序号": 40,
+                    "英文": "Depreciation",
+                    "读音": "/dɪˌpriːʃiˈeɪʃn/",
+                    "中文翻译": "折旧",
+                    "中文解释": "将资产价值在使用期间内系统性分摊。",
+                    "SAP场景例句": "Depreciation is posted monthly.",
+                    "常见会议说法": [
+                        "Run depreciation."
+                    ],
+                    "常见错误用法": [
+                        "只计算不入账"
+                    ]
+                },
+                {
+                    "序号": 41,
+                    "英文": "Useful Life",
+                    "读音": "/ˈjuːsfəl laɪf/",
+                    "中文翻译": "使用年限",
+                    "中文解释": "预计资产为公司产生经济利益的年限。",
+                    "SAP场景例句": "Useful life is set to five years.",
+                    "常见会议说法": [
+                        "Is the useful life correct?"
+                    ],
+                    "常见错误用法": [
+                        "所有资产设同一年限"
+                    ]
+                },
+                {
+                    "序号": 42,
+                    "英文": "Asset Acquisition",
+                    "读音": "/ˈæsɛt ˌækwɪˈzɪʃn/",
+                    "中文翻译": "资产购置",
+                    "中文解释": "取得固定资产并将其资本化的业务过程。",
+                    "SAP场景例句": "Asset acquisition is posted via vendor invoice.",
+                    "常见会议说法": [
+                        "Post asset acquisition."
+                    ],
+                    "常见错误用法": [
+                        "未资本化直接进费用"
+                    ]
+                },
+                {
+                    "序号": 43,
+                    "英文": "Asset Retirement",
+                    "读音": "/ˈæsɛt rɪˈtaɪərmənt/",
+                    "中文翻译": "资产处置 / 报废",
+                    "中文解释": "固定资产停止使用并从账面移除的过程。",
+                    "SAP场景例句": "Asset retirement is posted this month.",
+                    "常见会议说法": [
+                        "Retire the asset."
+                    ],
+                    "常见错误用法": [
+                        "资产不用了但仍在折旧"
+                    ]
+                }
+            ]
+        },
+        {
+            "章节": "管理会计核心（Controlling, CO）",
+            "词汇列表": [
+                {
+                    "序号": 44,
+                    "英文": "Controlling (CO)",
+                    "读音": "/kənˈtroʊlɪŋ/",
+                    "中文翻译": "管理会计",
+                    "中文解释": "用于企业内部成本控制、利润分析和管理决策的模块。",
+                    "SAP场景例句": "CO focuses on internal reporting.",
+                    "常见会议说法": [
+                        "This belongs to CO."
+                    ],
+                    "常见错误用法": [
+                        "用于法定对外报表"
+                    ]
+                },
+                {
+                    "序号": 45,
+                    "英文": "Cost",
+                    "读音": "/kɒst/",
+                    "中文翻译": "成本",
+                    "中文解释": "企业为获取收入而发生的资源消耗。",
+                    "SAP场景例句": "Cost is assigned to a cost center.",
+                    "常见会议说法": [
+                        "Control the cost."
+                    ],
+                    "常见错误用法": [
+                        "成本与费用混用"
+                    ]
+                },
+                {
+                    "序号": 46,
+                    "英文": "Revenue",
+                    "读音": "/ˈrevənjuː/",
+                    "中文翻译": "收入",
+                    "中文解释": "企业因销售商品或提供服务而获得的经济利益。",
+                    "SAP场景例句": "Revenue is posted to CO-PA.",
+                    "常见会议说法": [
+                        "Revenue recognition."
+                    ],
+                    "常见错误用法": [
+                        "与现金流等同"
+                    ]
+                },
+                {
+                    "序号": 47,
+                    "英文": "Cost Element",
+                    "读音": "/kɒst ˈelɪmənt/",
+                    "中文翻译": "成本要素",
+                    "中文解释": "CO 中对成本和收入的分类方式，与总账科目关联。",
+                    "SAP场景例句": "This is a primary cost element.",
+                    "常见会议说法": [
+                        "Create cost element."
+                    ],
+                    "常见错误用法": [
+                        "不区分一级、二级"
+                    ]
+                },
+                {
+                    "序号": 48,
+                    "英文": "Profit",
+                    "读音": "/ˈprɒfɪt/",
+                    "中文翻译": "利润",
+                    "中文解释": "收入扣除成本和费用后的经济成果。",
+                    "SAP场景例句": "Profit is analyzed in CO reports.",
+                    "常见会议说法": [
+                        "Improve profit."
+                    ],
+                    "常见错误用法": [
+                        "与现金流混淆"
+                    ]
+                },
+                {
+                    "序号": 49,
+                    "英文": "Cost Accounting",
+                    "读音": "/kɒst əˈkaʊntɪŋ/",
+                    "中文翻译": "成本核算",
+                    "中文解释": "对企业内部成本进行记录、分析和控制的体系。",
+                    "SAP场景例句": "Cost accounting is handled in CO.",
+                    "常见会议说法": [
+                        "Cost accounting structure."
+                    ],
+                    "常见错误用法": [
+                        "用于对外报表"
+                    ]
+                },
+                {
+                    "序号": 50,
+                    "英文": "Primary Cost Element",
+                    "读音": "/ˈpraɪməri kɒst ˈelɪmənt/",
+                    "中文翻译": "一级成本要素",
+                    "中文解释": "与总账科目一一对应的成本或收入要素。",
+                    "SAP场景例句": "Primary cost element is created automatically.",
+                    "常见会议说法": [
+                        "Primary cost posting."
+                    ],
+                    "常见错误用法": [
+                        "用于内部二次分摊"
+                    ]
+                },
+                {
+                    "序号": 51,
+                    "英文": "Secondary Cost Element",
+                    "读音": "/ˈsekəndri kɒst ˈelɪmənt/",
+                    "中文翻译": "二级成本要素",
+                    "中文解释": "仅用于 CO 内部结算和分摊的成本要素。",
+                    "SAP场景例句": "Secondary cost element is used for allocation.",
+                    "常见会议说法": [
+                        "Secondary allocation."
+                    ],
+                    "常见错误用法": [
+                        "与总账直接关联"
+                    ]
+                }
+            ]
+        },
+        {
+            "章节": "成本中心 & 内部核算",
+            "词汇列表": [
+                {
+                    "序号": 52,
+                    "英文": "Cost Center",
+                    "读音": "/kɒst ˈsentər/",
+                    "中文翻译": "成本中心",
+                    "中文解释": "用于归集成本、但不直接产生收入的内部对象。",
+                    "SAP场景例句": "Expense is posted to a cost center.",
+                    "常见会议说法": [
+                        "Which cost center?"
+                    ],
+                    "常见错误用法": [
+                        "用于利润分析"
+                    ]
+                },
+                {
+                    "序号": 53,
+                    "英文": "Internal Order",
+                    "读音": "/ɪnˈtɜːrnəl ˈɔːrdər/",
+                    "中文翻译": "内部订单",
+                    "中文解释": "用于项目型或临时性成本归集的对象。",
+                    "SAP场景例句": "Cost is collected on an internal order.",
+                    "常见会议说法": [
+                        "Close the internal order."
+                    ],
+                    "常见错误用法": [
+                        "长期不结算"
+                    ]
+                },
+                {
+                    "序号": 54,
+                    "英文": "Activity Type",
+                    "读音": "/ækˈtɪvɪti taɪp/",
+                    "中文翻译": "作业类型",
+                    "中文解释": "用于衡量内部服务输出量的单位。",
+                    "SAP场景例句": "Activity allocation is completed.",
+                    "常见会议说法": [
+                        "Activity price."
+                    ],
+                    "常见错误用法": [
+                        "没有业务含义"
+                    ]
+                },
+                {
+                    "序号": 55,
+                    "英文": "Statistical Key Figure (SKF)",
+                    "读音": "/stəˈtɪstɪkl kiː ˈfɪɡjər/",
+                    "中文翻译": "统计关键指标",
+                    "中文解释": "用于成本分摊的统计性指标。",
+                    "SAP场景例句": "SKF is used for allocation.",
+                    "常见会议说法": [
+                        "Maintain SKF."
+                    ],
+                    "常见错误用法": [
+                        "数据不更新"
+                    ]
+                },
+                {
+                    "序号": 56,
+                    "英文": "Cost Center Accounting",
+                    "读音": "/kɒst ˈsentər əˈkaʊntɪŋ/",
+                    "中文翻译": "成本中心核算",
+                    "中文解释": "基于成本中心归集和分析费用的核算方式。",
+                    "SAP场景例句": "Cost center accounting is used for overhead costs.",
+                    "常见会议说法": [
+                        "Cost center reporting."
+                    ],
+                    "常见错误用法": [
+                        "用于利润核算"
+                    ]
+                },
+                {
+                    "序号": 57,
+                    "英文": "Order Settlement",
+                    "读音": "/ˈɔːrdər ˈsetlmənt/",
+                    "中文翻译": "订单结算",
+                    "中文解释": "将内部订单上归集的成本结转到最终对象。",
+                    "SAP场景例句": "Internal order is settled to cost center.",
+                    "常见会议说法": [
+                        "Run settlement."
+                    ],
+                    "常见错误用法": [
+                        "长期不结算"
+                    ]
+                },
+                {
+                    "序号": 58,
+                    "英文": "Allocation",
+                    "读音": "/ˌæləˈkeɪʃn/",
+                    "中文翻译": "分摊",
+                    "中文解释": "将成本从一个对象分配到其他对象的统称。",
+                    "SAP场景例句": "Allocation is executed monthly.",
+                    "常见会议说法": [
+                        "Cost allocation."
+                    ],
+                    "常见错误用法": [
+                        "没有分摊依据"
+                    ]
+                },
+                {
+                    "序号": 59,
+                    "英文": "Assessment",
+                    "读音": "/əˈsesmənt/",
+                    "中文翻译": "评估分摊",
+                    "中文解释": "将成本合并后整体分摊，不保留原始要素。",
+                    "SAP场景例句": "Assessment is used for overhead costs.",
+                    "常见会议说法": [
+                        "Assessment cycle."
+                    ],
+                    "常见错误用法": [
+                        "需要明细却使用 assessment"
+                    ]
+                },
+                {
+                    "序号": 60,
+                    "英文": "Distribution",
+                    "读音": "/ˌdɪstrɪˈbjuːʃn/",
+                    "中文翻译": "分配",
+                    "中文解释": "按原始成本要素明细进行分摊。",
+                    "SAP场景例句": "Distribution keeps original cost elements.",
+                    "常见会议说法": [
+                        "Distribution cycle."
+                    ],
+                    "常见错误用法": [
+                        "与 assessment 混用"
+                    ]
+                }
+            ]
+        },
+        {
+            "章节": "利润分析",
+            "词汇列表": [
+                {
+                    "序号": 61,
+                    "英文": "Profit Center",
+                    "读音": "/ˈprɒfɪt ˈsentər/",
+                    "中文翻译": "利润中心",
+                    "中文解释": "用于分析收入、成本和利润归属的管理维度。",
+                    "SAP场景例句": "Revenue is assigned to a profit center.",
+                    "常见会议说法": [
+                        "Profit center reporting."
+                    ],
+                    "常见错误用法": [
+                        "与成本中心混用"
+                    ]
+                },
+                {
+                    "序号": 62,
+                    "英文": "Profitability Analysis (CO-PA)",
+                    "读音": "/ˌprɒfɪtəˈbɪləti əˈnæləsɪs/",
+                    "中文翻译": "盈利能力分析",
+                    "中文解释": "从产品、客户、市场维度分析利润。",
+                    "SAP场景例句": "CO-PA is used for margin analysis.",
+                    "常见会议说法": [
+                        "Check CO-PA report."
+                    ],
+                    "常见错误用法": [
+                        "与利润中心报表混淆"
+                    ]
+                },
+                {
+                    "序号": 63,
+                    "英文": "Contribution Margin",
+                    "读音": "/ˌkɒntrɪˈbjuːʃn ˈmɑːrdʒɪn/",
+                    "中文翻译": "边际贡献",
+                    "中文解释": "收入扣除变动成本后的盈利指标。",
+                    "SAP场景例句": "Contribution margin is too low.",
+                    "常见会议说法": [
+                        "Improve margin."
+                    ],
+                    "常见错误用法": [
+                        "与净利润混淆"
+                    ]
+                },
+                {
+                    "序号": 64,
+                    "英文": "Profit Center Accounting",
+                    "读音": "/ˈprɒfɪt ˈsentər əˈkaʊntɪŋ/",
+                    "中文翻译": "利润中心核算",
+                    "中文解释": "按责任单位分析利润的核算方式。",
+                    "SAP场景例句": "Profit center accounting is active.",
+                    "常见会议说法": [
+                        "Profit center report."
+                    ],
+                    "常见错误用法": [
+                        "与 CO-PA 混淆"
+                    ]
+                },
+                {
+                    "序号": 65,
+                    "英文": "Operating Concern",
+                    "读音": "/ˈɒpəreɪtɪŋ kənˈsɜːrn/",
+                    "中文翻译": "经营范围",
+                    "中文解释": "CO-PA 中用于定义盈利分析维度的最高层级。",
+                    "SAP场景例句": "Operating concern is defined at client level.",
+                    "常见会议说法": [
+                        "Same operating concern."
+                    ],
+                    "常见错误用法": [
+                        "随意新增"
+                    ]
+                },
+                {
+                    "序号": 66,
+                    "英文": "Sales Revenue",
+                    "读音": "/seɪlz ˈrevənjuː/",
+                    "中文翻译": "销售收入",
+                    "中文解释": "因销售商品或服务确认的收入。",
+                    "SAP场景例句": "Sales revenue is posted to CO-PA.",
+                    "常见会议说法": [
+                        "Revenue posting."
+                    ],
+                    "常见错误用法": [
+                        "与收款混淆"
+                    ]
+                },
+                {
+                    "序号": 67,
+                    "英文": "Plan/Actual Comparison",
+                    "读音": "/plæn ˈæktʃuəl kəmˈpærɪsn/",
+                    "中文翻译": "计划与实际对比",
+                    "中文解释": "用于分析执行结果与计划偏差的对比分析。",
+                    "SAP场景例句": "Plan/actual comparison shows variance.",
+                    "常见会议说法": [
+                        "Plan vs actual."
+                    ],
+                    "常见错误用法": [
+                        "不分析原因"
+                    ]
+                },
+                {
+                    "序号": 68,
+                    "英文": "Variance Analysis",
+                    "读音": "/ˈveəriəns əˈnæləsɪs/",
+                    "中文翻译": "差异分析",
+                    "中文解释": "对计划与实际差异进行原因拆解和解释。",
+                    "SAP场景例句": "Variance analysis is required.",
+                    "常见会议说法": [
+                        "Explain variance."
+                    ],
+                    "常见错误用法": [
+                        "只看数字不看业务"
+                    ]
+                }
+            ]
+        },
+        {
+            "章节": "计划 & 实际",
+            "词汇列表": [
+                {
+                    "序号": 69,
+                    "英文": "Plan",
+                    "读音": "/plæn/",
+                    "中文翻译": "计划",
+                    "中文解释": "事前设定的成本或收入目标值。",
+                    "SAP场景例句": "Plan data is maintained.",
+                    "常见会议说法": [
+                        "Plan figures."
+                    ],
+                    "常见错误用法": [
+                        "从不更新"
+                    ]
+                },
+                {
+                    "序号": 70,
+                    "英文": "Actual",
+                    "读音": "/ˈæktʃuəl/",
+                    "中文翻译": "实际",
+                    "中文解释": "已经真实发生并入账的数据。",
+                    "SAP场景例句": "Actual cost exceeds plan.",
+                    "常见会议说法": [
+                        "Actual numbers."
+                    ],
+                    "常见错误用法": [
+                        "与预测混用"
+                    ]
+                },
+                {
+                    "序号": 71,
+                    "英文": "Budget",
+                    "读音": "/ˈbʌdʒɪt/",
+                    "中文翻译": "预算",
+                    "中文解释": "对成本或项目的控制上限。",
+                    "SAP场景例句": "Budget is exceeded.",
+                    "常见会议说法": [
+                        "Budget control."
+                    ],
+                    "常见错误用法": [
+                        "没有控制机制"
+                    ]
+                },
+                {
+                    "序号": 72,
+                    "英文": "Forecast",
+                    "读音": "/ˈfɔːrkæst/",
+                    "中文翻译": "预测",
+                    "中文解释": "基于当前情况对未来结果的估计。",
+                    "SAP场景例句": "Forecast is updated monthly.",
+                    "常见会议说法": [
+                        "Latest forecast."
+                    ],
+                    "常见错误用法": [
+                        "长期不更新"
+                    ]
+                },
+                {
+                    "序号": 73,
+                    "英文": "Variance",
+                    "读音": "/ˈveəriəns/",
+                    "中文翻译": "差异",
+                    "中文解释": "计划值与实际值之间的偏差。",
+                    "SAP场景例句": "Variance needs explanation.",
+                    "常见会议说法": [
+                        "Explain the variance."
+                    ],
+                    "常见错误用法": [
+                        "不分析原因"
+                    ]
+                }
+            ]
+        },
+        {
+            "章节": "FICO 通用 & 高频英文词汇",
+            "词汇列表": [
+                {
+                    "序号": 74,
+                    "英文": "Master Data",
+                    "读音": "/ˈmæstər ˈdeɪtə/",
+                    "中文翻译": "主数据",
+                    "中文解释": "长期稳定、被反复使用的基础数据。",
+                    "SAP场景例句": "Master data is inconsistent.",
+                    "常见会议说法": [
+                        "Master data issue."
+                    ],
+                    "常见错误用法": [
+                        "把交易数据当主数据"
+                    ]
+                },
+                {
+                    "序号": 75,
+                    "英文": "Transaction Data",
+                    "读音": "/trænˈzækʃn ˈdeɪtə/",
+                    "中文翻译": "业务数据",
+                    "中文解释": "由具体业务操作产生的动态数据。",
+                    "SAP场景例句": "Transaction data is posted.",
+                    "常见会议说法": [
+                        "Transaction issue."
+                    ],
+                    "常见错误用法": [
+                        "当成主数据维护"
+                    ]
+                },
+                {
+                    "序号": 76,
+                    "英文": "Reconciliation Account",
+                    "读音": "/ˌrekənˌsɪlɪˈeɪʃn əˈkaʊnt/",
+                    "中文翻译": "统驭科目",
+                    "中文解释": "用于将子账余额自动汇总到总账的账户。",
+                    "SAP场景例句": "Reconciliation account is derived automatically.",
+                    "常见会议说法": [
+                        "Check recon account."
+                    ],
+                    "常见错误用法": [
+                        "手工过账"
+                    ]
+                },
+                {
+                    "序号": 77,
+                    "英文": "Period Closing",
+                    "读音": "/ˈpɪəriəd ˈkloʊzɪŋ/",
+                    "中文翻译": "期末结账",
+                    "中文解释": "完成当期核算并锁定数据的流程。",
+                    "SAP场景例句": "Period closing is completed.",
+                    "常见会议说法": [
+                        "Close the period."
+                    ],
+                    "常见错误用法": [
+                        "未对账就关账"
+                    ]
+                },
+                {
+                    "序号": 78,
+                    "英文": "Financial Statement",
+                    "读音": "/faɪˈnænʃl ˈsteɪtmənt/",
+                    "中文翻译": "财务报表",
+                    "中文解释": "对外披露企业财务状况和经营成果的正式报表。",
+                    "SAP场景例句": "Financial statements are generated from FI.",
+                    "常见会议说法": [
+                        "Prepare statements."
+                    ],
+                    "常见错误用法": [
+                        "使用内部报表对外披露"
+                    ]
+                },
+                {
+                    "序号": 79,
+                    "英文": "Trial Balance",
+                    "读音": "/ˈtraɪəl ˈbæləns/",
+                    "中文翻译": "试算平衡表",
+                    "中文解释": "用于验证借贷是否平衡的汇总报表。",
+                    "SAP场景例句": "Trial balance is balanced.",
+                    "常见会议说法": [
+                        "Check trial balance."
+                    ],
+                    "常见错误用法": [
+                        "平衡即认为正确"
+                    ]
+                },
+                {
+                    "序号": 80,
+                    "英文": "Configuration",
+                    "读音": "/kənˌfɪɡjəˈreɪʃn/",
+                    "中文翻译": "配置",
+                    "中文解释": "通过系统设置实现业务逻辑的过程。",
+                    "SAP场景例句": "This is controlled by configuration.",
+                    "常见会议说法": [
+                        "Change config."
+                    ],
+                    "常见错误用法": [
+                        "与开发混淆"
+                    ]
+                },
+                {
+                    "序号": 81,
+                    "英文": "Customizing",
+                    "读音": "/ˈkʌstəmaɪzɪŋ/",
+                    "中文翻译": "系统定制",
+                    "中文解释": "通过 SPRO 对 SAP 标准功能进行适配。",
+                    "SAP场景例句": "Customizing is done in SPRO.",
+                    "常见会议说法": [
+                        "Customizing setting."
+                    ],
+                    "常见错误用法": [
+                        "认为就是开发"
+                    ]
+                },
+                {
+                    "序号": 82,
+                    "英文": "Business Transaction",
+                    "读音": "/ˈbɪznɪs trænˈzækʃn/",
+                    "中文翻译": "业务交易",
+                    "中文解释": "触发会计过账或数据变更的业务行为。",
+                    "SAP场景例句": "This business transaction triggers posting.",
+                    "常见会议说法": [
+                        "Transaction type."
+                    ],
+                    "常见错误用法": [
+                        "只理解为 t-code"
+                    ]
+                },
+                {
+                    "序号": 83,
+                    "英文": "Reconciliation",
+                    "读音": "/ˌrekənˌsɪlɪˈeɪʃn/",
+                    "中文翻译": "对账",
+                    "中文解释": "确保不同模块或账簿数据一致的过程。",
+                    "SAP场景例句": "FI and CO reconciliation is completed.",
+                    "常见会议说法": [
+                        "Do reconciliation."
+                    ],
+                    "常见错误用法": [
+                        "只看余额不查原因"
+                    ]
+                },
+                {
+                    "序号": 84,
+                    "英文": "Balance Sheet",
+                    "读音": "/ˈbæləns ʃiːt/",
+                    "中文翻译": "资产负债表",
+                    "中文解释": "反映企业财务状况的法定报表。",
+                    "SAP场景例句": "Balance sheet is generated from FI.",
+                    "常见会议说法": [
+                        "BS item."
+                    ],
+                    "常见错误用法": [
+                        "混用 P&L 科目"
+                    ]
+                },
+                {
+                    "序号": 85,
+                    "英文": "Profit and Loss Statement (P&L)",
+                    "读音": "/ˈprɒfɪt ænd lɒs/",
+                    "中文翻译": "利润表",
+                    "中文解释": "反映企业经营成果的报表。",
+                    "SAP场景例句": "P&L is closed monthly.",
+                    "常见会议说法": [
+                        "P&L impact."
+                    ],
+                    "常见错误用法": [
+                        "与现金流表混淆"
+                    ]
+                },
+                {
+                    "序号": 86,
+                    "英文": "Audit",
+                    "读音": "/ˈɔːdɪt/",
+                    "中文翻译": "审计",
+                    "中文解释": "对财务数据和流程合规性的检查。",
+                    "SAP场景例句": "Audit requires full audit trail.",
+                    "常见会议说法": [
+                        "Audit requirement."
+                    ],
+                    "常见错误用法": [
+                        "事后才考虑审计"
+                    ]
+                }
+            ]
+        }
+    ]
+}

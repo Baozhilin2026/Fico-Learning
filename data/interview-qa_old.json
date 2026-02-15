@@ -1,0 +1,83 @@
+{
+    "documentName": "SAP FICO Implementation Consultant - Interview Guide",
+    "parts": [
+        {
+            "partId": "PART1",
+            "partName": "INTRODUCTION & BACKGROUND",
+            "questions": [
+                {
+                    "questionNo": "Q1",
+                    "questionContent": "Can you introduce yourself and walk me through your experience with SAP FICO?",
+                    "sampleAnswer": "Good morning/afternoon. Thank you for this opportunity. I'm a SAP FICO consultant with [X] years of experience in implementing and supporting SAP Financial Accounting and Controlling modules. I've worked on [number] full-cycle implementations across industries including [manufacturing/retail/pharma, etc.]. My expertise spans financial accounting configurations including general ledger, accounts payable, accounts receivable, asset accounting, and bank accounting. On the controlling side, I have strong experience with cost center accounting, internal orders, profit center accounting, and product costing. Most recently, I worked on [specific project] where I was responsible for [specific responsibilities], which resulted in [specific achievement]."
+                },
+                {
+                    "questionNo": "Q2",
+                    "questionContent": "What SAP versions have you worked with?",
+                    "sampleAnswer": "I've worked primarily with SAP ECC 6.0 and have hands-on experience with SAP S/4HANA Finance. I participated in an S/4HANA migration project where we converted from the classic G/L to the Universal Journal. I'm familiar with the key differences between ECC and S/4HANA, particularly around the new data model, embedded analytics, and simplified account assignment."
+                }
+            ]
+        },
+        {
+            "partId": "PART2",
+            "partName": "FINANCIAL ACCOUNTING (FI) QUESTIONS",
+            "questions": [
+                {
+                    "questionNo": "Q3",
+                    "questionContent": "Can you explain the organizational structure in SAP FI?",
+                    "sampleAnswer": "The organizational structure in FI consists of several key elements:  Company Code - This is the smallest organizational unit for which a complete self-contained set of accounts can be drawn up for external reporting purposes. It represents a legal entity.  Business Area - An optional organizational unit that represents a separate area of operations within an organization, used for internal reporting.  Functional Area - Used for classifying expenses and revenues by function for cost-of-sales accounting.  Segment - Used in S/4HANA for segment reporting under IFRS. The company code is the most critical element. Multiple company codes can be assigned to one controlling area, and company codes can have different fiscal year variants and currencies."
+                },
+                {
+                    "questionNo": "Q4",
+                    "questionContent": "What is the difference between Document Type and Posting Key?",
+                    "sampleAnswer": "Both are essential for posting in SAP, but they serve different purposes: Document Type controls the document header level and determines:  Number range for document numbers  Account types permitted (A-Assets, D-Customer, K-Vendor, M-Material, S-G/L)  Whether the document type is for normal posting, clearing, or reversal Common examples: SA (G/L document), DR (Customer invoice), KR (Vendor invoice), AB (Asset posting) Posting Key controls the line item level and determines:  Whether the line item is a debit or credit  Account type (40-debit G/L, 50-credit G/L, 01-debit customer, 11-credit customer, 31-debit vendor, 21-credit vendor)  Field status (which fields are mandatory, optional, or suppressed) For example, posting key 40 is for debit to G/L account, and 50 is for credit to G/L account."
+                },
+                {
+                    "questionNo": "Q5",
+                    "questionContent": "Explain the New G/L functionality in SAP.",
+                    "sampleAnswer": "The New General Ledger, introduced in ECC 6.0, provides enhanced functionality: Key Features: 1. Document Splitting - Allows real-time splitting of line items at document entry to enable balance sheet reporting at segment/profit center level 2. Segment Reporting - Supports IFRS segment reporting requirements 3. Parallel Ledgers - Ability to maintain multiple ledgers (local GAAP, IFRS, tax) simultaneously 4. Online Functionality - Real-time integration with CO eliminating reconciliation issues Benefits:  No need for reconciliation ledger  Real-time reporting at various dimensions  Improved performance  Better support for compliance requirements In S/4HANA, this evolved into the Universal Journal, which merged FI and CO into a single source of truth."
+                },
+                {
+                    "questionNo": "Q6",
+                    "questionContent": "How do you configure Automatic Payment Program (F110)?",
+                    "sampleAnswer": "The Automatic Payment Program (APP) configuration involves several steps: 1. Company Code Settings (FBZP):  Paying company codes  Payment methods per company code (C-Check, T-Wire transfer, etc.)  Bank determination settings  Minimum/maximum amounts 2. Payment Methods per Country:  Payment method classification (domestic/foreign, payment/bank transfer)  Required master data  Form data requirements 3. Payment Method per Company Code:  Outgoing payment specifications  Currency settings  Optimize by bank group/postal code  Forms and print programs 4. Bank Determination:  Available amounts for payment method  Bank accounts  Ranking order 5. Additional Settings:  Value date calculation  Payment terms  Exchange rate types The execution involves creating a payment proposal, editing if necessary, and then executing the payment run."
+                },
+                {
+                    "questionNo": "Q7",
+                    "questionContent": "What is APP and parking a document?",
+                    "sampleAnswer": "These are two distinct concepts: APP (Automatic Payment Program - F110): This is the tool used for processing outgoing payments to vendors and incoming payments from customers automatically. It selects open items due for payment based on payment terms, groups them, and creates payment documents. The main advantage is efficiency in processing large volumes of payments. Parking a Document: This is a preliminary step before posting. When you park a document (transaction FB50 or FV50):  The document is saved but NOT posted to the database  No impact on account balances or financial statements  Useful for workflow approvals or when information is incomplete  Can be edited, completed, and later posted or rejected The key difference: Parked documents are temporary and haven't updated any balances, while APP is about processing actual payments for posted documents."
+                },
+                {
+                    "questionNo": "Q8",
+                    "questionContent": "Explain Asset Accounting configuration steps.",
+                    "sampleAnswer": "Asset Accounting configuration involves these key steps: 1. Organizational Structures:  Define depreciation areas (book depreciation, tax depreciation, IFRS, etc.)  Chart of depreciation  Assign company code to chart of depreciation 2. Asset Classes:  Define asset classes (buildings, machinery, vehicles, etc.)  Assign G/L accounts (asset account, accumulated depreciation, depreciation expense)  Number ranges  Screen layout rules 3. Depreciation Configuration:  Define depreciation keys (calculation methods)  Determine depreciation areas in asset class  Specify transfer of APC values  Multi-level depreciation methods 4. Integration with G/L:  Specify account determination  Define how to post depreciation (periodic or year-end)  Document types for asset postings 5. Periodic Processing:  Depreciation posting runs (AFAB)  Fiscal year change (AJRW)  Year-end closing (AJAB) The most common depreciation methods include straight-line, declining balance, and sum-of-years digits."
+                }
+            ]
+        },
+        {
+            "partId": "PART3",
+            "partName": "CONTROLLING (CO) QUESTIONS",
+            "questions": [
+                {
+                    "questionNo": "Q9",
+                    "questionContent": "Explain the CO organizational structure.",
+                    "sampleAnswer": "The Controlling organizational structure consists of: 1. Operating Concern:  Highest level in CO-PA  Represents market-oriented organizational unit  Can contain multiple controlling areas 2. Controlling Area:  Central organizational unit in CO  Can contain one or multiple company codes  All company codes must use same operational chart of accounts and fiscal year variant  Controls cost accounting activities 3. Cost Centers:  Organizational units within controlling area  Represent locations where costs occur  Organized in standard hierarchy 4. Profit Centers:  Responsibility areas for internal controlling  Can be structured independently from company code  Used for internal profitability analysis 5. Internal Orders:  Used to collect costs for specific tasks or projects  Temporary or permanent The relationship: Operating Concern > Controlling Area > Company Code(s) > Cost Centers/Profit Centers"
+                },
+                {
+                    "questionNo": "Q10",
+                    "questionContent": "What is Cost Center Accounting and what types of cost centers exist?",
+                    "sampleAnswer": "Cost Center Accounting (CCA) is used to track where costs occur within an organization for internal controlling purposes. Types of Cost Centers: 1. Production Cost Centers:  o Directly involved in manufacturing o Costs allocated to products o Example: Assembly department, Machining department 2. Service Cost Centers:  o Provide services to other cost centers o Examples: Maintenance, IT, HR o Costs typically reallocated using assessment or distribution 3. Administrative Cost Centers:  o Support business operations o Examples: Finance, Legal, Management o Usually absorbed through overhead rates 4. Sales & Marketing Cost Centers:  o Related to sales activities o Examples: Marketing, Sales teams, Distribution Key Functions:  Cost planning and budgeting  Actual cost collection  Variance analysis  Internal reporting  Activity-based allocations Cost centers enable responsibility accounting and help management understand where costs are incurred."
+                },
+                {
+                    "questionNo": "Q11",
+                    "questionContent": "Explain the difference between Assessment and Distribution in CO.",
+                    "sampleAnswer": "Both are methods for allocating costs from sender cost centers to receiver cost objects, but they differ in how they handle the original cost elements: Distribution (KB15N):  Allocates costs while retaining the original cost element  Receiver sees the same cost element as the sender  Used when you want to maintain cost transparency  Example: Allocating rent cost (cost element 400000) from Admin to Production - Production also sees cost element 400000  Original cost element remains visible in reports Assessment (KB21N):  Allocates costs using a secondary cost element  Original primary cost element is replaced  Used for final allocations where original cost detail isn't needed  Example: Allocating total HR costs using secondary cost element 900000 - receivers only see 900000, not individual salary, benefits, etc.  Simplifies receiver reporting When to use:  Distribution: When cost transparency is important (shared services, utilities)  Assessment: Final allocations where detail isn't needed (overhead, department closures)"
+                },
+                {
+                    "questionNo": "Q12",
+                    "questionContent": "What is Internal Order and how is it different from Cost Center?",
+                    "sampleAnswer": "Both collect costs, but serve different purposes: Internal Orders:  Temporary or permanent cost collectors for specific jobs/tasks  Have defined lifecycle (created → released → technically complete → closed)  Time-limited or purpose-specific  Can be used for both planning and actual postings  Settlement required to transfer costs to other objects  Examples: Marketing campaigns, maintenance projects, R&D initiatives Cost Centers:  Permanent organizational units  Represent location where costs occur  Ongoing cost collection  Costs typically remain on cost center or allocated periodically  No settlement process  Examples: HR Department, IT Department, Production Line 1 Key Differences:  Duration: Orders are temporary; cost centers are permanent  Purpose: Orders track specific activities; cost centers track locations  Settlement: Orders usually settle elsewhere; cost centers generally don't  Lifecycle: Orders have status management; cost centers are always active  Planning: Orders often have detailed project-like planning; cost centers have periodic budgets Use internal orders when you need to track costs for a specific initiative separately from the department's normal operations."
+                }
+            ]
+        }
+    ]
+}
