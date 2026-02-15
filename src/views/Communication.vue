@@ -23,6 +23,13 @@
       <!-- TTS Settings - Right Side -->
       <div class="ts-settings">
         <div class="ts-row">
+          <span class="ts-label">引擎 / Engine:</span>
+          <el-radio-group v-model="currentEngine" @change="handleEngineChange" size="small">
+            <el-radio-button value="google">Google</el-radio-button>
+            <el-radio-button value="web">浏览器</el-radio-button>
+          </el-radio-group>
+        </div>
+        <div class="ts-row">
           <span class="ts-label">口音 / Accent:</span>
           <el-radio-group v-model="currentAccent" @change="handleAccentChange" size="small">
             <el-radio-button value="indian">印度</el-radio-button>
@@ -92,6 +99,7 @@ import { useBookmarkStore } from '@/stores/bookmarks'
 import { useSettingsStore } from '@/stores/settings'
 import { useStudyTimer } from '@/composables/useStudyTimer'
 import { dataLoader } from '@/services/dataLoader'
+import { unifiedTTSService } from '@/services/unifiedTTSService'
 import TopNavbar from '@/components/common/TopNavbar.vue'
 import BottomInfoBar from '@/components/common/BottomInfoBar.vue'
 import ScriptCard from '@/components/communication/ScriptCard.vue'
@@ -102,7 +110,7 @@ const settingsStore = useSettingsStore()
 useStudyTimer()
 
 const searchKeyword = ref('')
-const currentEngine = ref('google')
+const currentEngine = ref(unifiedTTSService.getEngine())
 const currentAccent = ref(settingsStore.ttsAccent)
 const currentGender = ref(settingsStore.ttsGender)
 const currentRate = ref(settingsStore.ttsRate)
@@ -170,6 +178,10 @@ function handleFilterChange() {
 
 function handleSearch() {
   currentPage.value = 1
+}
+
+function handleEngineChange(value: 'web' | 'google') {
+  unifiedTTSService.setEngine(value)
 }
 
 function handleAccentChange(value: string) {

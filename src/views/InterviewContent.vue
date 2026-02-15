@@ -29,6 +29,13 @@
       <!-- TTS Settings - Right Side -->
       <div class="tts-settings">
         <div class="tts-row">
+          <span class="tts-label">引擎 / Engine:</span>
+          <el-radio-group v-model="currentEngine" @change="handleEngineChange" size="small">
+            <el-radio-button value="google">Google</el-radio-button>
+            <el-radio-button value="web">浏览器</el-radio-button>
+          </el-radio-group>
+        </div>
+        <div class="tts-row">
           <span class="tts-label">口音 / Accent:</span>
           <el-radio-group v-model="currentAccent" @change="handleAccentChange" size="small">
             <el-radio-button value="indian">印度</el-radio-button>
@@ -98,6 +105,7 @@ import { useBookmarkStore } from '@/stores/bookmarks'
 import { useSettingsStore } from '@/stores/settings'
 import { useStudyTimer } from '@/composables/useStudyTimer'
 import { dataLoader } from '@/services/dataLoader'
+import { unifiedTTSService } from '@/services/unifiedTTSService'
 import type { InterviewQAData, TTSAccent, TTSGender } from '@/types'
 import TopNavbar from '@/components/common/TopNavbar.vue'
 import BottomInfoBar from '@/components/common/BottomInfoBar.vue'
@@ -115,6 +123,7 @@ const pageSize = ref(10)
 const interviewData = ref<InterviewQAData | null>(null)
 const allQuestions = ref<any[]>([])
 
+const currentEngine = ref(unifiedTTSService.getEngine())
 const currentAccent = ref<TTSAccent>(settingsStore.ttsAccent)
 const currentGender = ref<TTSGender>(settingsStore.ttsGender)
 const currentRate = ref(settingsStore.ttsRate)
@@ -182,6 +191,10 @@ function handleBookmark(item: any) {
 
 function handleScenarioChange() {
   currentPage.value = 1
+}
+
+function handleEngineChange(value: 'web' | 'google') {
+  unifiedTTSService.setEngine(value)
 }
 
 function handleAccentChange(value: TTSAccent) {
