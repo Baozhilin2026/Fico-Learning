@@ -61,9 +61,15 @@ import FeedbackReport from '@/components/mock-interview/FeedbackReport.vue'
 import { aiFeedbackService } from '@/services/aiFeedbackService'
 import { aiQuestionGenerator } from '@/services/aiQuestionGenerator'
 import { dataLoader } from '@/services/dataLoader'
+import { juniorInterviewService } from '@/services/juniorInterviewService'
+import { middleInterviewService } from '@/services/middleInterviewService'
+import { seniorInterviewService } from '@/services/seniorInterviewService'
+import type { InterviewQuestion, EvaluationResult } from '@/services/juniorInterviewService'
+import type { InterviewQuestion as MiddleInterviewQuestion } from '@/services/middleInterviewService'
+import type { InterviewQuestion as SeniorInterviewQuestion } from '@/services/seniorInterviewService'
 import { useStudyTimer } from '@/composables/useStudyTimer'
 import { useProgressStore } from '@/stores/progress'
-import type { InterviewFeedback, InterviewAnswer, TTSAccent, TTSGender, FICOJobLevel, FICOIndustry } from '@/types'
+import type { InterviewFeedback, InterviewAnswer, FICOJobLevel, FICOIndustry } from '@/types'
 
 const progressStore = useProgressStore()
 
@@ -76,14 +82,10 @@ type Phase = 'setup' | 'generating' | 'session' | 'feedback'
 
 const phase = ref<Phase>('setup')
 const interviewSettings = ref<{
-  accent: TTSAccent
-  gender: TTSGender
   jobLevel: FICOJobLevel
   industry: FICOIndustry
   timePerQuestion?: number
 }>({
-  accent: 'western',
-  gender: 'female',
   jobLevel: 'junior',
   industry: 'manufacturing'
 })
@@ -124,8 +126,6 @@ const industryDisplay = computed(() => {
 })
 
 async function handleStartInterview(settings: {
-  accent: TTSAccent
-  gender: TTSGender
   jobLevel: FICOJobLevel
   industry: FICOIndustry
 }) {
@@ -137,36 +137,75 @@ async function handleStartInterview(settings: {
     // Load job level config to get questions per session
     const config = await dataLoader.loadConfig()
     const jobLevelConfig = (config as any).jobLevels?.[settings.jobLevel]
-    const stages = config.interviewConfig.stages || ['项目经验', '技术问题', '真实场景问题', '反问环节']
 
     // Store time per question in settings for InterviewSession to use
     const timePerQuestion = jobLevelConfig?.timePerQuestion || 180
     ;(interviewSettings.value as any).timePerQuestion = timePerQuestion
 
-    // Calculate questions per stage based on job level's total questions
-    const totalQuestions = jobLevelConfig?.questionsPerSession || 5
-    const questionsPerStage = Math.ceil(totalQuestions / stages.length)
-
     // Progress update
     generatingProgress.value = 20
 
-    // Generate questions using AI
-    const questions = await aiQuestionGenerator.generateQuestionsForAllStages(
-      settings.jobLevel,
-      settings.industry,
-      questionsPerStage
-    )
+    // For junior level, use the junior interview service
+    if (settings.jobLevel === 'junior') {
+      console.log('[Mock Interview] Using Junior Interview Service for question generation')
+      const juniorQuestions = await juniorInterviewService.generateQuestions()
 
-    generatingProgress.value = 80
+      // Store the full questions for evaluation later
+      ;(interviewSettings.value as any).juniorQuestions = juniorQuestions
 
-    // Limit questions to the job level's total questions
-    const limitedQuestions = questions.slice(0, totalQuestions)
+      // Convert to the format expected by InterviewSession
+      currentQuestions.value = juniorQuestions.map(q => ({
+        englishQuestion: q.englishQuestion,
+        chineseTranslation: q.chineseTranslation
+      }))
+    } else if (settings.jobLevel === 'middle') {
+      // For middle level, use the middle interview service
+      console.log('[Mock Interview] Using Middle Interview Service for question generation')
+      const middleQuestions = await middleInterviewService.generateQuestions()
 
-    // Convert to the format expected by InterviewSession
-    currentQuestions.value = limitedQuestions.map(q => ({
-      englishQuestion: q.englishQuestion,
-      chineseTranslation: q.chineseTranslation
-    }))
+      // Store the full questions for evaluation later
+      ;(interviewSettings.value as any).middleQuestions = middleQuestions
+
+      // Convert to the format expected by InterviewSession
+      currentQuestions.value = middleQuestions.map(q => ({
+        englishQuestion: q.englishQuestion,
+        chineseTranslation: q.chineseTranslation
+      }))
+    } else if (settings.jobLevel === 'senior') {
+      // For senior level, use the senior interview service
+      console.log('[Mock Interview] Using Senior Interview Service for question generation')
+      const seniorQuestions = await seniorInterviewService.generateQuestions()
+
+      // Store the full questions for evaluation later
+      ;(interviewSettings.value as any).seniorQuestions = seniorQuestions
+
+      // Convert to the format expected by InterviewSession
+      currentQuestions.value = seniorQuestions.map(q => ({
+        englishQuestion: q.englishQuestion,
+        chineseTranslation: q.chineseTranslation
+      }))
+    } else {
+      // Fallback: use AI generation for any other level
+      const stages = config.interviewConfig.stages || ['项目经验', '技术问题', '真实场景问题', '反问环节']
+      const totalQuestions = jobLevelConfig?.questionsPerSession || 5
+      const questionsPerStage = Math.ceil(totalQuestions / stages.length)
+
+      // Generate questions using AI
+      const questions = await aiQuestionGenerator.generateQuestionsForAllStages(
+        settings.jobLevel,
+        settings.industry,
+        questionsPerStage
+      )
+
+      // Limit questions to the job level's total questions
+      const limitedQuestions = questions.slice(0, totalQuestions)
+
+      // Convert to the format expected by InterviewSession
+      currentQuestions.value = limitedQuestions.map(q => ({
+        englishQuestion: q.englishQuestion,
+        chineseTranslation: q.chineseTranslation
+      }))
+    }
 
     generatingProgress.value = 100
 
@@ -220,17 +259,80 @@ async function handleInterviewComplete(completedAnswers: InterviewAnswer[]) {
   answers.value = completedAnswers
 
   try {
-    // Generate AI feedback
+    // Generate feedback
     console.log('Setting phase to generating')
     phase.value = 'generating'
     generatingProgress.value = 20
 
-    console.log('Calling aiFeedbackService.evaluateSession...')
-    feedback.value = await aiFeedbackService.evaluateSession(
-      completedAnswers,
-      interviewSettings.value.jobLevel,
-      interviewSettings.value.industry
-    )
+    // For junior level, use AI evaluation with reference answers from MD
+    if (interviewSettings.value.jobLevel === 'junior' && (interviewSettings.value as any).juniorQuestions) {
+      console.log('[Mock Interview] Processing junior level interview')
+      const juniorQuestions = (interviewSettings.value as any).juniorQuestions as InterviewQuestion[]
+      console.log('[Mock Interview] juniorQuestions:', juniorQuestions.length, juniorQuestions)
+
+      // Use AI evaluation with reference answers from MD
+      console.log('[Mock Interview] Using AI evaluation with reference answers from MD')
+      const referenceAnswers = juniorQuestions.map(q => ({
+        question: q.englishQuestion,
+        englishAnswer: q.englishAnswer,
+        chineseAnswer: q.chineseAnswer
+      }))
+
+      feedback.value = await aiFeedbackService.evaluateSessionWithReferences(
+        completedAnswers,
+        interviewSettings.value.jobLevel,
+        interviewSettings.value.industry,
+        referenceAnswers
+      )
+    } else if (interviewSettings.value.jobLevel === 'middle' && (interviewSettings.value as any).middleQuestions) {
+      // For middle level, use AI evaluation with reference answers from MD
+      console.log('[Mock Interview] Processing middle level interview')
+      const middleQuestions = (interviewSettings.value as any).middleQuestions as MiddleInterviewQuestion[]
+      console.log('[Mock Interview] middleQuestions:', middleQuestions.length, middleQuestions)
+
+      // Use AI evaluation with reference answers from MD
+      console.log('[Mock Interview] Using AI evaluation with reference answers from MD')
+      const referenceAnswers = middleQuestions.map(q => ({
+        question: q.englishQuestion,
+        englishAnswer: q.englishAnswer,
+        chineseAnswer: q.chineseAnswer
+      }))
+
+      feedback.value = await aiFeedbackService.evaluateSessionWithReferences(
+        completedAnswers,
+        interviewSettings.value.jobLevel,
+        interviewSettings.value.industry,
+        referenceAnswers
+      )
+    } else if (interviewSettings.value.jobLevel === 'senior' && (interviewSettings.value as any).seniorQuestions) {
+      // For senior level, use AI evaluation with reference answers from MD
+      console.log('[Mock Interview] Processing senior level interview')
+      const seniorQuestions = (interviewSettings.value as any).seniorQuestions as SeniorInterviewQuestion[]
+      console.log('[Mock Interview] seniorQuestions:', seniorQuestions.length, seniorQuestions)
+
+      // Use AI evaluation with reference answers from MD
+      console.log('[Mock Interview] Using AI evaluation with reference answers from MD')
+      const referenceAnswers = seniorQuestions.map(q => ({
+        question: q.englishQuestion,
+        englishAnswer: q.englishAnswer,
+        chineseAnswer: q.chineseAnswer
+      }))
+
+      feedback.value = await aiFeedbackService.evaluateSessionWithReferences(
+        completedAnswers,
+        interviewSettings.value.jobLevel,
+        interviewSettings.value.industry,
+        referenceAnswers
+      )
+    } else {
+      // Fallback: use AI feedback without reference answers
+      console.log('Calling aiFeedbackService.evaluateSession...')
+      feedback.value = await aiFeedbackService.evaluateSession(
+        completedAnswers,
+        interviewSettings.value.jobLevel,
+        interviewSettings.value.industry
+      )
+    }
 
     console.log('Feedback received:', feedback.value)
     generatingProgress.value = 100
@@ -262,8 +364,24 @@ async function handleInterviewComplete(completedAnswers: InterviewAnswer[]) {
     // Still show feedback page even if AI evaluation fails
     feedback.value = {
       englishExpression: { score: 60, strengths: [], weaknesses: [], suggestions: [] },
-      ficoProfessionalism: { score: 60, strengths: [], weaknesses: [], suggestions: [] },
-      interviewSkills: { score: 60, strengths: [], weaknesses: [], suggestions: [] },
+      ficoProfessionalism: {
+        score: 60,
+        strengths: [],
+        weaknesses: [],
+        suggestions: [],
+        technicalAccuracy: [],
+        industryContext: [],
+        keywordUsage: []
+      },
+      interviewSkills: {
+        score: 60,
+        strengths: [],
+        weaknesses: [],
+        suggestions: [],
+        clarity: [],
+        structure: [],
+        completeness: []
+      },
       overallScore: 60,
       aiInsights: { overallAssessment: '评估暂时不可用，请稍后重试。', careerRecommendations: [], skillGaps: [] },
       referenceAnswers: completedAnswers.map(a => ({ question: a.question, englishAnswer: '暂无参考答案', chineseAnswer: '暂无参考答案' }))

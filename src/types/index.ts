@@ -101,8 +101,6 @@ export type TTSAccent = 'indian' | 'singapore' | 'western'
 export type TTSGender = 'male' | 'female'
 
 export interface TTSSettings {
-  accent: TTSAccent
-  gender: TTSGender
   rate: number
 }
 
@@ -143,10 +141,7 @@ export interface InterviewAnswer {
 export interface InterviewSession {
   id: string
   date: string
-  settings: {
-    accent: TTSAccent
-    gender: TTSGender
-  }
+  settings: {}
   answers: InterviewAnswer[]
   feedback: InterviewFeedback | null
 }

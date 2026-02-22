@@ -23,33 +23,11 @@
       <!-- TTS Settings - Right Side -->
       <div class="ts-settings">
         <div class="ts-row">
-          <span class="ts-label">引擎 / Engine:</span>
-          <el-radio-group v-model="currentEngine" @change="handleEngineChange" size="small">
-            <el-radio-button value="google">Google</el-radio-button>
-            <el-radio-button value="web">浏览器</el-radio-button>
-          </el-radio-group>
-        </div>
-        <div class="ts-row">
-          <span class="ts-label">口音 / Accent:</span>
-          <el-radio-group v-model="currentAccent" @change="handleAccentChange" size="small">
-            <el-radio-button value="indian">印度</el-radio-button>
-            <el-radio-button value="singapore">新加坡</el-radio-button>
-            <el-radio-button value="western">欧美</el-radio-button>
-          </el-radio-group>
-        </div>
-        <div class="ts-row">
-          <span class="ts-label">性别 / Gender:</span>
-          <el-radio-group v-model="currentGender" @change="handleGenderChange" size="small">
-            <el-radio-button value="male">男</el-radio-button>
-            <el-radio-button value="female">女</el-radio-button>
-          </el-radio-group>
-        </div>
-        <div class="ts-row">
           <span class="ts-label">语速 / Speed:</span>
           <el-radio-group v-model="currentRate" @change="handleRateChange" size="small">
-            <el-radio-button :value="0.8">慢</el-radio-button>
+            <el-radio-button :value="0.7">慢</el-radio-button>
             <el-radio-button :value="1.0">中</el-radio-button>
-            <el-radio-button :value="1.2">快</el-radio-button>
+            <el-radio-button :value="1.3">快</el-radio-button>
           </el-radio-group>
         </div>
       </div>
@@ -110,9 +88,6 @@ const settingsStore = useSettingsStore()
 useStudyTimer()
 
 const searchKeyword = ref('')
-const currentEngine = ref(unifiedTTSService.getEngine())
-const currentAccent = ref(settingsStore.ttsAccent)
-const currentGender = ref(settingsStore.ttsGender)
 const currentRate = ref(settingsStore.ttsRate)
 const selectedObject = ref('')
 const currentPage = ref(1)
@@ -178,18 +153,6 @@ function handleFilterChange() {
 
 function handleSearch() {
   currentPage.value = 1
-}
-
-function handleEngineChange(value: 'web' | 'google') {
-  unifiedTTSService.setEngine(value)
-}
-
-function handleAccentChange(value: string) {
-  settingsStore.setTTSAccent(value)
-}
-
-function handleGenderChange(value: string) {
-  settingsStore.setTTSGender(value)
 }
 
 function handleRateChange(value: number) {

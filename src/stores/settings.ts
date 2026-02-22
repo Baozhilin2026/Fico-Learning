@@ -1,20 +1,15 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
-import type { TTSAccent, TTSGender } from '@/types'
+import { ref, computed } from 'vue'
 
 const STORAGE_KEY = 'fico_settings'
 
 interface SettingsState {
-  ttsAccent: TTSAccent
-  ttsGender: TTSGender
   ttsRate: number
   autoPlay: boolean
   showChinese: boolean
 }
 
 const DEFAULT_SETTINGS: SettingsState = {
-  ttsAccent: 'western',
-  ttsGender: 'female',
   ttsRate: 1.0,
   autoPlay: false,
   showChinese: true
@@ -31,10 +26,13 @@ export const useSettingsStore = defineStore('settings', () => {
         const parsed = JSON.parse(stored)
         // Migrate old rate values to new ones for better speed differentiation
         if (parsed.ttsRate === 0.8 || parsed.ttsRate === 0.75) {
-          parsed.ttsRate = 0.6
+          parsed.ttsRate = 0.7
         } else if (parsed.ttsRate === 1.2 || parsed.ttsRate === 1.4) {
-          parsed.ttsRate = 1.6
+          parsed.ttsRate = 1.3
         }
+        // Remove old accent/gender settings if present
+        delete parsed.ttsAccent
+        delete parsed.ttsGender
         settings.value = { ...DEFAULT_SETTINGS, ...parsed }
       }
     } catch (error) {
@@ -52,16 +50,6 @@ export const useSettingsStore = defineStore('settings', () => {
   }
 
   // Update individual settings
-  function setTTSAccent(accent: TTSAccent) {
-    settings.value.ttsAccent = accent
-    saveSettings()
-  }
-
-  function setTTSGender(gender: TTSGender) {
-    settings.value.ttsGender = gender
-    saveSettings()
-  }
-
   function setTTSRate(rate: number) {
     settings.value.ttsRate = rate
     saveSettings()
@@ -88,13 +76,9 @@ export const useSettingsStore = defineStore('settings', () => {
 
   return {
     settings,
-    ttsAccent: computed(() => settings.value.ttsAccent),
-    ttsGender: computed(() => settings.value.ttsGender),
     ttsRate: computed(() => settings.value.ttsRate),
     autoPlay: computed(() => settings.value.autoPlay),
     showChinese: computed(() => settings.value.showChinese),
-    setTTSAccent,
-    setTTSGender,
     setTTSRate,
     setAutoPlay,
     setShowChinese,
@@ -102,5 +86,3 @@ export const useSettingsStore = defineStore('settings', () => {
     saveSettings
   }
 })
-
-import { computed } from 'vue'

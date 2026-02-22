@@ -29,7 +29,7 @@
     "junior": {
       "name": "FICO初级实施顾问",
       "experience": "0-2年",
-      "questionsPerSession": 5,
+      "questionsPerSession": 6,
       "timePerQuestion": 180,
       "document": "FICO初级顾问岗位要求.docx",
       "competencies": {
@@ -82,7 +82,7 @@
     "senior": {
       "name": "FICO高级实施顾问",
       "experience": "5年以上",
-      "questionsPerSession": 8,
+      "questionsPerSession": 5,
       "timePerQuestion": 360,
       "document": "FICO高级顾问岗位要求.docx",
       "competencies": {

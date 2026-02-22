@@ -126,18 +126,6 @@
                 </ul>
               </div>
 
-              <div v-if="dimension.data.weaknesses.length > 0" class="feedback-section weaknesses">
-                <h4>
-                  <el-icon><Close /></el-icon>
-                  {{ t('mockInterview.weaknesses') }}
-                </h4>
-                <ul>
-                  <li v-for="(item, index) in dimension.data.weaknesses" :key="index">
-                    {{ item }}
-                  </li>
-                </ul>
-              </div>
-
               <div v-if="dimension.data.suggestions.length > 0" class="feedback-section suggestions">
                 <h4>
                   <el-icon><Reading /></el-icon>
@@ -149,84 +137,6 @@
                   </li>
                 </ul>
               </div>
-
-              <!-- Additional fields for FICO Professionalism -->
-              <template v-if="dimension.key === 'ficoProfessionalism'">
-                <div v-if="dimension.data.technicalAccuracy?.length > 0" class="feedback-section">
-                  <h4>
-                    <el-icon><Check /></el-icon>
-                    技术准确性
-                  </h4>
-                  <ul>
-                    <li v-for="(item, index) in dimension.data.technicalAccuracy" :key="`tech-${index}`">
-                      {{ item }}
-                    </li>
-                  </ul>
-                </div>
-
-                <div v-if="dimension.data.industryContext?.length > 0" class="feedback-section">
-                  <h4>
-                    <el-icon><TrendCharts /></el-icon>
-                    行业理解
-                  </h4>
-                  <ul>
-                    <li v-for="(item, index) in dimension.data.industryContext" :key="`industry-${index}`">
-                      {{ item }}
-                    </li>
-                  </ul>
-                </div>
-
-                <div v-if="dimension.data.keywordUsage?.length > 0" class="feedback-section">
-                  <h4>
-                    <el-icon><Reading /></el-icon>
-                    关键词使用
-                  </h4>
-                  <ul>
-                    <li v-for="(item, index) in dimension.data.keywordUsage" :key="`keyword-${index}`">
-                      {{ item }}
-                    </li>
-                  </ul>
-                </div>
-              </template>
-
-              <!-- Additional fields for Interview Skills -->
-              <template v-if="dimension.key === 'interviewSkills'">
-                <div v-if="dimension.data.clarity?.length > 0" class="feedback-section">
-                  <h4>
-                    <el-icon><Check /></el-icon>
-                    清晰度
-                  </h4>
-                  <ul>
-                    <li v-for="(item, index) in dimension.data.clarity" :key="`clarity-${index}`">
-                      {{ item }}
-                    </li>
-                  </ul>
-                </div>
-
-                <div v-if="dimension.data.structure?.length > 0" class="feedback-section">
-                  <h4>
-                    <el-icon><TrendCharts /></el-icon>
-                    结构性
-                  </h4>
-                  <ul>
-                    <li v-for="(item, index) in dimension.data.structure" :key="`structure-${index}`">
-                      {{ item }}
-                    </li>
-                  </ul>
-                </div>
-
-                <div v-if="dimension.data.completeness?.length > 0" class="feedback-section">
-                  <h4>
-                    <el-icon><Reading /></el-icon>
-                    完整性
-                  </h4>
-                  <ul>
-                    <li v-for="(item, index) in dimension.data.completeness" :key="`complete-${index}`">
-                      {{ item }}
-                    </li>
-                  </ul>
-                </div>
-              </template>
             </div>
           </div>
         </div>
@@ -298,7 +208,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onUnmounted } from 'vue'
-import { RefreshLeft, Download, VideoPlay, Check, Close, Reading, ChatDotRound, TrendCharts, Warning, InfoFilled } from '@element-plus/icons-vue'
+import { RefreshLeft, Download, VideoPlay, Check, Reading, ChatDotRound, Warning, InfoFilled } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { useTTS } from '@/composables/useTTS'
 import { useI18n } from '@/composables/useI18n'

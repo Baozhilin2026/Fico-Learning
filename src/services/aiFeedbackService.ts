@@ -2,6 +2,13 @@ import { glmService } from './glmService'
 import { dataLoader } from './dataLoader'
 import type { FICOJobLevel, FICOIndustry, AIInterviewFeedback, InterviewAnswer } from '@/types'
 
+// Reference answer type
+interface ReferenceAnswer {
+  question: string
+  englishAnswer: string
+  chineseAnswer: string
+}
+
 class AIFeedbackService {
   private feedbackCache = new Map<string, AIInterviewFeedback>()
 
@@ -73,7 +80,8 @@ Evaluate now.`
   private buildSessionEvaluationPrompt(
     answers: InterviewAnswer[],
     jobLevel: FICOJobLevel,
-    industry: FICOIndustry
+    industry: FICOIndustry,
+    referenceAnswersFromMD: Array<{ question: string; englishAnswer: string; chineseAnswer: string }> = []
   ): string {
     // Check if all questions were skipped
     const allSkipped = answers.every(a =>
@@ -91,10 +99,21 @@ Evaluate now.`
 
     const answersText = answers.map((a, i) => {
       let answerStatus = ''
+      let referenceInfo = ''
+
+      // Find reference answer from MD if available
+      const mdReference = referenceAnswersFromMD.find(ref => ref.question === a.question)
+      if (mdReference) {
+        referenceInfo = `\nReference Answer: ${mdReference.englishAnswer}\n参考答案: ${mdReference.chineseAnswer}`
+      }
+
       if (a.answer.trim() === '' || a.answer === '[跳过]' || a.answer === '[Skipped]') {
         answerStatus = '(Skipped)'
+      } else if (a.answer === '[语音回答]') {
+        answerStatus = '(Voice Answer)'
       }
-      return `Q${i + 1}: ${a.question}\nA${i + 1}: ${a.answer || '[No answer provided]'} ${answerStatus}`
+
+      return `Q${i + 1}: ${a.question}\nA${i + 1}: ${a.answer || '[No answer provided]'} ${answerStatus}${referenceInfo}`
     }).join('\n\n')
 
     let specialInstructions = ''
@@ -163,10 +182,25 @@ For your evaluation:
       "chineseAnswer": "另一个参考答案..."
     }
   ]
-}`
+}
+
+IMPORTANT: The referenceAnswers array MUST contain exactly ${answers.length} entries - one for EACH question listed in the interview session above. Do NOT skip any question.`
 
     // Add uniqueness and objectivity instructions for all levels
     let levelSpecificInstructions = ''
+
+    // Add industry-specific instructions
+    let industrySpecificInstructions = ''
+    if (industry === 'technology') {
+      industrySpecificInstructions = `
+
+HIGH-TECH/INTERNET INDUSTRY SPECIFIC CONSIDERATIONS:
+- Software companies often use SAP for project-based accounting and revenue recognition
+- SaaS business models require special configuration (milestone billing, subscription management)
+- High-tech companies value integration with CRM systems (Salesforce, ServiceNow)
+- Emphasis on cost center profitability analysis for R&D vs operations
+- Asset management includes software capitalization (IFRS IAS 38) considerations`
+    }
 
     if (jobLevel === 'junior') {
       levelSpecificInstructions = `
@@ -219,44 +253,54 @@ Job Level: ${jobLevel}
 Industry: ${industry}
 Total Questions: ${answers.length}
 Questions Attempted: ${answeredCount}
-${specialInstructions}
+${specialInstructions}${industrySpecificInstructions}
 
 Interview Session:
 ${answersText}
 
-IMPORTANT EVALUATION INSTRUCTIONS:
+CRITICAL REQUIREMENTS:
 
-1. You MUST FIRST generate reference answers for ALL questions, then evaluate FICO Professionalism by DIRECTLY COMPARING the candidate's answers against these reference answers.
+1. REFERENCE ANSWERS - You MUST provide reference answers for ALL ${answers.length} questions listed above.
+   Each reference answer must include:
+   - question: The EXACT text of the question
+   - englishAnswer: 2-3 sentences of what an ideal ${jobLevel} level consultant should answer (in English)
+   - chineseAnswer: The Chinese translation of the reference answer
 
-2. For FICO Business Professionalism (40% weight), evaluate based on COMPARISON with reference answers:
-   - Technical content accuracy: What correct FICO concepts from reference are present/absent in candidate's answer?
-   - Key terminology coverage: What essential FICO keywords from reference are present/missing?
-   - Completeness of technical points: What key technical points from reference are covered/missing?
-   - Industry context relevance: Compared to reference, does the answer address industry-specific considerations?
+2. EVALUATION BASED ON REFERENCE - For FICO Professionalism score:
+${referenceAnswersFromMD.length > 0 ? '   - Reference answers are provided below for each question - USE THEM!' : '   - Generate reference answers for comparison'}
+   - Compare candidate's answer against the reference answer
+   - Award points for technical concepts from reference that ARE present
+   - Deduct points for key concepts from reference that are MISSING
+   - Note any INCORRECT technical information compared to reference
+   - Be FAIR and OBJECTIVE - if candidate's answer matches the reference well, give high scores
 
-3. Be OBJECTIVE and SPECIFIC in your feedback - state clearly what was covered vs missing:
-   - List technical points from reference answer that ARE present in candidate's answer
-   - List key FICO terminology that is MISSING from candidate's answer
-   - List technical concepts that are INCORRECTLY explained compared to reference
-   - For each feedback point, clearly indicate it came from comparing with reference answer
+3. OBJECTIVE SCORING for ${jobLevel} level:
+   - English Expression (30%): Grammar, fluency, terminology
+   - FICO Professionalism (40%): Based on COMPARISON with reference answers
+   - Interview Skills (30%): Clarity, structure, completeness
 
-4. You MUST provide reference answers (2-3 sentences each) in BOTH English and Chinese for EVERY SINGLE QUESTION listed above. These should represent what an ideal ${jobLevel} level FICO consultant in ${industry} industry should answer.
+4. ${jobLevel === 'junior' ? `JUNIOR LEVEL SCORING GUIDE:
+   - Normal score range: 70-80 (they are still learning!)
+   - 85+ is excellent for junior level
+   - Do NOT expect expert depth
+   - Focus on: company code, chart of accounts, document types, posting keys, basic configuration
+   - Be ENCOURAGING and CONSTRUCTIVE` : jobLevel === 'middle' ? `MIDDLE LEVEL SCORING GUIDE:
+   - Normal score range: 75-85
+   - 85+ is strong for middle level
+   - Expect: Configuration knowledge, integration understanding, project experience
+   - Focus on: Account determination, posting keys, fiscal year, asset accounting, cost center` : `SENIOR LEVEL SCORING GUIDE:
+   - Normal score range: 80-90
+   - 90+ is excellent for senior level
+   - Expect: Expert knowledge, leadership, complex scenarios
+   - Focus on: Advanced configuration, integrations, optimization, architecture`}
 
 Output ONLY valid JSON in this exact format (no markdown, no code blocks):
 ${jsonTemplate}
 
-CRITICAL REMEMBER:
-- You MUST include referenceAnswers for ALL ${answers.length} questions
-- For ficoProfessionalism feedback, base your assessment on DIRECT COMPARISON between candidate's answer and reference answer you generated
-- Specify what technical points ARE covered, what are MISSING, what are INCORRECT
-- Do not skip any question in referenceAnswers array
-
-5. SCORE OBJECTIVELY based on ACTUAL answer quality:
-   - Do NOT use template scores - evaluate each answer on its own merit
-   - For junior level: 70-80 is a normal score, 85+ is excellent
-   - Vary your scores and feedback based on the specific answers provided
-   - If all answers are similar to previous evaluations, STILL evaluate them fairly based on quality
-- Generate UNIQUE, SPECIFIC feedback for THIS evaluation session - do not repeat previous evaluations
+MUST INCLUDE:
+- referenceAnswers array with EXACTLY ${answers.length} entries (one for each question)
+- Each reference answer must have question, englishAnswer, and chineseAnswer fields
+- Do NOT skip any question
 
 Evaluate now.`
   }
@@ -332,8 +376,9 @@ Evaluate now.`
       feedback.aiInsights.skillGaps = []
     }
 
-    // Ensure referenceAnswers exists
-    if (!feedback.referenceAnswers) {
+    // Ensure referenceAnswers exists - this is CRITICAL
+    if (!feedback.referenceAnswers || !Array.isArray(feedback.referenceAnswers)) {
+      console.log('[AI Feedback] referenceAnswers missing or not an array, initializing as empty array')
       feedback.referenceAnswers = []
     }
 
@@ -421,9 +466,22 @@ Evaluate now.`
       other: '其他行业'
     }[industry] || '相关行业'
 
+    // Industry-specific reference answer enhancements
+    const industryEnhancement = {
+      technology: {
+        english: ' In high-tech companies, this involves understanding project-based accounting, software capitalization (IFRS IAS 38), and integration with CRM systems like Salesforce.',
+        chinese: '在高科技公司，这涉及理解基于项目的会计核算、软件资本化（IFRS IAS 38）以及与Salesforce等CRM系统的集成。'
+      }
+    }
+
+    const enhancement = industryEnhancement[industry] || {
+      english: '',
+      chinese: ''
+    }
+
     return {
-      englishAnswer: `As a ${jobLevel} level FICO consultant in ${industry} industry, I would explain that ${question.toLowerCase().replace('?', '')} involves understanding core SAP FICO configuration principles and applying them based on business requirements. The key is to demonstrate knowledge of relevant module integration points and industry-specific considerations.`,
-      chineseAnswer: `作为${industryText}行业的${jobLevelText}，该问题的核心在于理解SAP FICO的配置原则并根据业务需求进行应用。关键在于展示对相关模块集成点和行业特定考虑因素的理解。建议结合实际项目经验和具体业务场景进行阐述。`
+      englishAnswer: `As a ${jobLevelText} in the ${industryText} industry, ${question.toLowerCase().replace('?', '')} involves understanding SAP FICO configuration principles and applying them to business scenarios.${enhancement.english}`,
+      chineseAnswer: `作为${industryText}行业的${jobLevelText}，${question.replace('？', '')}涉及理解SAP FICO配置原则并将其应用到业务场景中。${enhancement.chinese}`
     }
   }
 
@@ -450,10 +508,20 @@ Evaluate now.`
         competencies
       )
 
+      const systemPrompt = `You are a professional SAP FICO interview evaluator.
+
+CRITICAL OUTPUT REQUIREMENTS:
+1. You MUST include a "referenceAnswers" array in your JSON response
+2. The referenceAnswers array MUST contain entries for ALL questions
+3. Each entry MUST have: question (exact text), englishAnswer (2-3 sentences), chineseAnswer (Chinese translation)
+4. Do NOT skip any question - every single question must have a reference answer
+
+Always respond with valid JSON only, no markdown, no code blocks.`
+
       const response = await glmService.callGLM([
         {
           role: 'system',
-          content: 'You are a professional SAP FICO interview evaluator. Always respond with valid JSON only, no markdown formatting, no code blocks, no explanations. Just raw JSON data.'
+          content: systemPrompt
         },
         {
           role: 'user',
@@ -492,6 +560,16 @@ Evaluate now.`
     industry: FICOIndustry,
     useCache = true
   ): Promise<AIInterviewFeedback> {
+    return this.evaluateSessionWithReferences(answers, jobLevel, industry, [], useCache)
+  }
+
+  async evaluateSessionWithReferences(
+    answers: InterviewAnswer[],
+    jobLevel: FICOJobLevel,
+    industry: FICOIndustry,
+    referenceAnswersFromMD: Array<{ question: string; englishAnswer: string; chineseAnswer: string }>,
+    useCache = true
+  ): Promise<AIInterviewFeedback> {
     // Disable cache for all levels to ensure fresh, objective evaluation each time
     const shouldUseCache = false
 
@@ -506,13 +584,24 @@ Evaluate now.`
       const prompt = this.buildSessionEvaluationPrompt(
         answers,
         jobLevel,
-        industry
+        industry,
+        referenceAnswersFromMD
       )
+
+      const systemPrompt = `You are a professional SAP FICO interview evaluator.
+
+CRITICAL OUTPUT REQUIREMENTS:
+1. You MUST include a "referenceAnswers" array in your JSON response
+2. The referenceAnswers array MUST contain entries for ALL questions
+3. Each entry MUST have: question (exact text), englishAnswer (2-3 sentences), chineseAnswer (Chinese translation)
+4. Do NOT skip any question - every single question must have a reference answer
+
+Always respond with valid JSON only, no markdown, no code blocks.`
 
       const response = await glmService.callGLM([
         {
           role: 'system',
-          content: 'You are a professional SAP FICO interview evaluator. Always respond with valid JSON only, no markdown formatting, no code blocks, no explanations. Just raw JSON data.'
+          content: systemPrompt
         },
         {
           role: 'user',
@@ -533,15 +622,41 @@ Evaluate now.`
       }
       cleanedResponse = cleanedResponse.trim()
 
-      const feedback = this.normalizeFeedback(JSON.parse(cleanedResponse))
+      // Parse JSON
+      let parsedFeedback
+      try {
+        parsedFeedback = JSON.parse(cleanedResponse)
+      } catch (e) {
+        console.error('[AI Feedback] Failed to parse JSON response:', e)
+        console.log('[AI Feedback] Response was:', cleanedResponse.substring(0, 500))
+        throw e
+      }
 
-      // Ensure all questions have reference answers
-      feedback.referenceAnswers = this.ensureAllReferenceAnswers(
+      // DEBUG: Log if referenceAnswers exists in AI response
+      console.log('[AI Feedback] referenceAnswers in AI response:', parsedFeedback.referenceAnswers ? 'YES (' + parsedFeedback.referenceAnswers.length + ' entries)' : 'NO')
+
+      const feedback = this.normalizeFeedback(parsedFeedback)
+
+      // CRITICAL: Ensure ALL questions have reference answers
+      // If AI didn't generate them, create them manually
+      const existingReferences = feedback.referenceAnswers || []
+      console.log('[AI Feedback] After normalize - referenceAnswers:', existingReferences.length, 'questions:', answers.length)
+
+      const completeReferences = this.ensureAllReferenceAnswers(
         answers,
-        feedback.referenceAnswers || [],
+        existingReferences,
         jobLevel,
         industry
       )
+      feedback.referenceAnswers = completeReferences
+
+      // Log if references were missing
+      if (existingReferences.length < answers.length) {
+        console.log(`[AI Feedback] Generated ${completeReferences.length - existingReferences.length} missing reference answers`)
+      }
+
+      // Final verification
+      console.log('[AI Feedback] Final referenceAnswers count:', feedback.referenceAnswers.length, 'expected:', answers.length)
 
       // Cache feedback
       this.feedbackCache.set(cacheKey, feedback)

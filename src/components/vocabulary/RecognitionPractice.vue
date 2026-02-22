@@ -161,12 +161,8 @@ function shuffleArray<T>(array: T[]): void {
 }
 
 async function playAudio() {
-  // Force western accent, female voice, and 1.0x speed for vocabulary module
-  await speak(currentVocabulary.value.英文, {
-    accent: 'western',
-    gender: 'female',
-    rate: 1.0
-  })
+  // Use default browser voice with 1.0x speed
+  await speak(currentVocabulary.value.英文, { rate: 1.0 })
 }
 
 function getVocabById(id: number | null): VocabularyEntry | undefined {
@@ -343,6 +339,14 @@ function resetCountdown() {
   align-items: center;
   justify-content: flex-start;
   text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+
+  // Better touch target size for iPad
+  @media (pointer: coarse) {
+    min-height: 72px;
+    padding: $spacing-xl;
+  }
 }
 
 .option-item:hover {
@@ -361,6 +365,12 @@ function resetCountdown() {
   padding: $spacing-sm $spacing-sm;
   cursor: pointer;
   white-space: nowrap;
+
+  // Larger font for touch devices
+  @media (pointer: coarse) {
+    font-size: 16px;
+    padding: $spacing-md;
+  }
 }
 
 .result-content {

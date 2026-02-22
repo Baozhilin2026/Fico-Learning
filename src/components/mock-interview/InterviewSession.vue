@@ -232,8 +232,6 @@ interface Props {
     chineseTranslation: string
   }>
   settings: {
-    accent: string
-    gender: string
     timePerQuestion?: number // Time per question in seconds
   }
 }
@@ -247,7 +245,7 @@ const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
 const { t } = useI18n()
-const { speak: speakTTS, setAccent, setGender } = useTTS()
+const { speak: speakTTS } = useTTS()
 const {
   state: recorderState,
   startRecording,
@@ -308,8 +306,6 @@ const audioUrl = computed(() => recorderState.value.audioUrl)
 
 // Initialize TTS settings
 onMounted(() => {
-  setAccent(props.settings.accent as any)
-  setGender(props.settings.gender as any)
   remainingTime.value = timePerQuestion.value
 })
 

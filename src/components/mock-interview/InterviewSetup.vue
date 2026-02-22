@@ -28,37 +28,6 @@
 
         <div class="settings-form">
           <div class="form-section">
-            <h3>面试设置</h3>
-
-            <div class="form-item">
-              <label>{{ t('mockInterview.selectAccent') }}</label>
-              <el-radio-group v-model="settings.accent">
-                <el-radio-button value="indian">
-                  {{ t('mockInterview.indianAccent') }}
-                </el-radio-button>
-                <el-radio-button value="singapore">
-                  {{ t('mockInterview.singaporeAccent') }}
-                </el-radio-button>
-                <el-radio-button value="western">
-                  {{ t('mockInterview.westernAccent') }}
-                </el-radio-button>
-              </el-radio-group>
-            </div>
-
-            <div class="form-item">
-              <label>{{ t('mockInterview.selectGender') }}</label>
-              <el-radio-group v-model="settings.gender">
-                <el-radio-button value="male">
-                  {{ t('mockInterview.male') }}
-                </el-radio-button>
-                <el-radio-button value="female">
-                  {{ t('mockInterview.female') }}
-                </el-radio-button>
-              </el-radio-group>
-            </div>
-          </div>
-
-          <div class="form-section">
             <h3>岗位与行业</h3>
 
             <div class="form-item">
@@ -128,7 +97,9 @@
 import { ref, onMounted, computed } from 'vue'
 import { VideoPlay } from '@element-plus/icons-vue'
 import { useI18n } from '@/composables/useI18n'
-import type { TTSAccent, TTSGender, FICOJobLevel, FICOIndustry } from '@/types'
+import type { FICOJobLevel, FICOIndustry } from '@/types'
+
+const { t } = useI18n()
 
 interface Emits {
   (e: 'start', settings: InterviewSettings): void
@@ -136,17 +107,11 @@ interface Emits {
 }
 
 interface InterviewSettings {
-  accent: TTSAccent
-  gender: TTSGender
   jobLevel: FICOJobLevel
   industry: FICOIndustry
 }
 
-const { t } = useI18n()
-
 const settings = ref<InterviewSettings>({
-  accent: 'western',
-  gender: 'female',
   jobLevel: 'junior',
   industry: 'manufacturing'
 })

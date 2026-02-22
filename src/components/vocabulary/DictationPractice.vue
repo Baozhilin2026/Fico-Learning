@@ -41,6 +41,8 @@
           type="textarea"
           :rows="3"
           placeholder="请输入你听到的英文术语..."
+          inputmode="text"
+          class="handwriting-input"
           @keyup.ctrl.enter="submitAnswer"
         />
 
@@ -139,12 +141,8 @@ function startCountdown() {
         countdownInterval.value = null
       }
       showCountdown.value = false
-      // Auto play audio after countdown
-      speak(currentVocabulary.value.英文, {
-        accent: 'western',
-        gender: 'female',
-        rate: 1.0
-      })
+      // Auto play audio after countdown - use default rate
+      speak(currentVocabulary.value.英文, { rate: 1.0 })
     }
   }, 1000)
 }
@@ -170,23 +168,15 @@ async function togglePlay() {
   if (isPlaying.value) {
     stop()
   } else {
-    // Force western accent, female voice, and 1.0x speed for vocabulary module
-    await speak(currentVocabulary.value.英文, {
-      accent: 'western',
-      gender: 'female',
-      rate: 1.0
-    })
+    // Use default browser voice with 1.0x speed
+    await speak(currentVocabulary.value.英文, { rate: 1.0 })
   }
 }
 
 function replay() {
   stop()
   setTimeout(() => {
-    speak(currentVocabulary.value.英文, {
-      accent: 'western',
-      gender: 'female',
-      rate: 1.0
-    })
+    speak(currentVocabulary.value.英文, { rate: 1.0 })
   }, 100)
 }
 
@@ -206,11 +196,7 @@ function retry() {
   userAnswer.value = ''
   showResult.value = false
   // Auto play audio immediately
-  speak(currentVocabulary.value.英文, {
-    accent: 'western',
-    gender: 'female',
-    rate: 1.0
-  })
+  speak(currentVocabulary.value.英文, { rate: 1.0 })
 }
 
 function next() {
@@ -226,11 +212,7 @@ function next() {
   } else {
     currentIndex.value++
     // Auto play audio immediately
-    speak(currentVocabulary.value.英文, {
-      accent: 'western',
-      gender: 'female',
-      rate: 1.0
-    })
+    speak(currentVocabulary.value.英文, { rate: 1.0 })
   }
 }
 
@@ -332,6 +314,28 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   gap: $spacing-md;
+
+  // iPad and touch device optimizations
+  :deep(.handwriting-input) {
+    .el-textarea__inner {
+      // Ensure good touch target size
+      min-height: 80px;
+      font-size: 16px; // Prevents iOS zoom on focus
+      line-height: 1.5;
+
+      // Enable handwriting input on iPad
+      -webkit-overflow-scrolling: touch;
+
+      // Improve touch experience
+      touch-action: manipulation;
+
+      // Better focus state for touch
+      &:focus {
+        outline: 2px solid $primary;
+        outline-offset: -2px;
+      }
+    }
+  }
 }
 
 .result-content {
@@ -432,5 +436,19 @@ onUnmounted(() => {
 
 .practice-footer {
   margin-top: $spacing-xl;
+}
+
+// iPad specific optimizations
+@media (pointer: coarse) {
+  .input-section {
+    :deep(.handwriting-input) {
+      .el-textarea__inner {
+        // Larger minimum height for touch devices
+        min-height: 120px;
+        // Better spacing for handwriting
+        padding: 12px;
+      }
+    }
+  }
 }
 </style>

@@ -166,7 +166,7 @@ const isDataLoaded = ref(false)
 
 // Category selection
 const sections = computed(() => vocabularyStore.sections)
-const selectedSections = ref<string[]>([])
+const selectedSections = ref<string[]>(['基本概念'])
 
 const currentVocabularies = computed(() => {
   return vocabularyStore.getVocabulariesBySectionNames(selectedSections.value)
@@ -239,6 +239,10 @@ function handleBookmark(vocab: any) {
 
 onMounted(async () => {
   await vocabularyStore.loadVocabularies()
+  // Set default category to '基本概念' after sections are loaded
+  if (sections.value.length > 0 && sections.value.includes('基本概念')) {
+    selectedSections.value = ['基本概念']
+  }
   isDataLoaded.value = true
 })
 </script>
@@ -254,18 +258,24 @@ onMounted(async () => {
   flex: 1;
   margin-top: calc($navbar-height + 10px);
   margin-bottom: $bottombar-height;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .main-content {
   max-width: $max-content-width;
-  margin: 0 auto;
   width: 100%;
-  padding: $spacing-xl;
+  padding-left: calc($spacing-2xl + $spacing-md);
+  padding-right: $spacing-xl;
+  padding-top: $spacing-xl;
+  padding-bottom: $spacing-xl;
   font-size: 14px;
 }
 
 .category-section {
   margin-bottom: $spacing-xl;
+  margin-left: $spacing-md;
 }
 
 .category-header {
@@ -300,6 +310,7 @@ h3 {
   justify-content: space-between;
   align-items: center;
   margin-bottom: $spacing-lg;
+  margin-left: $spacing-md;
 }
 
 .header-actions {
@@ -315,6 +326,7 @@ h3 {
   display: grid;
   gap: $spacing-md;
   grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  justify-items: center;
 }
 
 .empty-state {
@@ -323,12 +335,14 @@ h3 {
   align-items: center;
   min-height: 400px;
   gap: $spacing-md;
+  margin-left: $spacing-md;
 }
 
 .pagination {
   display: flex;
   justify-content: center;
   margin-top: $spacing-xl;
+  margin-left: $spacing-md;
 }
 
 .loading-container {

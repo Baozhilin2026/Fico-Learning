@@ -1,9 +1,6 @@
 import { ref, computed, onUnmounted, watch } from 'vue'
 import { unifiedTTSService } from '@/services/unifiedTTSService'
 import { useSettingsStore } from '@/stores/settings'
-import type { TTSAccent, TTSGender } from '@/types'
-
-type TTSEngine = 'web' | 'google'
 
 export function useTTS() {
   const settingsStore = useSettingsStore()
@@ -12,7 +9,6 @@ export function useTTS() {
   const isPaused = ref(false)
   const currentSpeed = ref(1.0)
   const progress = ref(0)
-  const currentEngine = ref<TTSEngine>('web')
 
   // Sync currentSpeed with settingsStore.ttsRate
   currentSpeed.value = settingsStore.ttsRate
@@ -24,24 +20,14 @@ export function useTTS() {
 
   // Get current TTS settings
   const currentSettings = computed(() => ({
-    accent: settingsStore.ttsAccent,
-    gender: settingsStore.ttsGender,
     rate: currentSpeed.value
   }))
 
   // Get engine info
   const engineInfo = computed(() => unifiedTTSService.getEngineInfo())
 
-  // Switch TTS engine
-  function setEngine(engine: TTSEngine): void {
-    currentEngine.value = engine
-    unifiedTTSService.setEngine(engine)
-  }
-
   // Speak text
   async function speak(text: string, options?: {
-    accent?: TTSAccent
-    gender?: TTSGender
     rate?: number
   }): Promise<void> {
     try {
@@ -53,8 +39,6 @@ export function useTTS() {
       progress.value = 0
 
       const settings = {
-        accent: options?.accent || currentSettings.value.accent,
-        gender: options?.gender || currentSettings.value.gender,
         rate: options?.rate || currentSettings.value.rate
       }
 
@@ -95,16 +79,6 @@ export function useTTS() {
     currentSpeed.value = rate
   }
 
-  // Update accent setting
-  function setAccent(accent: TTSAccent) {
-    settingsStore.setTTSAccent(accent)
-  }
-
-  // Update gender setting
-  function setGender(gender: TTSGender) {
-    settingsStore.setTTSGender(gender)
-  }
-
   // Cleanup on unmount
   onUnmounted(() => {
     stop()
@@ -115,17 +89,11 @@ export function useTTS() {
     isPaused,
     currentSpeed,
     progress,
-    currentAccent: computed(() => currentSettings.value.accent),
-    currentGender: computed(() => currentSettings.value.gender),
-    currentEngine: computed(() => currentEngine.value),
     engineInfo,
     speak,
     pause,
     resume,
     stop,
-    setSpeed,
-    setAccent,
-    setGender,
-    setEngine
+    setSpeed
   }
 }

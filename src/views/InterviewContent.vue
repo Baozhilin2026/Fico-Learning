@@ -29,33 +29,11 @@
       <!-- TTS Settings - Right Side -->
       <div class="tts-settings">
         <div class="tts-row">
-          <span class="tts-label">引擎 / Engine:</span>
-          <el-radio-group v-model="currentEngine" @change="handleEngineChange" size="small">
-            <el-radio-button value="google">Google</el-radio-button>
-            <el-radio-button value="web">浏览器</el-radio-button>
-          </el-radio-group>
-        </div>
-        <div class="tts-row">
-          <span class="tts-label">口音 / Accent:</span>
-          <el-radio-group v-model="currentAccent" @change="handleAccentChange" size="small">
-            <el-radio-button value="indian">印度</el-radio-button>
-            <el-radio-button value="singapore">新加坡</el-radio-button>
-            <el-radio-button value="western">欧美</el-radio-button>
-          </el-radio-group>
-        </div>
-        <div class="tts-row">
-          <span class="tts-label">性别 / Gender:</span>
-          <el-radio-group v-model="currentGender" @change="handleGenderChange" size="small">
-            <el-radio-button value="male">男</el-radio-button>
-            <el-radio-button value="female">女</el-radio-button>
-          </el-radio-group>
-        </div>
-        <div class="tts-row">
           <span class="tts-label">语速 / Speed:</span>
           <el-radio-group v-model="currentRate" @change="handleRateChange" size="small">
-            <el-radio-button :value="0.8">慢</el-radio-button>
+            <el-radio-button :value="0.7">慢</el-radio-button>
             <el-radio-button :value="1.0">中</el-radio-button>
-            <el-radio-button :value="1.2">快</el-radio-button>
+            <el-radio-button :value="1.3">快</el-radio-button>
           </el-radio-group>
         </div>
       </div>
@@ -106,7 +84,7 @@ import { useSettingsStore } from '@/stores/settings'
 import { useStudyTimer } from '@/composables/useStudyTimer'
 import { dataLoader } from '@/services/dataLoader'
 import { unifiedTTSService } from '@/services/unifiedTTSService'
-import type { InterviewQAData, TTSAccent, TTSGender } from '@/types'
+import type { InterviewQAData } from '@/types'
 import TopNavbar from '@/components/common/TopNavbar.vue'
 import BottomInfoBar from '@/components/common/BottomInfoBar.vue'
 import QuestionCard from '@/components/interview/QuestionCard.vue'
@@ -123,9 +101,6 @@ const pageSize = ref(10)
 const interviewData = ref<InterviewQAData | null>(null)
 const allQuestions = ref<any[]>([])
 
-const currentEngine = ref(unifiedTTSService.getEngine())
-const currentAccent = ref<TTSAccent>(settingsStore.ttsAccent)
-const currentGender = ref<TTSGender>(settingsStore.ttsGender)
 const currentRate = ref(settingsStore.ttsRate)
 
 const parts = computed(() => {
@@ -191,18 +166,6 @@ function handleBookmark(item: any) {
 
 function handleScenarioChange() {
   currentPage.value = 1
-}
-
-function handleEngineChange(value: 'web' | 'google') {
-  unifiedTTSService.setEngine(value)
-}
-
-function handleAccentChange(value: TTSAccent) {
-  settingsStore.setTTSAccent(value)
-}
-
-function handleGenderChange(value: TTSGender) {
-  settingsStore.setTTSGender(value)
 }
 
 function handleRateChange(value: number) {
@@ -278,7 +241,7 @@ onMounted(async () => {
     gap: $spacing-md;
 
     .scenario-label {
-      font-size: 13px;
+      font-size: 14px;
       font-weight: $font-weight-semibold;
       color: $primary;
       white-space: nowrap;
@@ -301,7 +264,7 @@ onMounted(async () => {
       gap: $spacing-sm;
 
       .tts-label {
-        font-size: 12px;
+        font-size: 14px;
         font-weight: $font-weight-semibold;
         color: $primary;
         white-space: nowrap;
@@ -309,7 +272,7 @@ onMounted(async () => {
     }
 
     :deep(.el-radio-button__inner) {
-      font-size: 12px;
+      font-size: 14px;
       padding: 4px 8px;
     }
   }
