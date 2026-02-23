@@ -206,7 +206,7 @@ class MiddleInterviewService {
       const urls = [
         '/FICO 中级顾问.md',
         '/FICO%20中级顾问.md',
-        encodeURIComponent('/FICO 中级顾问.md'),
+        encodeURI('/FICO 中级顾问.md'),
         '/fico-middle-consultant.md' // English fallback
       ]
 

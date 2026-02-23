@@ -225,7 +225,7 @@ class JuniorInterviewService {
       const urls = [
         '/FICO 初级顾问.md',
         '/FICO%20初级顾问.md',
-        encodeURIComponent('/FICO 初级顾问.md'),
+        encodeURI('/FICO 初级顾问.md'),
         '/FICO 初級顧問.md', // Traditional fallback
         '/fico-junior-consultant.md' // English fallback
       ]

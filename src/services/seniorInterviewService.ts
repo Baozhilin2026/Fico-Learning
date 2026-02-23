@@ -159,7 +159,7 @@ class SeniorInterviewService {
       const urls = [
         '/FICO 高级顾问.md',
         '/FICO%20高级顾问.md',
-        encodeURIComponent('/FICO 高级顾问.md'),
+        encodeURI('/FICO 高级顾问.md'),
         '/fico-senior-consultant.md'
       ]
 
