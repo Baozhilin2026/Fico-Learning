@@ -21,13 +21,42 @@ export function useRecorder() {
   let audioChunks: Blob[] = []
   let timerInterval: number | null = null
   let startTime: number = 0
+  let selectedMimeType = ''
+
+  // Detect supported MIME type for audio recording
+  function getSupportedMimeType(): string {
+    const types = [
+      'audio/mp4', // Safari (iOS/macOS) support
+      'audio/aac',
+      'audio/webm;codecs=opus', // Chrome/Firefox
+      'audio/webm',
+      'audio/ogg;codecs=opus', // Firefox
+      'audio/ogg'
+    ]
+
+    for (const type of types) {
+      if (MediaRecorder.isTypeSupported(type)) {
+        console.log(`[useRecorder] Using MIME type: ${type}`)
+        return type
+      }
+    }
+
+    // Fallback - let browser decide
+    console.log('[useRecorder] Using default MIME type')
+    return ''
+  }
 
   // Request microphone permission and start recording
   async function startRecording(): Promise<void> {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
 
-      mediaRecorder = new MediaRecorder(stream)
+      // Get supported MIME type
+      selectedMimeType = getSupportedMimeType()
+
+      // Create MediaRecorder with supported type (or empty for browser default)
+      const options = selectedMimeType ? { mimeType: selectedMimeType } : undefined
+      mediaRecorder = new MediaRecorder(stream, options)
       audioChunks = []
 
       mediaRecorder.ondataavailable = (event) => {
@@ -37,7 +66,9 @@ export function useRecorder() {
       }
 
       mediaRecorder.onstop = () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' })
+        // Create blob with the selected MIME type, or fallback to audio/webm
+        const blobType = selectedMimeType || 'audio/webm'
+        const audioBlob = new Blob(audioChunks, { type: blobType })
         const audioUrl = URL.createObjectURL(audioBlob)
 
         state.value.audioBlob = audioBlob
