@@ -79,7 +79,7 @@ export function useTTS() {
     currentSpeed.value = rate
   }
 
-  // Initialize TTS (required for Safari/iOS)
+  // Initialize TTS - required for Safari/iOS
   async initialize(): Promise<void> {
     return unifiedTTSService.initialize()
   }
