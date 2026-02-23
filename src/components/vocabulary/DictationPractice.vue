@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <div v-else-if="!showResult" class="practice-content">
+    <div v-else-if="!showResult && !showComplete" class="practice-content">
       <div class="audio-section">
         <el-button
           type="primary"
@@ -53,6 +53,74 @@
           @click="submitAnswer"
         >
           提交答案 (Ctrl+Enter)
+        </el-button>
+      </div>
+    </div>
+
+    <!-- Complete Summary -->
+    <div v-else-if="showComplete" class="complete-summary">
+      <div class="summary-header">
+        <div class="celebration-large">
+          <div class="confetti-large">🎉</div>
+          <h2>练习完成！</h2>
+        </div>
+        <div class="score-card">
+          <div class="score-circle">
+            <div class="score-percentage">{{ scorePercentage }}%</div>
+            <div class="score-label">正确率</div>
+          </div>
+          <div class="score-details">
+            <div class="score-item correct">
+              <span class="score-number">{{ correctCount }}</span>
+              <span class="score-text">答对</span>
+            </div>
+            <div class="score-item incorrect">
+              <span class="score-number">{{ totalQuestions - correctCount }}</span>
+              <span class="score-text">答错</span>
+            </div>
+            <div class="score-item total">
+              <span class="score-number">{{ totalQuestions }}</span>
+              <span class="score-text">总计</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="questions-review">
+        <h3>答题详情</h3>
+        <div class="review-list">
+          <div
+            v-for="(record, index) in answerRecords"
+            :key="index"
+            class="review-item"
+            :class="{ correct: record.isCorrect, incorrect: !record.isCorrect }"
+          >
+            <div class="review-number">{{ index + 1 }}</div>
+            <div class="review-content">
+              <div class="review-english">{{ record.vocabulary.英文 }}</div>
+              <div class="review-chinese">{{ record.vocabulary.中文翻译 }}</div>
+              <div v-if="!record.isCorrect" class="review-wrong">
+                你的答案：{{ record.userAnswer || '未作答' }}
+              </div>
+            </div>
+            <div class="review-status">
+              <el-icon v-if="record.isCorrect" class="status-icon correct">
+                <CircleCheck />
+              </el-icon>
+              <el-icon v-else class="status-icon incorrect">
+                <CircleClose />
+              </el-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-actions">
+        <el-button size="large" @click="backToVocabulary">
+          返回单词列表
+        </el-button>
+        <el-button type="primary" size="large" @click="restartPractice">
+          再练一次
         </el-button>
       </div>
     </div>
@@ -118,7 +186,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { VideoPlay, VideoPause, RefreshLeft, InfoFilled } from '@element-plus/icons-vue'
+import { VideoPlay, VideoPause, RefreshLeft, InfoFilled, CircleCheck, CircleClose } from '@element-plus/icons-vue'
 import { useTTS } from '@/composables/useTTS'
 import { useI18n } from '@/composables/useI18n'
 import type { VocabularyEntry } from '@/types'
@@ -129,6 +197,13 @@ interface Props {
 
 interface Emits {
   (e: 'complete', result: { correct: number; total: number }): void
+  (e: 'back'): void
+}
+
+interface AnswerRecord {
+  vocabulary: VocabularyEntry
+  userAnswer: string
+  isCorrect: boolean
 }
 
 const props = defineProps<Props>()
@@ -147,9 +222,22 @@ const countdown = ref(3)
 const showCountdown = ref(true)
 const countdownInterval = ref<number | null>(null)
 const showHint = ref(false)
+const showComplete = ref(false)
+const answerRecords = ref<AnswerRecord[]>([])
+
+const scorePercentage = computed(() => {
+  if (totalQuestions.value === 0) return 0
+  return Math.round((correctCount.value / totalQuestions.value) * 100)
+})
 
 const totalQuestions = computed(() => Math.min(10, props.vocabularies.length))
-const progressPercentage = computed(() => ((currentIndex.value) / totalQuestions.value) * 100)
+const progressPercentage = computed(() => {
+  // When showing complete summary, show 100%
+  if (showComplete.value) return 100
+  // Otherwise, progress based on answered questions
+  const answeredCount = answerRecords.value.length
+  return Math.round((answeredCount / totalQuestions.value) * 100)
+})
 
 const currentVocabulary = computed(() => {
   if (questionOrder.value.length === 0) return props.vocabularies[0]
@@ -210,9 +298,18 @@ function replay() {
 }
 
 function submitAnswer() {
-  const correctAnswer = currentVocabulary.value.英文.toLowerCase().trim()
-  const answer = userAnswer.value.toLowerCase().trim()
-  isCorrect.value = correctAnswer === answer
+  // Normalize answers: lowercase and remove all spaces for comparison
+  const normalizeAnswer = (str: string) => str.toLowerCase().replace(/\s+/g, '').trim()
+  const correctAnswer = normalizeAnswer(currentVocabulary.value.英文)
+  const userAnswerNormalized = normalizeAnswer(userAnswer.value)
+  isCorrect.value = correctAnswer === userAnswerNormalized
+
+  // Record the answer
+  answerRecords.value.push({
+    vocabulary: currentVocabulary.value,
+    userAnswer: userAnswer.value,
+    isCorrect: isCorrect.value
+  })
 
   if (isCorrect.value) {
     correctCount.value++
@@ -248,20 +345,47 @@ function closeHint() {
 }
 
 function next() {
-  userAnswer.value = ''
-  showResult.value = false
-
   if (currentIndex.value >= totalQuestions.value - 1) {
-    // Practice complete
+    // Practice complete - show summary
+    // Set showComplete first to avoid showing practice interface
+    showComplete.value = true
+    showResult.value = false
+    userAnswer.value = ''
     emit('complete', {
       correct: correctCount.value,
       total: totalQuestions.value
     })
   } else {
+    // Move to next question
+    userAnswer.value = ''
+    showResult.value = false
     currentIndex.value++
     // Auto play audio immediately
     speak(currentVocabulary.value.英文, { rate: 1.0 })
   }
+}
+
+function restartPractice() {
+  // Reset all state
+  currentIndex.value = 0
+  userAnswer.value = ''
+  showResult.value = false
+  isCorrect.value = false
+  correctCount.value = 0
+  showComplete.value = false
+  answerRecords.value = []
+
+  // Reshuffle questions
+  const indices = Array.from({ length: props.vocabularies.length }, (_, i) => i)
+  shuffleArray(indices)
+  questionOrder.value = indices.slice(0, totalQuestions.value)
+
+  // Start countdown
+  startCountdown()
+}
+
+function backToVocabulary() {
+  emit('back')
 }
 
 // Cleanup
@@ -484,6 +608,213 @@ onUnmounted(() => {
 
 .practice-footer {
   margin-top: $spacing-xl;
+}
+
+.complete-summary {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: $bg-primary;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-sm;
+  padding: $spacing-2xl;
+}
+
+.summary-header {
+  text-align: center;
+  margin-bottom: $spacing-2xl;
+}
+
+.celebration-large {
+  margin-bottom: $spacing-xl;
+  animation: bounceIn 0.6s ease-out;
+
+  .confetti-large {
+    font-size: 80px;
+    animation: confettiFall 1s ease-out;
+  }
+
+  h2 {
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+    color: $primary;
+    margin: $spacing-md 0 0 0;
+  }
+}
+
+.score-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-xl;
+  padding: $spacing-xl;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: $border-radius-lg;
+  color: white;
+}
+
+.score-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 8px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+
+  .score-percentage {
+    font-size: 48px;
+    font-weight: $font-weight-bold;
+    line-height: 1;
+  }
+
+  .score-label {
+    font-size: $font-size-sm;
+    opacity: 0.9;
+    margin-top: $spacing-xs;
+  }
+}
+
+.score-details {
+  display: flex;
+  gap: $spacing-2xl;
+  width: 100%;
+  justify-content: center;
+}
+
+.score-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-xs;
+
+  .score-number {
+    font-size: 32px;
+    font-weight: $font-weight-bold;
+    line-height: 1;
+  }
+
+  .score-text {
+    font-size: $font-size-sm;
+    opacity: 0.9;
+  }
+
+  &.correct .score-number {
+    color: #67f3d8;
+  }
+
+  &.incorrect .score-number {
+    color: #ffcfcf;
+  }
+
+  &.total .score-number {
+    color: white;
+  }
+}
+
+.questions-review {
+  margin-bottom: $spacing-2xl;
+
+  h3 {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-lg;
+    text-align: center;
+  }
+}
+
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: $spacing-sm;
+}
+
+.review-item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-md;
+  background-color: $bg-secondary;
+  border-radius: $border-radius-md;
+  border-left: 4px solid $border-color;
+  transition: all 0.3s ease;
+
+  &.correct {
+    border-left-color: $success;
+    background-color: rgba($success, 0.05);
+  }
+
+  &.incorrect {
+    border-left-color: $error;
+    background-color: rgba($error, 0.05);
+  }
+
+  .review-number {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: $primary;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-sm;
+  }
+
+  .review-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .review-english {
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    font-size: $font-size-base;
+    margin-bottom: $spacing-xs;
+  }
+
+  .review-chinese {
+    color: $text-secondary;
+    font-size: $font-size-sm;
+  }
+
+  .review-wrong {
+    color: $error;
+    font-size: $font-size-sm;
+    margin-top: $spacing-xs;
+  }
+
+  .review-status {
+    flex-shrink: 0;
+  }
+
+  .status-icon {
+    font-size: 24px;
+
+    &.correct {
+      color: $success;
+    }
+
+    &.incorrect {
+      color: $error;
+    }
+  }
+}
+
+.summary-actions {
+  display: flex;
+  justify-content: center;
+  gap: $spacing-md;
+  padding-top: $spacing-xl;
+  border-top: 1px solid $divider;
 }
 
 .hint-content {

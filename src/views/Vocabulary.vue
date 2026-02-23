@@ -123,6 +123,7 @@
             v-else-if="practiceMode === 'dictation'"
             :vocabularies="currentVocabularies"
             @complete="handlePracticeComplete"
+            @back="exitDictation"
           />
 
           <!-- Match3 game mode -->
@@ -206,6 +207,10 @@ function exitGame() {
   practiceMode.value = 'learn'
 }
 
+function exitDictation() {
+  practiceMode.value = 'learn'
+}
+
 function handlePracticeComplete(result: { correct: number; total: number }) {
   const score = Math.round((result.correct / result.total) * 100)
   const title = `${t('vocabulary.dictationPractice')} - 正确率: ${score}%`
@@ -216,7 +221,7 @@ function handlePracticeComplete(result: { correct: number; total: number }) {
     score: score
   })
 
-  practiceMode.value = 'learn'
+  // Don't automatically exit - let user view summary in DictationPractice component
 }
 
 function handlePageChange(page: number) {
