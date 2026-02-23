@@ -30,6 +30,10 @@ class UnifiedTTSService {
     return ttsService.getVoices()
   }
 
+  async initialize(): Promise<void> {
+    return ttsService.initialize()
+  }
+
   getEngineInfo(): { name: string; description: string } {
     return {
       name: '浏览器内置 TTS',

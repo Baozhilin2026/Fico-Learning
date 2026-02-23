@@ -4,6 +4,7 @@ interface TTSState {
   speaking: boolean
   paused: boolean
   currentUtterance: SpeechSynthesisUtterance | null
+  initialized: boolean
 }
 
 class TTSService {
@@ -11,8 +12,11 @@ class TTSService {
   private state: TTSState = {
     speaking: false,
     paused: false,
-    currentUtterance: null
+    currentUtterance: null,
+    initialized: false
   }
+  private voices: SpeechSynthesisVoice[] = []
+  private voicesLoaded = false
 
   constructor() {
     this.synth = window.speechSynthesis
@@ -23,11 +27,87 @@ class TTSService {
         this.stop()
       })
     }
+
+    // Load voices - handle Safari's async loading
+    this.loadVoices()
+  }
+
+  // Load voices with Safari support
+  private loadVoices(): void {
+    // Try to get voices immediately
+    this.voices = this.synth.getVoices()
+
+    if (this.voices.length > 0) {
+      this.voicesLoaded = true
+      console.log('[TTS] Voices loaded immediately:', this.voices.length)
+    } else {
+      // For Safari, voices are loaded asynchronously
+      this.synth.onvoiceschanged = () => {
+        this.voices = this.synth.getVoices()
+        this.voicesLoaded = true
+        console.log('[TTS] Voices loaded via voiceschanged:', this.voices.length)
+      }
+    }
+  }
+
+  // Initialize TTS with user interaction - required for Safari
+  async initialize(): Promise<void> {
+    if (this.state.initialized) return
+
+    // Wait for voices to be loaded
+    if (!this.voicesLoaded) {
+      await new Promise<void>(resolve => {
+        const checkVoices = () => {
+          if (this.voicesLoaded) {
+            resolve()
+          } else {
+            setTimeout(checkVoices, 100)
+          }
+        }
+        checkVoices()
+      })
+    }
+
+    // For Safari, speak a silent utterance to "wake up" the audio
+    // This must be triggered by user interaction
+    const silentUtterance = new SpeechSynthesisUtterance('')
+    silentUtterance.volume = 0
+
+    return new Promise((resolve) => {
+      silentUtterance.onend = () => {
+        this.state.initialized = true
+        console.log('[TTS] Initialized successfully')
+        resolve()
+      }
+
+      silentUtterance.onerror = () => {
+        // Even if error, consider initialized (some browsers don't support silent)
+        this.state.initialized = true
+        console.log('[TTS] Initialized (with error, but proceeding)')
+        resolve()
+      }
+
+      this.synth.speak(silentUtterance)
+
+      // Fallback timeout in case onend doesn't fire
+      setTimeout(() => {
+        if (!this.state.initialized) {
+          this.state.initialized = true
+          resolve()
+        }
+      }, 100)
+    })
   }
 
   // Get all available voices
   getVoices(): SpeechSynthesisVoice[] {
-    return this.synth.getVoices()
+    if (!this.voicesLoaded) {
+      this.voices = this.synth.getVoices()
+      if (this.voices.length > 0) {
+        this.voicesLoaded = true
+      }
+    }
+    return this.voices
   }
 
   // Select browser default English voice
@@ -48,9 +128,17 @@ class TTSService {
 
   // Speak text with specified settings
   speak(text: string, settings: TTSSettings): Promise<void> {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
+      // Initialize if not already done (required for Safari)
+      if (!this.state.initialized) {
+        await this.initialize()
+      }
+
       // Cancel any ongoing speech
       this.stop()
+
+      // Additional Safari fix: cancel and speak again to ensure it's not in paused state
+      this.synth.cancel()
 
       const utterance = new SpeechSynthesisUtterance(text)
 

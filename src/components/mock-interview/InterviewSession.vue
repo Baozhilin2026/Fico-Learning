@@ -245,7 +245,7 @@ const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
 const { t } = useI18n()
-const { speak: speakTTS } = useTTS()
+const { speak: speakTTS, initialize: initializeTTS } = useTTS()
 const {
   state: recorderState,
   startRecording,
@@ -511,7 +511,15 @@ async function handleEndInterview() {
 }
 
 // Start first question timer and countdown
-onMounted(() => {
+onMounted(async () => {
+  // Initialize TTS first (required for Safari/iOS)
+  try {
+    await initializeTTS()
+    console.log('[InterviewSession] TTS initialized successfully')
+  } catch (error) {
+    console.warn('[InterviewSession] TTS initialization failed:', error)
+  }
+
   startTimer()
   startCountdown()
 })
