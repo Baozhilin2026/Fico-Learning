@@ -80,7 +80,7 @@ export function useTTS() {
   }
 
   // Initialize TTS - required for Safari/iOS
-  async initialize(): Promise<void> {
+  const initialize = async (): Promise<void> => {
     return unifiedTTSService.initialize()
   }
 
