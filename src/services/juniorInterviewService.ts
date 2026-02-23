@@ -239,7 +239,10 @@ class JuniorInterviewService {
           response = await fetch(url)
           if (response.ok) {
             console.log(`[Junior Interview Service] Successfully loaded from: ${url}`)
+            console.log(`[Junior Interview Service] Response size: ${response.headers.get('content-length')} bytes`)
             break
+          } else {
+            console.log(`[Junior Interview Service] Response not OK: ${response.status} ${response.statusText}`)
           }
         } catch (e) {
           lastError = e as Error

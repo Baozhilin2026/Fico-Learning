@@ -172,7 +172,10 @@ class SeniorInterviewService {
           response = await fetch(url)
           if (response.ok) {
             console.log(`[Senior Interview Service] Successfully loaded from: ${url}`)
+            console.log(`[Senior Interview Service] Response size: ${response.headers.get('content-length')} bytes`)
             break
+          } else {
+            console.log(`[Senior Interview Service] Response not OK: ${response.status} ${response.statusText}`)
           }
         } catch (e) {
           lastError = e as Error
