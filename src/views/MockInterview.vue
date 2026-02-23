@@ -68,10 +68,12 @@ import type { InterviewQuestion, EvaluationResult } from '@/services/juniorInter
 import type { InterviewQuestion as MiddleInterviewQuestion } from '@/services/middleInterviewService'
 import type { InterviewQuestion as SeniorInterviewQuestion } from '@/services/seniorInterviewService'
 import { useStudyTimer } from '@/composables/useStudyTimer'
+import { useTTS } from '@/composables/useTTS'
 import { useProgressStore } from '@/stores/progress'
 import type { InterviewFeedback, InterviewAnswer, FICOJobLevel, FICOIndustry } from '@/types'
 
 const progressStore = useProgressStore()
+const { initialize: initializeTTS } = useTTS()
 
 // Auto-start study timer when on this page
 useStudyTimer()
@@ -130,6 +132,15 @@ async function handleStartInterview(settings: {
   industry: FICOIndustry
 }) {
   interviewSettings.value = settings
+
+  // Initialize TTS immediately on user interaction (required for Safari/iOS)
+  try {
+    await initializeTTS()
+    console.log('[MockInterview] TTS initialized on user interaction')
+  } catch (error) {
+    console.warn('[MockInterview] TTS initialization failed:', error)
+  }
+
   phase.value = 'generating'
   generatingProgress.value = 0
 
