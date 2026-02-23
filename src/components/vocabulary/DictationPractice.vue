@@ -28,8 +28,8 @@
             <el-button :icon="RefreshLeft" @click="replay">
               重新播放
             </el-button>
-            <el-button :icon="Right" @click="next">
-              跳过
+            <el-button :icon="InfoFilled" @click="showHintDialog">
+              提示
             </el-button>
           </el-button-group>
         </div>
@@ -75,12 +75,40 @@
         </template>
         <template #extra>
           <el-space>
-            <el-button @click="retry">重试</el-button>
-            <el-button type="primary" @click="next">继续</el-button>
+            <el-button v-if="!isCorrect" @click="retry">重试</el-button>
+            <el-button v-if="!isCorrect" type="primary" @click="next">继续</el-button>
+            <div v-if="isCorrect" class="auto-next-text">
+              即将自动播放下一个...
+            </div>
           </el-space>
         </template>
       </el-result>
     </div>
+
+    <!-- Hint Dialog -->
+    <el-dialog
+      v-model="showHint"
+      title="提示"
+      width="500px"
+      :close-on-click-modal="true"
+      @close="closeHint"
+    >
+      <div class="hint-content">
+        <div class="hint-item">
+          <span class="hint-label">英文术语：</span>
+          <span class="hint-value english">{{ currentVocabulary.英文 }}</span>
+        </div>
+        <div class="hint-item">
+          <span class="hint-label">中文翻译：</span>
+          <span class="hint-value chinese">{{ currentVocabulary.中文翻译 }}</span>
+        </div>
+      </div>
+      <template #footer>
+        <el-button type="primary" @click="closeHint">
+          知道了，重新练习
+        </el-button>
+      </template>
+    </el-dialog>
 
     <div class="practice-footer">
       <el-progress :percentage="progressPercentage" />
@@ -90,7 +118,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { VideoPlay, VideoPause, RefreshLeft, Right } from '@element-plus/icons-vue'
+import { VideoPlay, VideoPause, RefreshLeft, InfoFilled } from '@element-plus/icons-vue'
 import { useTTS } from '@/composables/useTTS'
 import { useI18n } from '@/composables/useI18n'
 import type { VocabularyEntry } from '@/types'
@@ -118,6 +146,7 @@ const questionOrder = ref<number[]>([])
 const countdown = ref(3)
 const showCountdown = ref(true)
 const countdownInterval = ref<number | null>(null)
+const showHint = ref(false)
 
 const totalQuestions = computed(() => Math.min(10, props.vocabularies.length))
 const progressPercentage = computed(() => ((currentIndex.value) / totalQuestions.value) * 100)
@@ -187,9 +216,14 @@ function submitAnswer() {
 
   if (isCorrect.value) {
     correctCount.value++
+    // Auto play next word after a short delay
+    showResult.value = true
+    setTimeout(() => {
+      next()
+    }, 1500)
+  } else {
+    showResult.value = true
   }
-
-  showResult.value = true
 }
 
 function retry() {
@@ -197,6 +231,20 @@ function retry() {
   showResult.value = false
   // Auto play audio immediately
   speak(currentVocabulary.value.英文, { rate: 1.0 })
+}
+
+function showHintDialog() {
+  showHint.value = true
+}
+
+function closeHint() {
+  showHint.value = false
+  // Clear the answer and replay audio
+  userAnswer.value = ''
+  showResult.value = false
+  setTimeout(() => {
+    speak(currentVocabulary.value.英文, { rate: 1.0 })
+  }, 300)
 }
 
 function next() {
@@ -436,6 +484,57 @@ onUnmounted(() => {
 
 .practice-footer {
   margin-top: $spacing-xl;
+}
+
+.hint-content {
+  padding: $spacing-lg 0;
+
+  .hint-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: $spacing-lg;
+    padding: $spacing-md;
+    background-color: $bg-secondary;
+    border-radius: $border-radius-md;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .hint-label {
+      font-weight: $font-weight-semibold;
+      color: $text-secondary;
+      min-width: 100px;
+    }
+
+    .hint-value {
+      font-size: $font-size-lg;
+
+      &.english {
+        color: $primary;
+        font-weight: $font-weight-bold;
+      }
+
+      &.chinese {
+        color: $text-primary;
+      }
+    }
+  }
+}
+
+.auto-next-text {
+  color: $success;
+  font-size: $font-size-sm;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 // iPad specific optimizations
