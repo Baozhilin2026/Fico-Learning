@@ -128,18 +128,18 @@ class TTSService {
 
   // Speak text with specified settings
   speak(text: string, settings: TTSSettings): Promise<void> {
-    return new Promise(async (resolve, reject) => {
-      // Initialize if not already done (required for Safari)
-      if (!this.state.initialized) {
-        await this.initialize()
-      }
+    // Initialize if not already done (required for Safari)
+    if (!this.state.initialized) {
+      return this.initialize().then(() => this.speak(text, settings))
+    }
 
-      // Cancel any ongoing speech
-      this.stop()
+    // Cancel any ongoing speech
+    this.stop()
 
-      // Additional Safari fix: cancel and speak again to ensure it's not in paused state
-      this.synth.cancel()
+    // Additional Safari fix: cancel and speak again to ensure it's not in paused state
+    this.synth.cancel()
 
+    return new Promise<void>((resolve, reject) => {
       const utterance = new SpeechSynthesisUtterance(text)
 
       // Use user-selected rate, default pitch and language
