@@ -29,25 +29,29 @@ export function useTTS() {
   // Speak text
   async function speak(text: string, options?: {
     rate?: number
+    accent?: string
+    gender?: string
   }): Promise<void> {
+    // Stop any current playback before starting new one
+    unifiedTTSService.stop()
+
+    isPlaying.value = true
+    isPaused.value = false
+    progress.value = 0
+
+    const settings = {
+      rate: options?.rate || currentSettings.value.rate
+    }
+
     try {
-      // Stop any current playback before starting new one
-      unifiedTTSService.stop()
-
-      isPlaying.value = true
-      isPaused.value = false
-      progress.value = 0
-
-      const settings = {
-        rate: options?.rate || currentSettings.value.rate
-      }
-
       await unifiedTTSService.speak(text, settings)
-
       progress.value = 100
     } catch (error) {
-      console.error('TTS error:', error)
-      throw error
+      // Only log non-interrupted errors
+      const errorMessage = error instanceof Error ? error.message : String(error)
+      if (!errorMessage.includes('interrupted') && !errorMessage.includes('canceled')) {
+        console.error('TTS error:', error)
+      }
     } finally {
       isPlaying.value = false
       isPaused.value = false

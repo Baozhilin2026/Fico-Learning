@@ -21,10 +21,11 @@ class DataLoader {
         // Check if running on Vercel
         if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
           basePath = '/'
-        } else {
-          // Assume GitHub Pages
+        } else if (typeof window !== 'undefined' && window.location.hostname.includes('github.io')) {
+          // GitHub Pages
           basePath = '/Fico-Learning/'
         }
+        // For Tencent Cloud and other direct deployments, use '/' (root)
       }
       const response = await fetch(`${basePath}data/${filename}`)
       if (!response.ok) {

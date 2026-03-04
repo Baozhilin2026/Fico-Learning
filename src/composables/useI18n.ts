@@ -18,7 +18,8 @@ const translations = {
       noData: '暂无数据',
       logout: '退出授权',
       contactAdmin: '联系管理员',
-      lastUpdate: '数据更新时间'
+      lastUpdate: '数据更新时间',
+      settings: '设置'
     },
 
     // Navigation

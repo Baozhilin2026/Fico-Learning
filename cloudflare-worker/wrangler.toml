@@ -1,0 +1,12 @@
+name = "fico-tts-proxy"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# Environment variables (set these in Cloudflare Dashboard)
+# TENCENT_TTS_SECRET_ID = "your_secret_id"
+# TENCENT_TTS_SECRET_KEY = "your_secret_key"
+
+# Routes (optional - if you want to use a custom domain)
+# routes = [
+#   { pattern = "https://your-domain.com/tts*", zone_name = "your-domain.com" }
+# ]

@@ -132,7 +132,7 @@ const modules = ref<ModuleItem[]>([
   {
     id: 'communication',
     title: t('nav.communication'),
-    description: '掌握项目沟通中的常用英文语句，支持多口音朗读',
+    description: '掌握项目沟通中的常用英文语句',
     path: '/communication',
     icon: ChatDotSquare,
     color: '#FF9800'
